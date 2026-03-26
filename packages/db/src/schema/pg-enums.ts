@@ -19,6 +19,14 @@ export const userRegisteredTypeEnum = pgEnum(
   enumToPgEnum(UserRegisteredType),
 )
 
+export enum OAuthProvider {
+  GOOGLE = 'google',
+  FACEBOOK = 'facebook',
+  GITHUB = 'github',
+}
+
+export const oauthProviderEnum = pgEnum('oauth_provider', enumToPgEnum(OAuthProvider))
+
 export enum BalanceMutationType {
   CREDIT = 'credit',
   DEBIT = 'debit',

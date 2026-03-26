@@ -4,6 +4,7 @@ export const SUPPORTED_LANGUAGES = ['en', 'id', 'ms']
 export const DEFAULT_THEME = 'light'
 export const SUPPORTED_THEMES = ['light', 'dark', 'system']
 export const DEVICE_ID_KEY = 'deviceId'
+export const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID || ''
 
 export const ACCESS_TOKEN = '_baguspay.auth_token'
 export const REFRESH_TOKEN = '_baguspay.refresh_token'

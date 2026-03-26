@@ -16,7 +16,6 @@ export const GUEST_USER: InferSelectModel<typeof tb.users> = {
   phone: null,
   deleted_at: null,
   is_deleted: false,
-  oauth_id: null,
   password: 'ini_password_guest_user_baguspay',
   pin_attempts: 0,
   pin_hash: null,

@@ -2,6 +2,7 @@ import { relations } from 'drizzle-orm'
 import { boolean, integer, pgTable, timestamp, uuid, varchar } from 'drizzle-orm/pg-core'
 import { balanceMutations } from './balance_mutations'
 import { deposits } from './deposits'
+import { oauthAccounts } from './oauth_accounts'
 import { offerOnOrders, offerUsers } from './offers'
 import { orders } from './orders'
 import { UserRegisteredType, UserRole, userRegisteredTypeEnum, userRoleEnum } from './pg-enums'
@@ -9,7 +10,6 @@ import { sessions } from './sessions'
 
 export const users = pgTable('users', {
   id: uuid('id').primaryKey().defaultRandom(),
-  oauth_id: varchar('oauth_id'),
   image_url: varchar('image_url'),
   registered_type: userRegisteredTypeEnum('registered_type')
     .notNull()
@@ -48,4 +48,5 @@ export const userRelations = relations(users, ({ many }) => ({
   orders: many(orders),
   offer_users: many(offerUsers),
   offer_on_orders: many(offerOnOrders),
+  oauth_accounts: many(oauthAccounts),
 }))

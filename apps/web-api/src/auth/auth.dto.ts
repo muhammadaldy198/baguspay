@@ -2,6 +2,7 @@ import { ApiProperty } from '@nestjs/swagger'
 import {
   Equals,
   IsEmail,
+  IsOptional,
   IsPhoneNumber,
   IsString,
   IsStrongPassword,
@@ -74,8 +75,9 @@ export class GoogleLoginDto {
   access_token: string
 
   @ApiProperty()
+  @IsOptional()
   @IsString()
-  id_token: string
+  id_token?: string
 }
 
 export class RefreshTokenDto {

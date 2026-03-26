@@ -1,9 +1,10 @@
 import { BadRequestException, Injectable } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { JwtService } from '@nestjs/jwt'
-import { LoginIsFrom, UserRegisteredType, UserRole } from '@repo/db/types'
+import { LoginIsFrom, OAuthProvider, UserRegisteredType, UserRole } from '@repo/db/types'
+import axios from 'axios'
 import { compare, hash } from 'bcrypt'
-import { LoginDto, RegisterDto } from './auth.dto'
+import { GoogleLoginDto, LoginDto, RegisterDto } from './auth.dto'
 import { AuthRepository } from './auth.repository'
 import { type DeviceInfo, getDeviceInfo, isSameDevice } from './utils/device-fingerprint'
 
@@ -16,6 +17,23 @@ interface LoginHeaders {
 interface TokenPayload {
   id: string
   role: string
+}
+
+type GoogleTokenInfo = {
+  sub: string
+  email: string
+  email_verified: string | boolean
+  name?: string
+  picture?: string
+  aud?: string
+}
+
+type GoogleUserInfo = {
+  sub: string
+  email: string
+  email_verified: boolean
+  name?: string
+  picture?: string
 }
 
 // Token expiration constants
@@ -59,6 +77,54 @@ export class AuthService {
       refreshToken,
       accessTokenExpiresAt,
       refreshTokenExpiresAt,
+    }
+  }
+
+  private async verifyGoogleIdToken(idToken: string): Promise<GoogleTokenInfo> {
+    try {
+      const { data } = await axios.get<GoogleTokenInfo>('https://oauth2.googleapis.com/tokeninfo', {
+        params: { id_token: idToken },
+      })
+
+      const clientId = this._configService.get<string>('GOOGLE_CLIENT_ID')
+      if (clientId && data.aud && data.aud !== clientId) {
+        throw new BadRequestException('Google token audience mismatch')
+      }
+
+      const emailVerified = data.email_verified === true || data.email_verified === 'true'
+      if (!emailVerified) {
+        throw new BadRequestException('Google email is not verified')
+      }
+
+      if (!data.email || !data.sub) {
+        throw new BadRequestException('Invalid Google token payload')
+      }
+
+      return data
+    } catch {
+      throw new BadRequestException('Failed to verify Google token')
+    }
+  }
+
+  private async fetchGoogleUserInfo(accessToken: string): Promise<GoogleUserInfo> {
+    try {
+      const { data } = await axios.get<GoogleUserInfo>(
+        'https://www.googleapis.com/oauth2/v3/userinfo',
+        {
+          headers: { Authorization: `Bearer ${accessToken}` },
+        },
+      )
+
+      if (!data?.email || !data?.sub) {
+        throw new BadRequestException('Invalid Google user info')
+      }
+
+      return {
+        ...data,
+        email_verified: Boolean((data as any).email_verified),
+      }
+    } catch {
+      throw new BadRequestException('Failed to fetch Google user info')
     }
   }
 
@@ -163,6 +229,130 @@ export class AuthService {
           name: user.name,
           is_banned: user.is_banned,
           role: user.role,
+        },
+        device: {
+          name: deviceName,
+          fingerprint: deviceInfo.fingerprint,
+          type: deviceInfo.deviceType,
+          is_baguspay_app: deviceInfo.isBagusPayApp,
+          login_from: getLoginSource(deviceInfo),
+          ...(deviceInfo.isBagusPayApp &&
+            deviceInfo.appInfo && {
+              app_version: deviceInfo.appInfo.appVersion,
+              device_model: deviceInfo.appInfo.deviceModel,
+            }),
+        },
+      },
+    }
+  }
+
+  async loginWithGoogle(data: GoogleLoginDto, headers: LoginHeaders) {
+    let tokenInfo: GoogleTokenInfo | GoogleUserInfo
+
+    if (data.id_token) {
+      tokenInfo = await this.verifyGoogleIdToken(data.id_token)
+    } else if (data.access_token) {
+      tokenInfo = await this.fetchGoogleUserInfo(data.access_token)
+    } else {
+      throw new BadRequestException('Token Google tidak lengkap')
+    }
+
+    const user = await this.authRepository.findUserByEmail(tokenInfo.email)
+
+    if (!user) {
+      throw new BadRequestException('Email belum terdaftar, silakan daftar manual terlebih dahulu')
+    }
+
+    // Link Google account to existing user (email must match)
+    const existingProviderAccount = await this.authRepository.findOauthAccountByProviderUserId(
+      OAuthProvider.GOOGLE,
+      tokenInfo.sub,
+    )
+
+    if (existingProviderAccount && existingProviderAccount.user_id !== user.id) {
+      throw new BadRequestException('Akun Google sudah terhubung ke email lain')
+    }
+
+    if (!existingProviderAccount) {
+      await this.authRepository.createOauthAccount({
+        user_id: user.id,
+        provider: OAuthProvider.GOOGLE,
+        provider_user_id: tokenInfo.sub,
+        provider_email: tokenInfo.email,
+        display_name: tokenInfo.name,
+        avatar_url: tokenInfo.picture,
+      })
+    }
+
+    // Generate device info and fingerprint
+    const deviceInfo = getDeviceInfo(headers.deviceId, headers.userAgent)
+    const deviceName = deviceInfo.isBagusPayApp
+      ? `BagusPay App (${deviceInfo.appInfo?.deviceModel || deviceInfo.os})`
+      : `${deviceInfo.browser} on ${deviceInfo.os}`
+
+    const tokens = this.generateTokens({ id: user.id, role: user.role })
+
+    const sessionData = {
+      user_id: user.id,
+      device_id: headers.deviceId,
+      device_fingerprint: deviceInfo.fingerprint,
+      device_name: deviceName,
+      ip_address: headers.ip,
+      user_agent: headers.userAgent,
+      login_type: UserRegisteredType.GOOGLE,
+      is_from: getLoginSource(deviceInfo),
+      access_token: tokens.accessToken,
+      refresh_token: tokens.refreshToken,
+      access_token_expires_at: tokens.accessTokenExpiresAt,
+      refresh_token_expires_at: tokens.refreshTokenExpiresAt,
+      id_token: data.id_token,
+    }
+
+    // Find existing session using fingerprint (primary) or device_id (fallback)
+    let existingSession = await this.authRepository.findSessionByUserAndDevice(
+      user.id,
+      headers.deviceId,
+      deviceInfo.fingerprint,
+    )
+
+    // If no session found by fingerprint/deviceId, check all user sessions for similar devices
+    if (!existingSession) {
+      const allUserSessions = await this.authRepository.findAllSessionsByUserId(user.id)
+
+      for (const session of allUserSessions) {
+        const isSame = isSameDevice(
+          { deviceId: headers.deviceId, userAgent: headers.userAgent, ip: headers.ip },
+          { deviceId: session.device_id, userAgent: session.user_agent, ip: session.ip_address },
+        )
+
+        if (isSame) {
+          existingSession = session
+          break
+        }
+      }
+    }
+
+    if (existingSession) {
+      await this.authRepository.updateSession(existingSession.id, sessionData)
+    } else {
+      await this.authRepository.createSession(sessionData)
+    }
+
+    return {
+      success: true,
+      message: 'Login Google berhasil',
+      data: {
+        access_token: tokens.accessToken,
+        refresh_token: tokens.refreshToken,
+        access_token_expired_at: tokens.accessTokenExpiresAt,
+        refresh_token_expired_at: tokens.refreshTokenExpiresAt,
+        user: {
+          id: user.id,
+          email: user.email,
+          name: user.name,
+          is_banned: user.is_banned,
+          role: user.role,
+          avatar_url: tokenInfo.picture,
         },
         device: {
           name: deviceName,

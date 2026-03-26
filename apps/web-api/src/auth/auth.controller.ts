@@ -1,7 +1,7 @@
 import { BadRequestException, Body, Controller, Headers, Ip, Post, UseGuards } from '@nestjs/common'
 import { ApiHeader, ApiOperation } from '@nestjs/swagger'
 import { JwtAuthGuard } from 'src/auth/guards/jwt.guard'
-import { LoginDto, RefreshTokenDto, RegisterDto } from './auth.dto'
+import { GoogleLoginDto, LoginDto, RefreshTokenDto, RegisterDto } from './auth.dto'
 import { AuthService } from './auth.service'
 
 @Controller('auth')
@@ -51,6 +51,34 @@ export class AuthController {
       deviceId,
       ip,
       userAgent: userAgent,
+    })
+  }
+
+  @ApiHeader({
+    name: 'X-Device-ID',
+    description: 'Device ID from the client',
+    required: true,
+  })
+  @ApiHeader({
+    name: 'user-agent',
+    description: 'User agent from the client',
+    required: true,
+  })
+  @Post('/google')
+  async loginWithGoogle(
+    @Body() body: GoogleLoginDto,
+    @Headers('X-Device-ID') deviceId: string,
+    @Headers('user-agent') userAgent: string,
+    @Ip() ip: string,
+  ) {
+    if (!ip || !userAgent || !deviceId) {
+      throw new BadRequestException('Missing required headers')
+    }
+
+    return this.authService.loginWithGoogle(body, {
+      deviceId,
+      ip,
+      userAgent,
     })
   }
 

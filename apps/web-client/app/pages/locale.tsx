@@ -1,3 +1,4 @@
+import { GoogleOAuthProvider } from '@react-oauth/google'
 import { QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { Provider, useAtom, useSetAtom } from 'jotai'
@@ -70,11 +71,13 @@ export default function Locale(_args: Route.ComponentProps) {
   return (
     <QueryClientProvider client={queryClient}>
       <Provider store={store}>
-        <SetPinWrapper>
-          <UserLayout>
-            <Outlet />
-          </UserLayout>
-        </SetPinWrapper>
+        <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
+          <SetPinWrapper>
+            <UserLayout>
+              <Outlet />
+            </UserLayout>
+          </SetPinWrapper>
+        </GoogleOAuthProvider>
         <ReactQueryDevtools initialIsOpen={false} />
       </Provider>
     </QueryClientProvider>

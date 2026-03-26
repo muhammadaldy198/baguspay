@@ -1,11 +1,12 @@
 import { Injectable } from '@nestjs/common'
 import { and, eq, type InferInsertModel } from '@repo/db'
-import { tb } from '@repo/db/types'
+import { OAuthProvider, tb } from '@repo/db/types'
 import type { DBInstance } from 'src/common/types/db-instance'
 import { DatabaseService } from 'src/database/database.service'
 
 type SessionInsert = InferInsertModel<typeof tb.sessions>
 type UserInsert = InferInsertModel<typeof tb.users>
+type OauthAccountInsert = InferInsertModel<typeof tb.oauthAccounts>
 
 @Injectable()
 export class AuthRepository {
@@ -122,5 +123,34 @@ export class AuthRepository {
   async deleteSession(sessionId: string, tx?: DBInstance) {
     const db = tx ?? this.databaseService.db
     await db.delete(tb.sessions).where(eq(tb.sessions.id, sessionId))
+  }
+
+  // ==================== OAuth Account Methods ====================
+
+  async findOauthAccountByProviderUserId(provider: OAuthProvider, providerUserId: string) {
+    return this.databaseService.db.query.oauthAccounts.findFirst({
+      where: and(
+        eq(tb.oauthAccounts.provider, provider),
+        eq(tb.oauthAccounts.provider_user_id, providerUserId),
+      ),
+    })
+  }
+
+  async findOauthAccountByProviderEmail(provider: OAuthProvider, providerEmail: string) {
+    return this.databaseService.db.query.oauthAccounts.findFirst({
+      where: and(
+        eq(tb.oauthAccounts.provider, provider),
+        eq(tb.oauthAccounts.provider_email, providerEmail),
+      ),
+    })
+  }
+
+  async createOauthAccount(data: OauthAccountInsert) {
+    const [row] = await this.databaseService.db.insert(tb.oauthAccounts).values(data).returning({
+      id: tb.oauthAccounts.id,
+      user_id: tb.oauthAccounts.user_id,
+      provider: tb.oauthAccounts.provider,
+    })
+    return row
   }
 }
