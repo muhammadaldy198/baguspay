@@ -9,6 +9,7 @@ export default [
     ...prefix('auth', [
       route('login', 'pages/auth/login.tsx'),
       route('register', 'pages/auth/register.tsx'),
+      route('passkey/register', 'pages/auth/passkey-register.tsx'),
     ]),
 
     ...prefix('order', [
@@ -45,6 +46,7 @@ export default [
         route('deposit/history', 'pages/protected/user/deposit/history.tsx'),
         route('deposit/history/:id', 'pages/protected/user/deposit/detail.tsx'),
         route('settings', 'pages/protected/user/settings/index.tsx'),
+        route('passkey', 'pages/protected/user/passkey.tsx'),
         route('sessions', 'pages/protected/user/sessions.tsx'),
       ]),
     ]),

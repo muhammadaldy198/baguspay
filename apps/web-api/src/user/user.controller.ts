@@ -61,6 +61,22 @@ export class UserController {
     return await this.userService.dashboard(user)
   }
 
+  // Passkeys
+  @UseGuards(JwtAuthGuard)
+  @Get('/passkeys')
+  async getUserPasskeys(@User() user: TUser) {
+    return await this.userService.getAllPasskeys(user)
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Delete('/passkeys/:passkeyId')
+  async destroyUserPasskey(
+    @User() user: TUser,
+    @Param('passkeyId', ParseUUIDPipe) passkeyId: string,
+  ) {
+    return await this.userService.destroyPasskey(user, passkeyId)
+  }
+
   // Sessions
   @UseGuards(JwtAuthGuard)
   @Get('/sessions')

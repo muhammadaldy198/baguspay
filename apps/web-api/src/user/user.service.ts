@@ -183,9 +183,16 @@ export class UserService {
       throw new NotFoundException(`User with ID ${userId} not found`)
     }
 
+    let passkeyCount = 0
+    try {
+      passkeyCount = await this.userRepository.countPasskeyCredentialsByUserId(userId)
+    } catch {
+      // Fallback to avoid breaking security-info when passkey table/query is unavailable.
+      passkeyCount = 0
+    }
     const hasPin = Boolean(user.pin_hash ?? user.pin_set_at)
     const isKyc = false // no KYC column yet; keep for future expansion
-    const hasPasskey = false // no passkey column yet
+    const hasPasskey = passkeyCount > 0
 
     return SendResponse.success(
       {
@@ -195,6 +202,35 @@ export class UserService {
       },
       'User security info retrieved successfully',
     )
+  }
+
+  async getAllPasskeys(user: TUser) {
+    const passkeys = await this.userRepository.findAllPasskeyCredentialsByUserId(user.id)
+
+    const data = passkeys.map((passkey) => ({
+      id: passkey.id,
+      credential_id: passkey.credential_id,
+      credential_device_type: passkey.credential_device_type ?? 'unknown',
+      transports: passkey.transports?.split(',').filter(Boolean) ?? [],
+      credential_backed_up: passkey.credential_backed_up,
+      last_used_at: passkey.last_used_at,
+      created_at: passkey.created_at,
+    }))
+
+    return SendResponse.success(data, 'User passkeys retrieved successfully')
+  }
+
+  async destroyPasskey(user: TUser, passkeyId: string) {
+    const [deletedPasskey] = await this.userRepository.deletePasskeyCredentialByIdAndUserId(
+      passkeyId,
+      user.id,
+    )
+
+    if (!deletedPasskey) {
+      throw new NotFoundException(`Passkey with ID ${passkeyId} not found`)
+    }
+
+    return SendResponse.success(null, 'User passkey deleted successfully')
   }
 
   // Session

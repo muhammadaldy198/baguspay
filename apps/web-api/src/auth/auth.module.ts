@@ -8,9 +8,10 @@ import { AuthRepository } from './auth.repository'
 import { AuthService } from './auth.service'
 import { TransactionGuard } from './guards/transaction.guard'
 import { JwtStrategy } from './jwt.strategy'
+import { PasskeyService } from './services/passkey.service'
 
 @Module({
-  providers: [AuthService, AuthRepository, JwtStrategy, TransactionGuard],
+  providers: [AuthService, AuthRepository, JwtStrategy, TransactionGuard, PasskeyService],
   controllers: [AuthController],
   exports: [TransactionGuard],
   imports: [

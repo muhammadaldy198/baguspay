@@ -11,6 +11,7 @@ export enum UserRegisteredType {
   GOOGLE = 'google',
   FACEBOOK = 'facebook',
   GITHUB = 'github',
+  PASSKEY = 'passkey',
   LOCAL = 'local',
 }
 export const userRoleEnum = pgEnum('user_role', enumToPgEnum(UserRole))

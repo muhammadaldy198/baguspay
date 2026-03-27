@@ -4,8 +4,14 @@ import { JwtService } from '@nestjs/jwt'
 import { LoginIsFrom, OAuthProvider, UserRegisteredType, UserRole } from '@repo/db/types'
 import axios from 'axios'
 import { compare, hash } from 'bcrypt'
+import type {
+  PasskeyLoginOptionsDto,
+  PasskeyLoginVerifyDto,
+  PasskeyRegisterVerifyDto,
+} from './auth.dto'
 import { GoogleLoginDto, LoginDto, RegisterDto } from './auth.dto'
 import { AuthRepository } from './auth.repository'
+import { PasskeyService } from './services/passkey.service'
 import { type DeviceInfo, getDeviceInfo, isSameDevice } from './utils/device-fingerprint'
 
 interface LoginHeaders {
@@ -63,6 +69,7 @@ export class AuthService {
   constructor(
     private readonly authRepository: AuthRepository,
     private readonly jwtService: JwtService,
+    private readonly passkeyService: PasskeyService,
     readonly _configService: ConfigService,
   ) {}
 
@@ -425,6 +432,118 @@ export class AuthService {
         refresh_token: tokens.refreshToken,
         access_token_expired_at: tokens.accessTokenExpiresAt,
         refresh_token_expired_at: tokens.refreshTokenExpiresAt,
+      },
+    }
+  }
+
+  // ==================== Passkey Methods ====================
+
+  async getPasskeyRegisterOptions(userId: string) {
+    return this.passkeyService.getPasskeyRegisterOptions(userId)
+  }
+
+  async verifyPasskeyRegistration(userId: string, data: PasskeyRegisterVerifyDto) {
+    return this.passkeyService.verifyPasskeyRegistration(userId, data)
+  }
+
+  async getPasskeyLoginOptions(data: PasskeyLoginOptionsDto) {
+    return this.passkeyService.getPasskeyLoginOptions(data)
+  }
+
+  async verifyPasskeyLogin(
+    data: PasskeyLoginVerifyDto,
+    headers: { deviceId: string; ip: string; userAgent: string },
+  ) {
+    // First verify the passkey credentials
+    const verifyResult = await this.passkeyService.verifyPasskeyLogin(data, headers)
+
+    // Then create a session with JWT tokens
+    const user = await this.authRepository.findUserById(verifyResult.user_id)
+
+    if (!user) {
+      throw new BadRequestException('User not found')
+    }
+
+    // Generate device info and fingerprint
+    const deviceInfo = getDeviceInfo(headers.deviceId, headers.userAgent)
+    const deviceName = deviceInfo.isBagusPayApp
+      ? `BagusPay App (${deviceInfo.appInfo?.deviceModel || deviceInfo.os})`
+      : `${deviceInfo.browser} on ${deviceInfo.os}`
+
+    const tokens = this.generateTokens({ id: user.id, role: user.role })
+
+    const sessionData = {
+      user_id: user.id,
+      device_id: headers.deviceId,
+      device_fingerprint: deviceInfo.fingerprint,
+      device_name: deviceName,
+      ip_address: headers.ip,
+      user_agent: headers.userAgent,
+      login_type: UserRegisteredType.PASSKEY,
+      is_from: getLoginSource(deviceInfo),
+      access_token: tokens.accessToken,
+      refresh_token: tokens.refreshToken,
+      access_token_expires_at: tokens.accessTokenExpiresAt,
+      refresh_token_expires_at: tokens.refreshTokenExpiresAt,
+    }
+
+    // Find existing session using fingerprint (primary) or device_id (fallback)
+    let existingSession = await this.authRepository.findSessionByUserAndDevice(
+      user.id,
+      headers.deviceId,
+      deviceInfo.fingerprint,
+    )
+
+    // If no session found by fingerprint/deviceId, check all user sessions for similar devices
+    if (!existingSession) {
+      const allUserSessions = await this.authRepository.findAllSessionsByUserId(user.id)
+
+      for (const session of allUserSessions) {
+        const isSame = isSameDevice(
+          { deviceId: headers.deviceId, userAgent: headers.userAgent, ip: headers.ip },
+          { deviceId: session.device_id, userAgent: session.user_agent, ip: session.ip_address },
+        )
+
+        if (isSame) {
+          existingSession = session
+          break
+        }
+      }
+    }
+
+    if (existingSession) {
+      await this.authRepository.updateSession(existingSession.id, sessionData)
+    } else {
+      await this.authRepository.createSession(sessionData)
+    }
+
+    return {
+      success: true,
+      message: 'Passkey login successful',
+      data: {
+        access_token: tokens.accessToken,
+        refresh_token: tokens.refreshToken,
+        access_token_expired_at: tokens.accessTokenExpiresAt,
+        refresh_token_expired_at: tokens.refreshTokenExpiresAt,
+        user: {
+          id: user.id,
+          email: user.email,
+          name: user.name,
+          is_banned: user.is_banned,
+          role: user.role,
+        },
+        device: {
+          name: deviceName,
+          fingerprint: deviceInfo.fingerprint,
+          type: deviceInfo.deviceType,
+          is_baguspay_app: deviceInfo.isBagusPayApp,
+          login_from: getLoginSource(deviceInfo),
+          ...(deviceInfo.isBagusPayApp &&
+            deviceInfo.appInfo && {
+              app_version: deviceInfo.appInfo.appVersion,
+              device_model: deviceInfo.appInfo.deviceModel,
+            }),
+        },
       },
     }
   }

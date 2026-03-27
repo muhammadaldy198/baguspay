@@ -51,6 +51,47 @@ export class UserRepository {
     return user
   }
 
+  async countPasskeyCredentialsByUserId(userId: string, tx?: DBInstance) {
+    const db = tx ?? this.databaseService.db
+    const [result] = await db
+      .select({
+        count: count(tb.passkeyCredentials.id),
+      })
+      .from(tb.passkeyCredentials)
+      .where(eq(tb.passkeyCredentials.user_id, userId))
+
+    return Number(result?.count ?? 0)
+  }
+
+  async findAllPasskeyCredentialsByUserId(userId: string, tx?: DBInstance) {
+    const db = tx ?? this.databaseService.db
+    return db.query.passkeyCredentials.findMany({
+      where: eq(tb.passkeyCredentials.user_id, userId),
+      orderBy: desc(tb.passkeyCredentials.created_at),
+      columns: {
+        id: true,
+        credential_id: true,
+        transports: true,
+        credential_device_type: true,
+        credential_backed_up: true,
+        last_used_at: true,
+        created_at: true,
+      },
+    })
+  }
+
+  async deletePasskeyCredentialByIdAndUserId(passkeyId: string, userId: string, tx?: DBInstance) {
+    const db = tx ?? this.databaseService.db
+    return db
+      .delete(tb.passkeyCredentials)
+      .where(
+        and(eq(tb.passkeyCredentials.id, passkeyId), eq(tb.passkeyCredentials.user_id, userId)),
+      )
+      .returning({
+        id: tb.passkeyCredentials.id,
+      })
+  }
+
   async findAllBalanceMutationByUserId(
     userId: string,
     query: GetBalanceMutationHistoryQuery,

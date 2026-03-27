@@ -132,7 +132,7 @@ export default function Register({ loaderData }: Route.ComponentProps) {
               error={form.formState.errors.confirm_password?.message}
             />
           </div>
-          <Button type="submit" className="w-full">
+          <Button type="submit" size="lg" className="w-full rounded-2xl">
             {register.isPending ? 'Loading...' : t('submitButton')}
           </Button>
         </form>

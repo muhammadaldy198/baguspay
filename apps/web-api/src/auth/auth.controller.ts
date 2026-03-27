@@ -1,7 +1,17 @@
 import { BadRequestException, Body, Controller, Headers, Ip, Post, UseGuards } from '@nestjs/common'
 import { ApiHeader, ApiOperation } from '@nestjs/swagger'
 import { JwtAuthGuard } from 'src/auth/guards/jwt.guard'
-import { GoogleLoginDto, LoginDto, RefreshTokenDto, RegisterDto } from './auth.dto'
+import { User } from 'src/common/decorators/user.decorator'
+import type { TUser } from 'src/common/types/meta.type'
+import {
+  GoogleLoginDto,
+  LoginDto,
+  PasskeyLoginOptionsDto,
+  PasskeyLoginVerifyDto,
+  PasskeyRegisterVerifyDto,
+  RefreshTokenDto,
+  RegisterDto,
+} from './auth.dto'
 import { AuthService } from './auth.service'
 
 @Controller('auth')
@@ -76,6 +86,51 @@ export class AuthController {
     }
 
     return this.authService.loginWithGoogle(body, {
+      deviceId,
+      ip,
+      userAgent,
+    })
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Post('/passkey/register/options')
+  async getPasskeyRegisterOptions(@User() user: TUser) {
+    return this.authService.getPasskeyRegisterOptions(user.id)
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Post('/passkey/register/verify')
+  async verifyPasskeyRegistration(@User() user: TUser, @Body() body: PasskeyRegisterVerifyDto) {
+    return this.authService.verifyPasskeyRegistration(user.id, body)
+  }
+
+  @Post('/passkey/login/options')
+  async getPasskeyLoginOptions(@Body() body: PasskeyLoginOptionsDto) {
+    return this.authService.getPasskeyLoginOptions(body)
+  }
+
+  @ApiHeader({
+    name: 'X-Device-ID',
+    description: 'Device ID from the client',
+    required: true,
+  })
+  @ApiHeader({
+    name: 'user-agent',
+    description: 'User agent from the client',
+    required: true,
+  })
+  @Post('/passkey/login/verify')
+  async verifyPasskeyLogin(
+    @Body() body: PasskeyLoginVerifyDto,
+    @Headers('X-Device-ID') deviceId: string,
+    @Headers('user-agent') userAgent: string,
+    @Ip() ip: string,
+  ) {
+    if (!ip || !userAgent || !deviceId) {
+      throw new BadRequestException('Missing required headers')
+    }
+
+    return this.authService.verifyPasskeyLogin(body, {
       deviceId,
       ip,
       userAgent,

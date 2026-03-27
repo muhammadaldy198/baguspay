@@ -5,6 +5,7 @@ import { deposits } from './deposits'
 import { oauthAccounts } from './oauth_accounts'
 import { offerOnOrders, offerUsers } from './offers'
 import { orders } from './orders'
+import { passkeyCredentials } from './passkey_credentials'
 import { UserRegisteredType, UserRole, userRegisteredTypeEnum, userRoleEnum } from './pg-enums'
 import { sessions } from './sessions'
 
@@ -49,4 +50,5 @@ export const userRelations = relations(users, ({ many }) => ({
   offer_users: many(offerUsers),
   offer_on_orders: many(offerOnOrders),
   oauth_accounts: many(oauthAccounts),
+  passkey_credentials: many(passkeyCredentials),
 }))

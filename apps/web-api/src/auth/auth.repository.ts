@@ -7,6 +7,7 @@ import { DatabaseService } from 'src/database/database.service'
 type SessionInsert = InferInsertModel<typeof tb.sessions>
 type UserInsert = InferInsertModel<typeof tb.users>
 type OauthAccountInsert = InferInsertModel<typeof tb.oauthAccounts>
+type PasskeyCredentialInsert = InferInsertModel<typeof tb.passkeyCredentials>
 
 @Injectable()
 export class AuthRepository {
@@ -123,6 +124,48 @@ export class AuthRepository {
   async deleteSession(sessionId: string, tx?: DBInstance) {
     const db = tx ?? this.databaseService.db
     await db.delete(tb.sessions).where(eq(tb.sessions.id, sessionId))
+  }
+
+  // ==================== Passkey Methods ====================
+
+  async findPasskeyCredentialsByUserId(userId: string, tx?: DBInstance) {
+    const db = tx ?? this.databaseService.db
+    return db.query.passkeyCredentials.findMany({
+      where: eq(tb.passkeyCredentials.user_id, userId),
+    })
+  }
+
+  async findPasskeyCredentialByCredentialId(credentialId: string, tx?: DBInstance) {
+    const db = tx ?? this.databaseService.db
+    return db.query.passkeyCredentials.findFirst({
+      where: eq(tb.passkeyCredentials.credential_id, credentialId),
+    })
+  }
+
+  async createPasskeyCredential(data: PasskeyCredentialInsert, tx?: DBInstance) {
+    const db = tx ?? this.databaseService.db
+    const [row] = await db.insert(tb.passkeyCredentials).values(data).returning({
+      id: tb.passkeyCredentials.id,
+      user_id: tb.passkeyCredentials.user_id,
+      credential_id: tb.passkeyCredentials.credential_id,
+    })
+    return row
+  }
+
+  async updatePasskeyCredential(
+    credentialId: string,
+    data: Partial<PasskeyCredentialInsert>,
+    tx?: DBInstance,
+  ) {
+    const db = tx ?? this.databaseService.db
+    const [row] = await db
+      .update(tb.passkeyCredentials)
+      .set(data)
+      .where(eq(tb.passkeyCredentials.credential_id, credentialId))
+      .returning({
+        id: tb.passkeyCredentials.id,
+      })
+    return row
   }
 
   // ==================== OAuth Account Methods ====================

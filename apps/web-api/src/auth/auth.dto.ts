@@ -1,7 +1,8 @@
-import { ApiProperty } from '@nestjs/swagger'
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger'
 import {
   Equals,
   IsEmail,
+  IsObject,
   IsOptional,
   IsPhoneNumber,
   IsString,
@@ -87,4 +88,52 @@ export class RefreshTokenDto {
   })
   @IsString()
   refresh_token: string
+}
+
+export class PasskeyRegisterOptionsDto {}
+
+export class PasskeyRegisterVerifyDto {
+  @ApiProperty({
+    description: 'Token challenge dari endpoint register/options',
+  })
+  @IsString()
+  challenge_token: string
+
+  @ApiProperty({
+    description: 'Body response hasil navigator.credentials.create()',
+  })
+  @IsObject()
+  response: Record<string, unknown>
+}
+
+export class PasskeyLoginOptionsDto {
+  @ApiPropertyOptional({
+    description: 'Email user pemilik passkey (opsional untuk username-less passkey)',
+    example: 'user@mail.com',
+  })
+  @IsOptional()
+  @IsEmail({ require_tld: true })
+  email?: string
+}
+
+export class PasskeyLoginVerifyDto {
+  @ApiPropertyOptional({
+    description: 'Email user yang sama dengan saat request options (opsional)',
+    example: 'user@mail.com',
+  })
+  @IsOptional()
+  @IsEmail({ require_tld: true })
+  email?: string
+
+  @ApiProperty({
+    description: 'Token challenge dari endpoint login/options',
+  })
+  @IsString()
+  challenge_token: string
+
+  @ApiProperty({
+    description: 'Body response hasil navigator.credentials.get()',
+  })
+  @IsObject()
+  response: Record<string, unknown>
 }
