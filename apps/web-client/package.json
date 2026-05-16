@@ -16,8 +16,8 @@
   "dependencies": {
     "@hookform/resolvers": "^5.2.1",
     "@react-oauth/google": "^0.13.4",
-    "@react-router/node": "^7.7.1",
-    "@react-router/serve": "^7.7.1",
+    "@react-router/node": "^7.15.1",
+    "@react-router/serve": "^7.15.1",
     "@repo/db": "workspace:^",
     "@repo/ui": "workspace:*",
     "@simplewebauthn/browser": "^13.3.0",
@@ -26,7 +26,7 @@
     "@tanstack/react-query": "^5.83.0",
     "@tanstack/react-query-devtools": "^5.84.1",
     "@tanstack/react-table": "^8.21.3",
-    "@vitejs/plugin-rsc": "^0.5.9",
+    "@vitejs/plugin-rsc": "^0.5.26",
     "axios": "^1.11.0",
     "cookie": "^1.0.2",
     "html-parse-stringify": "^3.0.1",
@@ -45,7 +45,7 @@
     "react-hook-form": "^7.61.1",
     "react-hot-toast": "^2.6.0",
     "react-i18next": "^15.7.1",
-    "react-router": "^7.7.1",
+    "react-router": "^7.15.1",
     "react-server-dom-webpack": "^19.2.3",
     "react-to-print": "^3.3.0",
     "remix-auth": "^4.2.0",
@@ -60,16 +60,15 @@
     "zustand": "^5.0.7"
   },
   "devDependencies": {
-    "@react-router/dev": "^7.7.1",
-    "@tailwindcss/vite": "^4.1.4",
+    "@react-router/dev": "^7.15.1",
+    "@tailwindcss/vite": "^4.3.0",
     "@types/node": "22.15.18",
     "@types/nprogress": "^0.2.3",
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",
     "@types/uuid": "^10.0.0",
-    "tailwindcss": "^4.1.4",
+    "tailwindcss": "^4.3.0",
     "typescript": "^5.8.3",
-    "vite": "^6.3.3",
-    "vite-tsconfig-paths": "^5.1.4"
+    "vite": "^8.0.0"
   }
 }

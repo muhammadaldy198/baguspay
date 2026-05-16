@@ -24,6 +24,7 @@
   "devDependencies": {
     "@biomejs/biome": "^2.3.14",
     "husky": "^9.1.7",
+    "skills": "^1.5.7",
     "turbo": "^2.7.2",
     "typescript": "5.8.3"
   },
