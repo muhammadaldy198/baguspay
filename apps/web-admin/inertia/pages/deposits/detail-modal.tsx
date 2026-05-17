@@ -37,10 +37,9 @@ export default function DetailDepositModal(props: Props) {
   })
 
   useEffect(() => {
-    if (open) {
-      detailDeposit.mutate()
-    }
-  }, [open, detailDeposit])
+    if (!open) return
+    detailDeposit.mutate()
+  }, [open, props.depositId])
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>

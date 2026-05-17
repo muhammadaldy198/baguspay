@@ -495,7 +495,7 @@ export default function AddProviderProductsModal({
                 Showing {(pageSafe - 1) * pageSize + 1}-
                 {Math.min(pageSafe * pageSize, sortedProducts.length)} of {sortedProducts.length}
               </span>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 rounded-md bg-slate-50 px-3 py-2">
                 <select
                   className="h-7 rounded border px-2 text-xs"
                   value={pageSize}

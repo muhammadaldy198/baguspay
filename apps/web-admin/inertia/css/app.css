@@ -1,2 +1,41 @@
 @import "@repo/ui/globals.css";
 @plugin "@tailwindcss/typography";
+
+:root {
+  --background: oklch(0.985 0.008 250);
+  --foreground: oklch(0.24 0.03 258);
+  --card: oklch(0.998 0.004 255);
+  --card-foreground: oklch(0.24 0.03 258);
+  --popover: oklch(0.998 0.004 255);
+  --popover-foreground: oklch(0.24 0.03 258);
+  --primary: oklch(0.48 0.16 260);
+  --primary-foreground: oklch(0.98 0.01 250);
+  --secondary: oklch(0.94 0.02 250);
+  --secondary-foreground: oklch(0.3 0.04 258);
+  --muted: oklch(0.955 0.012 250);
+  --muted-foreground: oklch(0.52 0.04 258);
+  --accent: oklch(0.92 0.05 230);
+  --accent-foreground: oklch(0.27 0.04 258);
+  --border: oklch(0.89 0.015 252);
+  --input: oklch(0.89 0.015 252);
+  --ring: oklch(0.48 0.16 260);
+  --sidebar: oklch(0.99 0.005 252);
+  --sidebar-foreground: oklch(0.24 0.03 258);
+  --sidebar-primary: oklch(0.48 0.16 260);
+  --sidebar-primary-foreground: oklch(0.98 0.01 250);
+  --sidebar-accent: oklch(0.95 0.018 252);
+  --sidebar-accent-foreground: oklch(0.3 0.04 258);
+  --sidebar-border: oklch(0.9 0.014 252);
+  --sidebar-ring: oklch(0.48 0.16 260);
+  --radius: 0.9rem;
+}
+
+@layer base {
+  body {
+    background-image:
+      radial-gradient(circle at 0% 0%, oklch(0.95 0.03 255) 0%, transparent 35%),
+      radial-gradient(circle at 100% 0%, oklch(0.93 0.04 225) 0%, transparent 30%),
+      linear-gradient(180deg, oklch(0.99 0.006 250), oklch(0.975 0.01 250));
+    background-attachment: fixed;
+  }
+}

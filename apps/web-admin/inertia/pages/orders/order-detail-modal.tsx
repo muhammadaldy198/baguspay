@@ -49,10 +49,9 @@ export default function OrderDetailModal({ orderId }: Props) {
   })
 
   useEffect(() => {
-    if (open) {
-      detailOrder.mutate()
-    }
-  }, [open, detailOrder])
+    if (!open) return
+    detailOrder.mutate()
+  }, [open, orderId])
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>

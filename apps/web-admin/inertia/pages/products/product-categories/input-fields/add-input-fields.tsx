@@ -32,10 +32,9 @@ export default function AddInputFields({ productCategoryId }: { productCategoryI
   })
 
   useEffect(() => {
-    if (open) {
-      getInputFields.refetch()
-    }
-  }, [open, getInputFields])
+    if (!open) return
+    getInputFields.refetch()
+  }, [open])
 
   const handleAdd = (inputId: string) => {
     router.post(

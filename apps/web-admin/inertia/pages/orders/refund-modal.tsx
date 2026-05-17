@@ -9,7 +9,7 @@ import {
   DialogTrigger,
 } from '@repo/ui/components/ui/dialog'
 import { RecycleIcon } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import toast from 'react-hot-toast'
 
 export default function RefundOrderModal({ orderId }: { orderId: string }) {
@@ -29,12 +29,6 @@ export default function RefundOrderModal({ orderId }: { orderId: string }) {
       },
     })
   }
-
-  useEffect(() => {
-    if (open) {
-      form.setData('status', status)
-    }
-  }, [open, form])
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>

@@ -64,10 +64,9 @@ export default function EditProductSubCategoryModal({ productSubCategoryId }: Pr
   })
 
   useEffect(() => {
-    if (open) {
-      productSubCategory.mutate()
-    }
-  }, [open, productSubCategory])
+    if (!open) return
+    productSubCategory.mutate()
+  }, [open, productSubCategoryId])
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()

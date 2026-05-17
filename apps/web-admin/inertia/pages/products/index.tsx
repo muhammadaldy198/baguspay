@@ -45,15 +45,18 @@ export default function ProductCategory(props: Props) {
 
   return (
     <AdminLayout>
-      <div className="flex justify-between mt-5 mb-2">
-        <h1 className="text-2xl font-bold">Product Categories</h1>
+      <div className="mb-4 mt-4 flex flex-wrap items-center justify-between gap-3">
+        <h1 className="text-2xl font-semibold text-slate-900">Product Categories</h1>
         <Button asChild>
           <Link href="/admin/product-categories/create">Add New</Link>
         </Button>
       </div>
-      <form className="flex gap-2" onSubmit={handleSearch}>
+      <form
+        className="mb-4 flex flex-wrap items-center gap-2 rounded-xl border border-slate-200 bg-white/90 p-3"
+        onSubmit={handleSearch}
+      >
         <Select onValueChange={(v) => setSearchBy(v as 'id' | 'name')} value={searchBy}>
-          <SelectTrigger size="sm">
+          <SelectTrigger size="sm" className="min-w-[120px] rounded-md">
             <SelectValue placeholder="Pilih Tipe" />
           </SelectTrigger>
           <SelectContent>
@@ -65,14 +68,16 @@ export default function ProductCategory(props: Props) {
           placeholder="Search..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="w-48 h-8 text-sm"
+          className="h-8 w-56 rounded-md text-sm"
         />
         <Button type="submit" size="sm">
           Search
         </Button>
       </form>
-      <DataTable columns={columns} data={productCategories} />
-      <div className="flex justify-between items-center mt-4">
+      <div className="overflow-hidden rounded-xl border border-slate-200 bg-white/95 shadow-sm">
+        <DataTable columns={columns} data={productCategories} />
+      </div>
+      <div className="mt-4 flex items-center justify-between rounded-lg border border-slate-200 bg-white/80 px-3 py-2">
         <span>
           Page {pagination.page} of {pagination.totalPages}
         </span>
@@ -142,11 +147,11 @@ const columns: ColumnDef<Props['productCategories'][number]>[] = [
     id: 'actions',
     header: 'Actions',
     cell: ({ row }) => (
-      <div className="flex space-x-2">
+      <div className="flex flex-wrap gap-2">
         <Button variant="outline" size="sm" asChild>
           <Link href={`/admin/product-categories/${row.original.id}`}>Detail</Link>
         </Button>
-        <Button variant="secondary" size="sm" asChild>
+        <Button variant="outline" size="sm" asChild>
           <Link href={`/admin/product-categories/${row.original.id}/edit`}>Edit</Link>
         </Button>
         <Dialog>

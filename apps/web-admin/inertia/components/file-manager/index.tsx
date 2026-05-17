@@ -85,6 +85,7 @@ export default function FileManager({
   )
   const [open, setOpen] = useState(false)
   const loaderRef = useRef<HTMLDivElement | null>(null)
+  const fetchedDefaultIdRef = useRef<string | null>(null)
 
   const listFile = useInfiniteQuery<FileListResponse>({
     queryKey: ['listFile'],
@@ -267,13 +268,28 @@ export default function FileManager({
     }
   }, [open, fetchNextPage, hasNextPage, isFetchingNextPage])
 
-  // Fetch default file only once on mount or when defaultFileId changes
+  // Fetch default file only once per defaultFileId
   useEffect(() => {
-    if (defaultFileId && !selectedFile) {
-      getDefaultFile.mutate()
+    if (!defaultFileId) {
+      fetchedDefaultIdRef.current = null
+      return
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [defaultFileId, getDefaultFile, selectedFile])
+
+    if (selectedFile?.id === defaultFileId) {
+      return
+    }
+
+    if (fetchedDefaultIdRef.current === defaultFileId) {
+      return
+    }
+
+    fetchedDefaultIdRef.current = defaultFileId
+    getDefaultFile.mutate(undefined, {
+      onError: () => {
+        fetchedDefaultIdRef.current = null
+      },
+    })
+  }, [defaultFileId, selectedFile?.id, getDefaultFile])
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>

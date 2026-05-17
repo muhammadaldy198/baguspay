@@ -85,8 +85,14 @@ export default function SectionProducts({ productSubCategoryId, selectedSubCateg
 
   useEffect(() => {
     if (!products.data?.data) return
-    setSelectedIds((prev) => prev.filter((id) => visibleIds.includes(id)))
-  }, [products.data?.data, visibleIds])
+    setSelectedIds((prev) => {
+      const next = prev.filter((id) => visibleIds.includes(id))
+      if (next.length === prev.length && next.every((id, index) => id === prev[index])) {
+        return prev
+      }
+      return next
+    })
+  }, [products.data?.data])
 
   const toggleSelectAll = () => {
     if (visibleIds.length === 0) return
@@ -205,7 +211,7 @@ export default function SectionProducts({ productSubCategoryId, selectedSubCateg
         id: 'actions',
         header: 'Actions',
         cell: ({ row }) => (
-          <div className="flex space-x-2">
+          <div className="flex flex-wrap gap-2">
             <EditProductModal productId={row.original.id} />
             <DeleteProductModal productId={row.original.id} />
           </div>
@@ -220,7 +226,7 @@ export default function SectionProducts({ productSubCategoryId, selectedSubCateg
       <div className="flex justify-between gap-4 items-end flex-wrap">
         <h2 className="text-lg font-semibold">Products</h2>
         {productSubCategoryId && (
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 rounded-md bg-slate-50 px-3 py-2">
             <Button
               size="sm"
               variant="destructive"
@@ -259,7 +265,7 @@ export default function SectionProducts({ productSubCategoryId, selectedSubCateg
               <span className="text-xs text-muted-foreground">
                 Page {products.data.meta.page} of {products.data.meta.totalPages}
               </span>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 rounded-md bg-slate-50 px-3 py-2">
                 <select
                   className="h-8 rounded border px-2 text-sm"
                   value={products.data.meta.limit}

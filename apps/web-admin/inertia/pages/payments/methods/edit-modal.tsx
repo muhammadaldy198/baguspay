@@ -101,10 +101,9 @@ export function EditPaymentMethodModal({ paymentMethodId }: Props) {
   })
 
   useEffect(() => {
-    if (open) {
-      getPaymentMethod.mutate()
-    }
-  }, [open, getPaymentMethod])
+    if (!open) return
+    getPaymentMethod.mutate()
+  }, [open, paymentMethodId])
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>

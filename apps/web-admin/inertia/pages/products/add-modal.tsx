@@ -168,7 +168,7 @@ export default function AddProductModal({ productSubCategoryId }: Props) {
           </div>
           <div className="flex gap-4">
             <div className="w-full flex items-start gap-4 mt-6">
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 rounded-md bg-slate-50 px-3 py-2">
                 <Label htmlFor="is_available">Available</Label>
                 <input
                   id="is_available"
@@ -180,7 +180,7 @@ export default function AddProductModal({ productSubCategoryId }: Props) {
                   className="accent-primary h-5 w-10"
                 />
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 rounded-md bg-slate-50 px-3 py-2">
                 <Label htmlFor="is_featured">Featured</Label>
                 <input
                   id="is_featured"
