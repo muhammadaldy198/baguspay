@@ -24,7 +24,6 @@ export class DepositsController {
 
   @Post('/create')
   async createDeposit(@Body() data: CreateDeposit, @User() user: TUser) {
-    console.log('Creating deposit with data:', data, 'for user:', user.id)
     return this.depositService.createDeposit(data, user)
   }
 
