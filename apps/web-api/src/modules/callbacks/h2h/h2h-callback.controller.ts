@@ -19,12 +19,6 @@ export class H2HCallbackController {
     @Headers('User-Agent') userAgent: 'Digiflazz-Hookshot' | 'Digiflazz-Pasca-Hookshot',
     @Ip() _ip: string,
   ) {
-    // console.log('Digiflazz Callback Body:', ip)
-
-    // if (DIGIFLAZZ_IPS.includes(ip) === false) {
-    //   throw new BadRequestException('Invalid IP Address')
-    // }
-
     return this.callbackService.handleDigiflazz(body, signFromPost, event, userAgent)
   }
 }

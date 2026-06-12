@@ -17,6 +17,7 @@ import type { TUser } from 'src/common/types/meta.type'
 import { SendResponse } from 'src/common/utils/response'
 import { DatabaseService } from 'src/core/database/database.service'
 import { StorageService } from 'src/core/storage/storage.service'
+import { calculatePaymentFee } from 'src/integrations/payment-gateway/payment-fee'
 import { ChangePinDto, PaymentAuthDto, ResetPinDto, SetPinDto } from './dto/pin.dto'
 import { PaymentAuthService } from './payment-auth.service'
 import { PaymentAuthType } from './payment-auth.type'
@@ -172,7 +173,7 @@ export class PaymentsService {
       throw new BadRequestException('Payment phone number is required for this payment method.')
     }
 
-    const fee = this.calculateFee(
+    const fee = calculatePaymentFee(
       total_price,
       paymentMethod.fee_percentage / 100,
       paymentMethod.fee_static,
@@ -253,15 +254,6 @@ export class PaymentsService {
       pin: (payload as any).pin, // backward compatibility if provided
       passkeyAssertion: payload.passkey_assertion,
     })
-  }
-
-  /**
-   * Hitung total fee payment method
-   */
-  private calculateFee(amount: number, feePercent: number, feeStatic: number): number {
-    const total = amount / (1 - feePercent) + feeStatic / (1 - feePercent)
-    const fee = total - amount
-    return Math.ceil(fee)
   }
 }
 

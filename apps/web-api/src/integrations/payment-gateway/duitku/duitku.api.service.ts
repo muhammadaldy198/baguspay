@@ -3,6 +3,7 @@ import { HttpStatus, Injectable } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import axios, { type AxiosInstance, isAxiosError } from 'axios'
 import { ApiServiceException } from 'src/common/exceptions/api-service.exception'
+import { calculatePaymentFee } from '../payment-fee'
 import type {
   DuitkuCreateTransactionPayload,
   DuitkuCreateTransactionResponseSuccess,
@@ -56,9 +57,7 @@ export class DuitkuAPiService {
     return hash
   }
 
-  public calculateFee(amountReceived: number, feePercent: number, feeFixed: number): number {
-    const total = amountReceived / (1 - feePercent) + feeFixed / (1 - feePercent)
-    const fee = total - amountReceived
-    return Math.ceil(fee)
+  public calculateFee(amountReceived: number, feeRate: number, fixedFee: number): number {
+    return calculatePaymentFee(amountReceived, feeRate, fixedFee)
   }
 }

@@ -1,25 +1,32 @@
 import type { PaymentMethodFeeType, PaymentMethodProvider, PaymentStatus } from '@repo/db/types'
-import type { TripayOrderItem } from './tripay/tripay.type'
 
-export interface CreatePaymentGatewayRequest {
+export interface PaymentGatewayOrderItem {
+  name: string
+  product_id: string
+  price: number
+  quantity: number
+  customer_input?: string
+}
+
+export interface CreatePaymentRequest {
   provider_name: PaymentMethodProvider
   provider_code: string
   fee_type: PaymentMethodFeeType
-  id: string
+  merchant_ref: string
   amount: number
-  fee_in_percent: number
+  fee_percentage: number
   fee_static: number
   customer_name: string
   customer_email: string
   customer_phone?: string
-  order_items: TripayOrderItem[]
+  order_items: PaymentGatewayOrderItem[]
   callback_url?: string
   return_url?: string
-  expired_in: number // in seconds
+  expires_in_seconds: number
   user_id: string | null
 }
 
-export interface CreatePaymentGatewayResponse {
+export interface CreatePaymentResult {
   id: string
   ref_id: string
   provider_name: PaymentMethodProvider
@@ -32,7 +39,7 @@ export interface CreatePaymentGatewayResponse {
   customer_name: string
   customer_email: string
   customer_phone?: string
-  order_items: TripayOrderItem[]
+  order_items: PaymentGatewayOrderItem[]
   callback_url?: string
   return_url?: string
   expired_at: Date

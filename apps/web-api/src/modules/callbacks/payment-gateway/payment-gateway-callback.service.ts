@@ -18,68 +18,75 @@ export class PaymentGatewayCallbackService {
   ) {}
 
   async handleTripay(payload: TripayCallbackData, signature: string) {
-    const verifySignature = this.tripayService.verifyCallbackSignature({
+    const isSignatureValid = this.tripayService.verifyCallbackSignature({
       data: payload,
       signature: signature,
     })
 
-    if (!verifySignature) {
+    if (!isSignatureValid) {
       throw new BadRequestException('Invalid signature')
     }
 
     const paymentStatus = payload.status === 'PAID' ? PaymentStatus.SUCCESS : PaymentStatus.FAILED
+    const merchantRef = payload.merchant_ref
+    const referenceType = this.getPaymentReferenceType(merchantRef)
 
-    if (payload.merchant_ref.toLowerCase().startsWith('t')) {
+    if (referenceType === 'order') {
       const result = await this.orderService.handlePaymentCallback(
-        payload.merchant_ref,
+        merchantRef,
         paymentStatus,
         PaymentMethodProvider.TRIPAY,
       )
 
       return SendResponse.success(result)
-    } else if (payload.merchant_ref.toLowerCase().startsWith('depo')) {
-      const result = await this.depositService.handlePaymentCallback(
-        payload.merchant_ref,
-        paymentStatus,
-      )
+    } else if (referenceType === 'deposit') {
+      const result = await this.depositService.handlePaymentCallback(merchantRef, paymentStatus)
 
       return SendResponse.success(result)
     } else {
-      throw new BadRequestException('Unknown order type')
+      throw new BadRequestException('Unknown payment reference type')
     }
   }
 
   public async handleDuitku(payload: DuitkuCallbackPayload) {
-    const verifySIgnature = this.duitkuService.verifyCallbackSignature({
+    const isSignatureValid = this.duitkuService.verifyCallbackSignature({
       signature: payload.signature,
       merchantCode: payload.merchantCode,
       amount: payload.amount,
       merchantOrderId: payload.merchantOrderId,
     })
 
-    if (!verifySIgnature) {
+    if (!isSignatureValid) {
       throw new BadRequestException('Invalid signature')
     }
 
     const paymentStatus = payload.resultCode === '00' ? PaymentStatus.SUCCESS : PaymentStatus.FAILED
+    const merchantRef = payload.merchantOrderId
+    const referenceType = this.getPaymentReferenceType(merchantRef)
 
-    if (!payload.merchantOrderId.toLowerCase().startsWith('t')) {
+    if (referenceType === 'order') {
       const result = await this.orderService.handlePaymentCallback(
-        payload.merchantOrderId,
+        merchantRef,
         paymentStatus,
         PaymentMethodProvider.DUITKU,
       )
 
       return SendResponse.success(result)
-    } else if (payload.merchantOrderId.toLowerCase().startsWith('depo')) {
-      const result = await this.depositService.handlePaymentCallback(
-        payload.merchantOrderId,
-        paymentStatus,
-      )
+    } else if (referenceType === 'deposit') {
+      const result = await this.depositService.handlePaymentCallback(merchantRef, paymentStatus)
 
       return SendResponse.success(result)
     } else {
-      throw new BadRequestException('Unknown order type')
+      throw new BadRequestException('Unknown payment reference type')
     }
+  }
+
+  private getPaymentReferenceType(reference: string): 'order' | 'deposit' | null {
+    const normalizedReference = reference.toLowerCase()
+
+    if (normalizedReference.startsWith('t')) return 'order'
+    if (normalizedReference.startsWith('depo')) return 'deposit'
+
+    return null
   }
 }

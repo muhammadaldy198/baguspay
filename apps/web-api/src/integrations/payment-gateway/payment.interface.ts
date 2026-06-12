@@ -1,18 +1,17 @@
 import type { db } from '@repo/db'
-import type {
-  CreatePaymentGatewayRequest,
-  CreatePaymentGatewayResponse,
-} from './payment-gateway.type'
+import type { CreatePaymentRequest, CreatePaymentResult } from './payment-gateway.type'
 
-export interface PaymentGateway {
+export interface PaymentCreator {
   createTransaction(
-    data: CreatePaymentGatewayRequest,
-    dbInstance?: Parameters<Parameters<(typeof db)['transaction']>[0]>[0],
-  ): Promise<CreatePaymentGatewayResponse>
+    data: CreatePaymentRequest,
+    tx?: Parameters<Parameters<(typeof db)['transaction']>[0]>[0],
+  ): Promise<CreatePaymentResult>
+}
 
+export interface PaymentGateway extends PaymentCreator {
   cancelTransaction(data: any): Promise<any>
 
   handleCallback(data: any): Promise<any>
 
-  calculateFee(amountReceived: number, feePercent: number, feeFixed: number): number
+  calculateFee(amountReceived: number, feeRate: number, fixedFee: number): number
 }

@@ -15,7 +15,7 @@ export class InquiryService {
   constructor(
     readonly _databaseService: DatabaseService,
     readonly _configService: ConfigService,
-    readonly _pgService: PaymentGatewayService,
+    readonly _paymentGatewayService: PaymentGatewayService,
     readonly _queueService: QueueService,
     readonly _offerService: OffersService,
     readonly _paymentService: PaymentsService,

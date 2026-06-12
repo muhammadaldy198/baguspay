@@ -15,6 +15,7 @@ import { DatabaseService } from 'src/core/database/database.service'
 import { QueueService } from 'src/core/queue/queue.service'
 import { StorageService } from 'src/core/storage/storage.service'
 import { BalanceService } from 'src/integrations/payment-gateway/balance/balance.service'
+import { calculatePaymentFee } from 'src/integrations/payment-gateway/payment-fee'
 import { PaymentGatewayService } from 'src/integrations/payment-gateway/payment-gateway.service'
 import { DepositsRepository } from './deposits.repository'
 import type { CreateDeposit, DepositHistoryQuery } from './dto/deposits.dto'
@@ -23,7 +24,7 @@ import type { CreateDeposit, DepositHistoryQuery } from './dto/deposits.dto'
 export class DepositsService {
   constructor(
     private readonly databaseService: DatabaseService,
-    private readonly pgService: PaymentGatewayService,
+    private readonly paymentGatewayService: PaymentGatewayService,
     private readonly queueService: QueueService,
     private readonly depositRepository: DepositsRepository,
     private readonly balanceService: BalanceService,
@@ -124,82 +125,86 @@ export class DepositsService {
   }
 
   async createDeposit(data: CreateDeposit, user: TUser) {
-    const payment = await this.depositRepository.findPaymentMethodById(data.payment_method_id)
+    const paymentMethod = await this.depositRepository.findPaymentMethodById(data.payment_method_id)
 
-    if (!payment) {
+    if (!paymentMethod) {
       throw new NotFoundException('Payment method not found or not available')
     }
 
-    if (payment.is_need_phone_number && !data.phone_number) {
+    if (paymentMethod.is_need_phone_number && !data.phone_number) {
       throw new BadRequestException('Phone number is required for this payment method')
     }
 
-    if (data.amount < payment.min_amount || data.amount >= payment.max_amount)
+    if (data.amount < paymentMethod.min_amount || data.amount >= paymentMethod.max_amount)
       throw new BadRequestException(
-        `Amount must be between ${payment.min_amount} and ${payment.max_amount}`,
+        `Amount must be between ${paymentMethod.min_amount} and ${paymentMethod.max_amount}`,
       )
 
     let totalFee = 0
 
-    if (payment.fee_type !== PaymentMethodFeeType.BUYER) {
-      totalFee = this.calculateFee(data.amount, payment.fee_percentage / 100, payment.fee_static)
-
-      const [, deposit] = await this.databaseService.db.transaction(async (tx) => {
-        const depositId = this.generateDepositId(user.id)
-
-        const pg = await this.pgService.createPayment({
-          user_id: user.id,
-          amount: data.amount,
-          provider_code: payment.provider_code,
-          provider_name: payment.provider_name,
-          customer_email: user.email,
-          customer_name: user.name,
-          customer_phone: data.phone_number ?? '',
-          order_items: [
-            {
-              name: `Deposit ${depositId}`,
-              price: data.amount + totalFee,
-              quantity: 1,
-              product_id: depositId,
-            },
-          ],
-          fee_type: payment.fee_type,
-          id: depositId,
-          expired_in: payment.expired_in,
-          fee_static: payment.fee_static,
-          fee_in_percent: payment.fee_percentage,
-        })
-
-        const deposit = await this.depositRepository.createDeposit(
-          {
-            ref_id: pg.ref_id,
-            deposit_id: depositId,
-            payment_method_id: payment.id,
-            status: DepositStatus.PENDING,
-            user_id: user.id,
-            amount_pay: pg.amount_total,
-            expired_at: pg.expired_at,
-            amount_received: pg.amount_received,
-            amount_fee: pg.total_fee,
-            email: pg.customer_email,
-            phone_number: data.phone_number,
-            pay_code: pg.pay_code,
-            pay_url: pg.pay_url,
-            qr_code: pg.qr_code,
-          },
-          tx,
-        )
-
-        return [pg, deposit]
-      })
-
-      const delay = new Date(deposit?.expired_at).getTime() - Date.now()
-      await this.queueService.addExpiredDepositJob(deposit.deposit_id, delay)
-
-      return SendResponse.success({
-        deposit_id: deposit.deposit_id,
-      })
+    if (paymentMethod.fee_type !== PaymentMethodFeeType.BUYER) {
+      totalFee = calculatePaymentFee(
+        data.amount,
+        paymentMethod.fee_percentage / 100,
+        paymentMethod.fee_static,
+      )
     }
+
+    const [, deposit] = await this.databaseService.db.transaction(async (tx) => {
+      const depositId = this.generateDepositId(user.id)
+
+      const paymentResult = await this.paymentGatewayService.createPayment({
+        user_id: user.id,
+        amount: data.amount,
+        provider_code: paymentMethod.provider_code,
+        provider_name: paymentMethod.provider_name,
+        customer_email: user.email,
+        customer_name: user.name,
+        customer_phone: data.phone_number ?? '',
+        order_items: [
+          {
+            name: `Deposit ${depositId}`,
+            price: data.amount + totalFee,
+            quantity: 1,
+            product_id: depositId,
+          },
+        ],
+        fee_type: paymentMethod.fee_type,
+        merchant_ref: depositId,
+        expires_in_seconds: paymentMethod.expired_in,
+        fee_static: paymentMethod.fee_static,
+        fee_percentage: paymentMethod.fee_percentage,
+      })
+
+      const deposit = await this.depositRepository.createDeposit(
+        {
+          ref_id: paymentResult.ref_id,
+          deposit_id: depositId,
+          payment_method_id: paymentMethod.id,
+          status: DepositStatus.PENDING,
+          user_id: user.id,
+          amount_pay: paymentResult.amount_total,
+          expired_at: paymentResult.expired_at,
+          amount_received: paymentResult.amount_received,
+          amount_fee: paymentResult.total_fee,
+          email: paymentResult.customer_email,
+          phone_number: data.phone_number,
+          pay_code: paymentResult.pay_code,
+          pay_url: paymentResult.pay_url,
+          qr_code: paymentResult.qr_code,
+        },
+        tx,
+      )
+
+      return [paymentResult, deposit]
+    })
+
+    const delay = new Date(deposit?.expired_at).getTime() - Date.now()
+    await this.queueService.addExpiredDepositJob(deposit.deposit_id, delay)
+
+    return SendResponse.success({
+      deposit_id: deposit.deposit_id,
+    })
   }
 
   async cancelDeposit(depositId: string, userId: string) {
@@ -239,15 +244,18 @@ export class DepositsService {
       await this.depositRepository.updateDepositStatus(depositId, depositStatus, tx)
 
       if (paymentStatus === PaymentStatus.SUCCESS) {
-        await this.balanceService.addBalance({
-          userId: deposit.user_id,
-          amount: deposit.amount_received,
-          name: 'DEPOSIT',
-          ref_type: BalanceMutationRefType.DEPOSIT,
-          ref_id: deposit.deposit_id,
-          type: BalanceMutationType.CREDIT,
-          notes: `Deposit successful: ${deposit.deposit_id}`,
-        })
+        await this.balanceService.addBalance(
+          {
+            userId: deposit.user_id,
+            amount: deposit.amount_received,
+            name: 'DEPOSIT',
+            ref_type: BalanceMutationRefType.DEPOSIT,
+            ref_id: deposit.deposit_id,
+            type: BalanceMutationType.CREDIT,
+            notes: `Deposit successful: ${deposit.deposit_id}`,
+          },
+          tx,
+        )
       }
     })
 
@@ -261,11 +269,5 @@ export class DepositsService {
     const randomPart = crypto.randomBytes(3).toString('hex').toUpperCase()
 
     return `${prefix}${userPart}${timestamp}${randomPart}`
-  }
-
-  private calculateFee(amountReceived: number, feePercent: number, feeFixed: number): number {
-    const total = amountReceived / (1 - feePercent) + feeFixed / (1 - feePercent)
-    const fee = total - amountReceived
-    return Math.ceil(fee)
   }
 }

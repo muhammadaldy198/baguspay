@@ -25,6 +25,7 @@ import { SignatureUtils } from 'src/common/utils/signature'
 import { DatabaseService } from 'src/core/database/database.service'
 import { QueueService } from 'src/core/queue/queue.service'
 import type { DigiflazzCekTagihanResponse } from 'src/integrations/h2h/digiflazz/digiflazz.type'
+import { calculatePaymentFee } from 'src/integrations/payment-gateway/payment-fee'
 import { PaymentGatewayService } from 'src/integrations/payment-gateway/payment-gateway.service'
 import { OffersRepository } from 'src/modules/offers/offers.repository'
 import { OffersService } from 'src/modules/offers/offers.service'
@@ -41,7 +42,7 @@ export class OrdersService {
   constructor(
     private readonly databaseService: DatabaseService,
     private readonly configService: ConfigService,
-    private readonly pgService: PaymentGatewayService,
+    private readonly paymentGatewayService: PaymentGatewayService,
     private readonly paymentAuthService: PaymentAuthService,
     private readonly queueService: QueueService,
     private readonly offerService: OffersService,
@@ -91,7 +92,7 @@ export class OrdersService {
     const groupedList = Array.from(groupedPaymentMethods.entries()).map(([name, items]) => ({
       name,
       items: items.map(({ payment_method_category, ...rest }) => {
-        const fee = this.calculateFee(product.price, rest.fee_percentage / 100, rest.fee_static)
+        const fee = calculatePaymentFee(product.price, rest.fee_percentage / 100, rest.fee_static)
 
         return {
           ...rest,
@@ -361,7 +362,7 @@ export class OrdersService {
     const groupedList = Array.from(groupedPaymentMethods.entries()).map(([name, items]) => ({
       name,
       items: items.map(({ payment_method_category, ...rest }) => {
-        const fee = this.calculateFee(
+        const fee = calculatePaymentFee(
           inquiryData.total_price,
           rest.fee_percentage / 100,
           rest.fee_static,
@@ -460,21 +461,21 @@ export class OrdersService {
     }
 
     const orderId = this.generateOrderId(user?.id)
-    const calculateFee = this.calculateFee(
+    const totalFee = calculatePaymentFee(
       inquiryData.total_price,
       paymentMethod.fee_percentage / 100,
       paymentMethod.fee_static,
     )
 
-    const { createPayment } = await this.databaseService.db.transaction(async (tx) => {
+    const { paymentResult } = await this.databaseService.db.transaction(async (tx) => {
       // Validate Voucher
-      const voucherAplied = inquiryData.offer_applied.find(
+      const appliedVoucher = inquiryData.offer_applied.find(
         (offer) => offer.type === OfferType.VOUCHER,
       )
 
-      if (inquiryData.offer_applied.length > 0 && voucherAplied) {
+      if (inquiryData.offer_applied.length > 0 && appliedVoucher) {
         await this.offerService.validateVoucher(
-          voucherAplied.id,
+          appliedVoucher.id,
           inquiryData.product_snapshot.product_id,
           user,
         )
@@ -482,23 +483,23 @@ export class OrdersService {
 
       // Validate Voucher
 
-      const createPayment = await this.pgService.createPayment({
+      const paymentResult = await this.paymentGatewayService.createPayment({
         user_id: user.id,
         amount: inquiryData.total_price,
         customer_email: user.email,
         customer_phone: inquiryData.customer_phone,
         customer_name: user.name,
-        expired_in: paymentMethod.expired_in,
+        expires_in_seconds: paymentMethod.expired_in,
         provider_code: paymentMethod.provider_code,
-        fee_in_percent: paymentMethod.fee_percentage,
+        fee_percentage: paymentMethod.fee_percentage,
         fee_static: paymentMethod.fee_static,
         fee_type: paymentMethod.fee_type,
         provider_name: paymentMethod.provider_name,
-        id: orderId,
+        merchant_ref: orderId,
         order_items: [
           {
             name: `${inquiryData.product_snapshot.category_name} - ${inquiryData.product_snapshot.name}`,
-            price: inquiryData.total_price + calculateFee,
+            price: inquiryData.total_price + totalFee,
             quantity: 1,
             product_id: inquiryData.product_snapshot.product_id,
             customer_input: inquiryData.customer_input_merged,
@@ -520,16 +521,16 @@ export class OrdersService {
           email: user.email,
 
           expired_in: paymentMethod.expired_in,
-          expired_at: createPayment.expired_at,
+          expired_at: paymentResult.expired_at,
 
           is_need_email: paymentMethod.is_need_email,
           is_need_phone_number: paymentMethod.is_need_phone_number,
           phone_number: data.payment_phone_number,
 
-          provider_ref_id: createPayment.ref_id,
-          qr_code: createPayment.qr_code,
-          pay_code: createPayment.pay_code,
-          pay_url: createPayment.pay_url,
+          provider_ref_id: paymentResult.ref_id,
+          qr_code: paymentResult.qr_code,
+          pay_code: paymentResult.pay_code,
+          pay_url: paymentResult.pay_url,
         },
         tx,
       )
@@ -541,16 +542,16 @@ export class OrdersService {
           product_snapshot_id: inquiryData.product_snapshot_id,
           user_id: user.id,
           price: inquiryData.price,
-          total_price: createPayment.amount_total,
+          total_price: paymentResult.amount_total,
           discount_price: inquiryData.discount_price,
           cost_price: inquiryData.product_snapshot.provider_price,
-          fee: createPayment.total_fee,
+          fee: paymentResult.total_fee,
           profit: inquiryData.profit,
           sn_number: '',
           order_id: orderId,
-          payment_status: createPayment.status,
+          payment_status: paymentResult.status,
           order_status:
-            createPayment.status === PaymentStatus.SUCCESS ? OrderStatus.PENDING : OrderStatus.NONE,
+            paymentResult.status === PaymentStatus.SUCCESS ? OrderStatus.PENDING : OrderStatus.NONE,
           customer_input: inquiryData.customer_input_merged,
           customer_phone: inquiryData.customer_phone,
           customer_email: inquiryData.customer_email,
@@ -560,9 +561,9 @@ export class OrdersService {
         tx,
       )
 
-      if (voucherAplied) {
-        await this.offerRepository.aplyOfferToOrder(voucherAplied.id, createOrder.id, user.id, tx)
-        await this.offerRepository.incrementOfferUsageCount(voucherAplied.id, tx)
+      if (appliedVoucher) {
+        await this.offerRepository.aplyOfferToOrder(appliedVoucher.id, createOrder.id, user.id, tx)
+        await this.offerRepository.incrementOfferUsageCount(appliedVoucher.id, tx)
       }
 
       await this.productRepository.decreaseProductStockByProductId(
@@ -573,16 +574,16 @@ export class OrdersService {
 
       await this.orderRepository.setInquiryStatus(InquiryStatus.USED, inquiryData.id, tx)
 
-      return { createPayment, voucherAplied }
+      return { paymentResult, appliedVoucher }
     })
 
     // Add queue jobs AFTER transaction commits to ensure order exists in database
-    if (createPayment.status === PaymentStatus.SUCCESS) {
+    if (paymentResult.status === PaymentStatus.SUCCESS) {
       await this.queueService.addOrderJob(orderId)
     }
 
-    if (createPayment.status === PaymentStatus.PENDING) {
-      const delay = new Date(createPayment.expired_at).getTime() - Date.now()
+    if (paymentResult.status === PaymentStatus.PENDING) {
+      const delay = new Date(paymentResult.expired_at).getTime() - Date.now()
       await this.queueService.addExpiredOrderJob(orderId, delay)
     }
 
@@ -590,7 +591,7 @@ export class OrdersService {
       order_id: orderId,
       product_name: `${inquiryData.product_snapshot.category_name} - ${inquiryData.product_snapshot.name}`,
       payment_method: `${paymentMethod.type} - ${paymentMethod.name}`,
-      amount: createPayment.amount_total,
+      amount: paymentResult.amount_total,
     })
   }
 
@@ -776,12 +777,6 @@ export class OrdersService {
     const randomPart = crypto.randomBytes(3).toString('hex').toUpperCase()
 
     return `${prefix}${userPart}${timestamp}${randomPart}`
-  }
-
-  private calculateFee(amountReceived: number, feePercent: number, feeFixed: number): number {
-    const total = amountReceived / (1 - feePercent) + feeFixed / (1 - feePercent)
-    const fee = total - amountReceived
-    return Math.ceil(fee)
   }
 
   private getMergedInputFields(
