@@ -58,18 +58,18 @@ export class TripayService implements PaymentGateway {
       })
 
       return {
-        amount: response.data.amount,
+        base_amount: response.data.amount,
         customer_email: response.data.customer_email,
         customer_name: response.data.customer_name,
         customer_phone: response.data.customer_phone,
-        amount_received: response.data.amount_received,
-        amount_total: totalAmount,
+        settlement_amount: response.data.amount_received,
+        pay_amount: totalAmount,
         fee_type: data.fee_type,
         order_items: response.data.order_items,
         provider_code: data.provider_code,
         provider_name: data.provider_name,
         ref_id: response.data.reference,
-        total_fee: response.data.total_fee,
+        fee_amount: response.data.total_fee,
         callback_url: response.data.callback_url,
         checkout_url: response.data.checkout_url,
         return_url: response.data.return_url,

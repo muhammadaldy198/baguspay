@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common'
+import { AuthCommonModule } from 'src/common/auth/auth-common.module'
 import { DatabaseModule } from 'src/core/database/database.module'
 import { QueueModule } from 'src/core/queue/queue.module'
 import { BalanceModule } from 'src/integrations/payment-gateway/balance/balance.module'
@@ -8,7 +9,7 @@ import { DepositsRepository } from './deposits.repository'
 import { DepositsService } from './deposits.service'
 
 @Module({
-  imports: [DatabaseModule, PaymentGatewayModule, QueueModule, BalanceModule],
+  imports: [AuthCommonModule, DatabaseModule, PaymentGatewayModule, QueueModule, BalanceModule],
   exports: [DepositsService],
   controllers: [DepositsController],
   providers: [DepositsService, DepositsRepository],

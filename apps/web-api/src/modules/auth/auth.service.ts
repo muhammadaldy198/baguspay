@@ -4,6 +4,7 @@ import { JwtService } from '@nestjs/jwt'
 import { LoginIsFrom, OAuthProvider, UserRegisteredType, UserRole } from '@repo/db/types'
 import axios from 'axios'
 import { compare, hash } from 'bcrypt'
+import { type DeviceInfo, getDeviceInfo, isSameDevice } from 'src/common/utils/device-fingerprint'
 import { AuthRepository } from './auth.repository'
 import type {
   PasskeyLoginOptionsDto,
@@ -12,7 +13,6 @@ import type {
 } from './dto/auth.dto'
 import { GoogleLoginDto, LoginDto, RegisterDto } from './dto/auth.dto'
 import { PasskeyService } from './services/passkey.service'
-import { type DeviceInfo, getDeviceInfo, isSameDevice } from './utils/device-fingerprint'
 
 interface LoginHeaders {
   deviceId: string

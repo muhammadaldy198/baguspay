@@ -542,10 +542,10 @@ export class OrdersService {
           product_snapshot_id: inquiryData.product_snapshot_id,
           user_id: user.id,
           price: inquiryData.price,
-          total_price: paymentResult.amount_total,
+          total_price: paymentResult.pay_amount,
           discount_price: inquiryData.discount_price,
           cost_price: inquiryData.product_snapshot.provider_price,
-          fee: paymentResult.total_fee,
+          fee: paymentResult.fee_amount,
           profit: inquiryData.profit,
           sn_number: '',
           order_id: orderId,
@@ -591,7 +591,7 @@ export class OrdersService {
       order_id: orderId,
       product_name: `${inquiryData.product_snapshot.category_name} - ${inquiryData.product_snapshot.name}`,
       payment_method: `${paymentMethod.type} - ${paymentMethod.name}`,
-      amount: paymentResult.amount_total,
+      amount: paymentResult.pay_amount,
     })
   }
 

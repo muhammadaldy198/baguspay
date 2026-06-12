@@ -1,7 +1,12 @@
 import { createParamDecorator, type ExecutionContext } from '@nestjs/common'
 import type { Request } from 'express'
+import type { TUser } from 'src/common/types/meta.type'
 
-export const User = createParamDecorator((_data: unknown, ctx: ExecutionContext) => {
+interface RequestWithUser extends Request {
+  user?: TUser | null
+}
+
+export const User = createParamDecorator((_data: unknown, ctx: ExecutionContext): TUser | null => {
   const request: Request = ctx.switchToHttp().getRequest()
-  return request.user
+  return (request as RequestWithUser).user || null
 })

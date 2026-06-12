@@ -33,10 +33,10 @@ export class BalanceService implements PaymentGateway {
     )
 
     return {
-      amount: data.amount,
-      amount_received: data.amount,
+      base_amount: data.amount,
+      settlement_amount: data.amount,
       fee_type: data.fee_type,
-      amount_total: data.amount,
+      pay_amount: data.amount,
       customer_email: data.customer_email,
       customer_name: data.customer_name,
       expired_at: new Date(Date.now() + 60 * 60 * 1000),
@@ -45,7 +45,7 @@ export class BalanceService implements PaymentGateway {
       provider_code: data.provider_code,
       provider_name: data.provider_name,
       ref_id: data.merchant_ref,
-      total_fee: 0,
+      fee_amount: 0,
       customer_phone: data.customer_phone,
       pay_url: null,
       pay_code: null,

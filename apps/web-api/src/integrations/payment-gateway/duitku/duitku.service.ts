@@ -66,23 +66,23 @@ export class DuitkuService implements PaymentGateway {
       })
 
       // Data Setelah Revisi Create Payment
-      let r_fee = 0
-      let r_amount_received = 0
-      const r_amount_total = response.amount
+      let feeAmount = 0
+      let settlementAmount = 0
+      const payAmount = response.amount
 
       if (data.fee_type === PaymentMethodFeeType.BUYER) {
-        r_fee = response.amount - data.amount
-        r_amount_received = response.amount - r_fee
+        feeAmount = response.amount - data.amount
+        settlementAmount = response.amount - feeAmount
       } else {
-        r_fee = fee
-        r_amount_received = response.amount - r_fee
+        feeAmount = fee
+        settlementAmount = response.amount - feeAmount
       }
 
       return {
-        amount: data.amount,
-        amount_received: r_amount_received,
+        base_amount: data.amount,
+        settlement_amount: settlementAmount,
         fee_type: data.fee_type,
-        amount_total: r_amount_total,
+        pay_amount: payAmount,
         customer_email: data.customer_email,
         customer_name: data.customer_name,
         expired_at: expiredAt,
@@ -91,7 +91,7 @@ export class DuitkuService implements PaymentGateway {
         provider_code: data.provider_code,
         provider_name: data.provider_name,
         ref_id: response.reference,
-        total_fee: r_fee,
+        fee_amount: feeAmount,
         customer_phone: data.customer_phone,
         pay_url: response.paymentUrl,
         pay_code: response.vaNumber,

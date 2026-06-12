@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common'
+import { AuthCommonModule } from 'src/common/auth/auth-common.module'
 import { DatabaseModule } from 'src/core/database/database.module'
 import { PaymentAuthService } from './payment-auth.service'
 import { PaymentsController } from './payments.controller'
@@ -7,7 +8,7 @@ import { PaymentsService } from './payments.service'
 import { PinService } from './pin.service'
 
 @Module({
-  imports: [DatabaseModule],
+  imports: [AuthCommonModule, DatabaseModule],
   exports: [PaymentsService, PinService, PaymentAuthService],
   controllers: [PaymentsController],
   providers: [PaymentsService, PaymentsRepository, PinService, PaymentAuthService],

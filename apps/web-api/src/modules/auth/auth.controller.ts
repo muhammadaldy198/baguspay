@@ -1,8 +1,8 @@
 import { BadRequestException, Body, Controller, Headers, Ip, Post, UseGuards } from '@nestjs/common'
 import { ApiHeader, ApiOperation } from '@nestjs/swagger'
+import { JwtAuthGuard } from 'src/common/auth/guards/jwt.guard'
 import { User } from 'src/common/decorators/user.decorator'
 import type { TUser } from 'src/common/types/meta.type'
-import { JwtAuthGuard } from 'src/modules/auth/guards/jwt.guard'
 import { AuthService } from './auth.service'
 import {
   GoogleLoginDto,

@@ -1,7 +1,7 @@
 import { Body, Controller, Post, UseGuards } from '@nestjs/common'
+import { TransactionGuard } from 'src/common/auth/guards/transaction.guard'
 import { User } from 'src/common/decorators/user.decorator'
 import type { TUser } from 'src/common/types/meta.type'
-import { TransactionGuard } from 'src/modules/auth/guards/transaction.guard'
 import { RedeemVoucherDto } from './dto/offers.dto'
 import { OffersService } from './offers.service'
 

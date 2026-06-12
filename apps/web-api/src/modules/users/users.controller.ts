@@ -10,10 +10,10 @@ import {
 } from '@nestjs/common'
 
 import { ApiSecurity } from '@nestjs/swagger'
+import { JwtAuthGuard } from 'src/common/auth/guards/jwt.guard'
+import { TransactionGuard } from 'src/common/auth/guards/transaction.guard'
 import { User } from 'src/common/decorators/user.decorator'
 import type { TUser } from 'src/common/types/meta.type'
-import { JwtAuthGuard } from 'src/modules/auth/guards/jwt.guard'
-import { TransactionGuard } from 'src/modules/auth/guards/transaction.guard'
 import type { GetBalanceMutationHistoryQuery } from './dto/users.dto'
 import { UsersService } from './users.service'
 

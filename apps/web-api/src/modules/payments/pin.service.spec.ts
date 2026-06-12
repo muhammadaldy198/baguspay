@@ -20,7 +20,7 @@ type MockDb = {
   update: jest.Mock<any, any>
 }
 
-function createMockDb(user: any): { db: MockDb; lastUpdatePayload: any } {
+function createMockDb(user: any): { db: MockDb; getLastUpdatePayload: () => any } {
   let lastUpdatePayload: any = null
   const makeUpdateChain = (): UpdateChain => ({
     set: jest.fn((payload) => {
@@ -41,7 +41,7 @@ function createMockDb(user: any): { db: MockDb; lastUpdatePayload: any } {
     update: jest.fn().mockImplementation(() => makeUpdateChain()),
   }
 
-  return { db, lastUpdatePayload }
+  return { db, getLastUpdatePayload: () => lastUpdatePayload }
 }
 
 describe('PinService', () => {
@@ -63,7 +63,7 @@ describe('PinService', () => {
   })
 
   it('resets attempts on successful verification', async () => {
-    const { db, lastUpdatePayload } = createMockDb({
+    const { db, getLastUpdatePayload } = createMockDb({
       id: userId,
       pin_hash: 'hashed-123456',
       pin_attempts: 2,
@@ -73,13 +73,13 @@ describe('PinService', () => {
 
     await service.verifyPin(userId, '123456')
 
-    expect(lastUpdatePayload).toEqual(
+    expect(getLastUpdatePayload()).toEqual(
       expect.objectContaining({ pin_attempts: 0, pin_locked_until: null }),
     )
   })
 
   it('locks after max failed attempts', async () => {
-    const { db, lastUpdatePayload } = createMockDb({
+    const { db, getLastUpdatePayload } = createMockDb({
       id: userId,
       pin_hash: 'hashed-000000',
       pin_attempts: 2,
@@ -89,18 +89,18 @@ describe('PinService', () => {
 
     await expect(service.verifyPin(userId, '123456')).rejects.toBeInstanceOf(BadRequestException)
 
-    expect(lastUpdatePayload).toEqual(
+    expect(getLastUpdatePayload()).toEqual(
       expect.objectContaining({ pin_attempts: 0, pin_locked_until: expect.any(Date) }),
     )
   })
 
   it('hashes and stores PIN on setPin', async () => {
-    const { db, lastUpdatePayload } = createMockDb({ id: userId })
+    const { db, getLastUpdatePayload } = createMockDb({ id: userId })
     const service = new PinService({ db } as any)
 
     await service.setPin(userId, '123456')
 
-    expect(lastUpdatePayload).toEqual(
+    expect(getLastUpdatePayload()).toEqual(
       expect.objectContaining({
         pin_hash: 'hashed-123456',
         pin_attempts: 0,
@@ -110,7 +110,7 @@ describe('PinService', () => {
   })
 
   it('changes PIN after verifying current', async () => {
-    const { db, lastUpdatePayload } = createMockDb({
+    const { db, getLastUpdatePayload } = createMockDb({
       id: userId,
       pin_hash: 'hashed-111111',
       pin_attempts: 0,
@@ -120,7 +120,7 @@ describe('PinService', () => {
 
     await service.changePin(userId, '111111', '222222')
 
-    expect(lastUpdatePayload).toEqual(
+    expect(getLastUpdatePayload()).toEqual(
       expect.objectContaining({
         pin_hash: 'hashed-222222',
         pin_attempts: 0,

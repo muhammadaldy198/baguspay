@@ -31,10 +31,10 @@ export interface CreatePaymentResult {
   ref_id: string
   provider_name: PaymentMethodProvider
   provider_code: string
-  amount: number
-  amount_received: number
-  amount_total: number
-  total_fee: number
+  base_amount: number
+  settlement_amount: number
+  pay_amount: number
+  fee_amount: number
   fee_type: PaymentMethodFeeType
   customer_name: string
   customer_email: string
