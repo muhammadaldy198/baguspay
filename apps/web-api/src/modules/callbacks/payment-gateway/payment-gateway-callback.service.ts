@@ -5,16 +5,16 @@ import { DuitkuService } from 'src/integrations/payment-gateway/duitku/duitku.se
 import type { DuitkuCallbackPayload } from 'src/integrations/payment-gateway/duitku/duitku.type'
 import { TripayService } from 'src/integrations/payment-gateway/tripay/tripay.service'
 import type { TripayCallbackData } from 'src/integrations/payment-gateway/tripay/tripay.type'
-import { DepositService } from 'src/modules/deposits/deposit.service'
-import { OrderService } from 'src/modules/orders/services/order.service'
+import { DepositsService } from 'src/modules/deposits/deposits.service'
+import { OrdersService } from 'src/modules/orders/services/orders.service'
 
 @Injectable()
 export class PaymentGatewayCallbackService {
   constructor(
     private readonly tripayService: TripayService,
     private readonly duitkuService: DuitkuService,
-    private readonly orderService: OrderService,
-    private readonly depositService: DepositService,
+    private readonly orderService: OrdersService,
+    private readonly depositService: DepositsService,
   ) {}
 
   async handleTripay(payload: TripayCallbackData, signature: string) {

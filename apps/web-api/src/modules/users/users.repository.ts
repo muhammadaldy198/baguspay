@@ -3,7 +3,7 @@ import { and, count, desc, eq, gte, type InferInsertModel, lte, type SQL, sql, s
 import { type BalanceMutationType, DepositStatus, OrderStatus, tb } from '@repo/db/types'
 import type { DBInstance } from 'src/common/types/db-instance'
 import { DatabaseService } from 'src/core/database/database.service'
-import type { GetBalanceMutationHistoryQuery } from './dto/user.dto'
+import type { GetBalanceMutationHistoryQuery } from './dto/users.dto'
 
 export interface DateRange {
   start: Date
@@ -11,7 +11,7 @@ export interface DateRange {
 }
 
 @Injectable()
-export class UserRepository {
+export class UsersRepository {
   constructor(private readonly databaseService: DatabaseService) {}
 
   async updateUser(

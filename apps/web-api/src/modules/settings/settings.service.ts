@@ -4,7 +4,7 @@ import bcrypt from 'bcrypt'
 import type { TUser } from 'src/common/types/meta.type'
 import { SendResponse } from 'src/common/utils/response'
 import { DatabaseService } from 'src/core/database/database.service'
-import { UserRepository } from 'src/modules/users/user.repository'
+import { UsersRepository } from 'src/modules/users/users.repository'
 import { ChangeEmailDto } from './dto/change-email.dto'
 import { ChangePasswordDto } from './dto/change-password.dto'
 import { changePhoneNumberDto } from './dto/change-phone.dto'
@@ -14,7 +14,7 @@ import { ChangeProfileDto } from './dto/change-profile.dto'
 export class SettingsService {
   constructor(
     readonly _databaseService: DatabaseService,
-    private readonly userRepository: UserRepository,
+    private readonly userRepository: UsersRepository,
   ) {}
 
   async changePassword(data: ChangePasswordDto, _user: TUser) {

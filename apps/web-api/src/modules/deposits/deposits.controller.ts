@@ -3,14 +3,14 @@ import { ApiParam, ApiSecurity } from '@nestjs/swagger'
 import { User } from 'src/common/decorators/user.decorator'
 import type { TUser } from 'src/common/types/meta.type'
 import { JwtAuthGuard } from 'src/modules/auth/guards/jwt.guard'
-import { DepositService } from './deposit.service'
-import { CreateDeposit, DepositHistoryQuery, DepositParams } from './dto/deposit.dto'
+import { DepositsService } from './deposits.service'
+import { CreateDeposit, DepositHistoryQuery, DepositParams } from './dto/deposits.dto'
 
 @ApiSecurity('access-token')
 @UseGuards(JwtAuthGuard)
 @Controller('deposit')
-export class DepositController {
-  constructor(private readonly depositService: DepositService) {}
+export class DepositsController {
+  constructor(private readonly depositService: DepositsService) {}
 
   @Get('/payment-methods')
   async getDepositMethods() {

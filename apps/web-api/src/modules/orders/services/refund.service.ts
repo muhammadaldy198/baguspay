@@ -4,7 +4,7 @@ import { DatabaseService } from 'src/core/database/database.service'
 import { BalanceService } from 'src/integrations/payment-gateway/balance/balance.service'
 import { OffersRepository } from 'src/modules/offers/offers.repository'
 import { ProductRepository } from 'src/modules/products/product.repository'
-import { OrderRepository } from '../order.repository'
+import { OrdersRepository } from '../orders.repository'
 
 @Injectable()
 export class RefundService {
@@ -15,7 +15,7 @@ export class RefundService {
     private readonly productRepository: ProductRepository,
     private readonly offerRepository: OffersRepository,
     private readonly databaseService: DatabaseService,
-    private readonly orderRepository: OrderRepository,
+    private readonly orderRepository: OrdersRepository,
   ) {}
 
   async handleFailedOrder(order: RefundableOrder) {

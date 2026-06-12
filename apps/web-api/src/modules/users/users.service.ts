@@ -5,8 +5,8 @@ import type { MetaPaginated, TUser } from 'src/common/types/meta.type'
 import { SendResponse } from 'src/common/utils/response'
 import { StorageService } from 'src/core/storage/storage.service'
 import { getDeviceInfo, isBagusPayMobileApp } from 'src/modules/auth/utils/device-fingerprint'
-import type { GetBalanceMutationHistoryQuery } from './dto/user.dto'
-import { DateRange, UserRepository } from './user.repository'
+import type { GetBalanceMutationHistoryQuery } from './dto/users.dto'
+import { DateRange, UsersRepository } from './users.repository'
 
 /**
  * Get human-readable client type label
@@ -25,10 +25,10 @@ function getClientTypeLabel(isFrom: LoginIsFrom | null): string {
 }
 
 @Injectable()
-export class UserService {
+export class UsersService {
   constructor(
     private readonly storageService: StorageService,
-    private readonly userRepository: UserRepository,
+    private readonly userRepository: UsersRepository,
   ) {}
 
   private getCurrentMonthRange(): DateRange {

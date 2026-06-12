@@ -20,10 +20,10 @@ import {
 } from '@repo/db/types'
 import type { DBInstance } from 'src/common/types/db-instance'
 import { DatabaseService } from 'src/core/database/database.service'
-import type { DepositHistoryQuery } from './dto/deposit.dto'
+import type { DepositHistoryQuery } from './dto/deposits.dto'
 
 @Injectable()
-export class DepositRepository {
+export class DepositsRepository {
   constructor(private readonly databaseService: DatabaseService) {}
 
   async findDepositById(depositId: string, tx?: DBInstance) {

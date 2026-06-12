@@ -5,9 +5,9 @@ import { DigiflazzModule } from 'src/integrations/h2h/digiflazz/digiflazz.module
 import { BalanceModule } from 'src/integrations/payment-gateway/balance/balance.module'
 import { DuitkuModule } from 'src/integrations/payment-gateway/duitku/duitku.module'
 import { TripayModule } from 'src/integrations/payment-gateway/tripay/tripay.module'
-import { DepositModule } from 'src/modules/deposits/deposit.module'
+import { DepositsModule } from 'src/modules/deposits/deposits.module'
 import { OffersModule } from 'src/modules/offers/offers.module'
-import { OrderModule } from 'src/modules/orders/order.module'
+import { OrdersModule } from 'src/modules/orders/orders.module'
 import { ProductsModule } from 'src/modules/products/products.module'
 import { DigiflazzH2HCallbackService } from './h2h/digiflazz-h2h-callback.service'
 import { H2HCallbackController } from './h2h/h2h-callback.controller'
@@ -23,10 +23,10 @@ import { PaymentGatewayCallbackService } from './payment-gateway/payment-gateway
     DigiflazzModule,
     QueueModule,
     DuitkuModule,
-    OrderModule,
+    OrdersModule,
     ProductsModule,
     OffersModule,
-    DepositModule,
+    DepositsModule,
   ],
   controllers: [PaymentGatewayCallbackController, H2HCallbackController],
   providers: [PaymentGatewayCallbackService, DigiflazzH2HCallbackService, H2HCallbackService],

@@ -5,8 +5,8 @@ import type {
   DigiflazzPostpaidCallbackData,
   DigiflazzPrepaidCallbackData,
 } from 'src/integrations/h2h/digiflazz/digiflazz.type'
-import { DepositService } from 'src/modules/deposits/deposit.service'
-import { OrderRepository } from 'src/modules/orders/order.repository'
+import { DepositsService } from 'src/modules/deposits/deposits.service'
+import { OrdersRepository } from 'src/modules/orders/orders.repository'
 import { RefundService } from 'src/modules/orders/services/refund.service'
 
 @Injectable()
@@ -14,8 +14,8 @@ export class DigiflazzH2HCallbackService {
   private logger = new Logger(DigiflazzH2HCallbackService.name)
 
   constructor(
-    private readonly orderRepository: OrderRepository,
-    readonly _depositService: DepositService,
+    private readonly orderRepository: OrdersRepository,
+    readonly _depositService: DepositsService,
     private readonly digiflazzService: DigiflazzService,
     private readonly refundService: RefundService,
   ) {}

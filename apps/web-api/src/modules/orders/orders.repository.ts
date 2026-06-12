@@ -21,10 +21,10 @@ import {
 } from '@repo/db/types'
 import type { DBInstance } from 'src/common/types/db-instance'
 import { DatabaseService } from 'src/core/database/database.service'
-import { GetOrderHistoryQueryDto } from './dto/order.dto'
+import { GetOrderHistoryQueryDto } from './dto/orders.dto'
 
 @Injectable()
-export class OrderRepository {
+export class OrdersRepository {
   constructor(private readonly databaseService: DatabaseService) {}
 
   async findProductByProductIdForInquiry(productId: string) {

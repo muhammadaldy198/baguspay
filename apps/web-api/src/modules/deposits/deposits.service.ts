@@ -16,16 +16,16 @@ import { QueueService } from 'src/core/queue/queue.service'
 import { StorageService } from 'src/core/storage/storage.service'
 import { BalanceService } from 'src/integrations/payment-gateway/balance/balance.service'
 import { PaymentGatewayService } from 'src/integrations/payment-gateway/payment-gateway.service'
-import { DepositRepository } from './deposit.repository'
-import type { CreateDeposit, DepositHistoryQuery } from './dto/deposit.dto'
+import { DepositsRepository } from './deposits.repository'
+import type { CreateDeposit, DepositHistoryQuery } from './dto/deposits.dto'
 
 @Injectable()
-export class DepositService {
+export class DepositsService {
   constructor(
     private readonly databaseService: DatabaseService,
     private readonly pgService: PaymentGatewayService,
     private readonly queueService: QueueService,
-    private readonly depositRepository: DepositRepository,
+    private readonly depositRepository: DepositsRepository,
     private readonly balanceService: BalanceService,
     private readonly storageService: StorageService,
   ) {}

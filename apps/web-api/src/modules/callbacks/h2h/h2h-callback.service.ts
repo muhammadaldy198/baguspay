@@ -4,7 +4,7 @@ import type {
   DigiflazzPostpaidCallbackData,
   DigiflazzPrepaidCallbackData,
 } from 'src/integrations/h2h/digiflazz/digiflazz.type'
-import { OrderRepository } from 'src/modules/orders/order.repository'
+import { OrdersRepository } from 'src/modules/orders/orders.repository'
 import { DigiflazzH2HCallbackService } from './digiflazz-h2h-callback.service'
 
 @Injectable()
@@ -13,7 +13,7 @@ export class H2HCallbackService {
 
   constructor(
     private readonly digiflazzH2HCallbackService: DigiflazzH2HCallbackService,
-    private readonly orderRepository: OrderRepository,
+    private readonly orderRepository: OrdersRepository,
   ) {}
 
   async handleDigiflazz(

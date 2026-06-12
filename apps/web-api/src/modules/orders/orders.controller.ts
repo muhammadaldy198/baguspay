@@ -18,13 +18,13 @@ import { CurrentUser } from 'src/modules/auth/decorators/current-user.decorator'
 import { JwtAuthGuard } from 'src/modules/auth/guards/jwt.guard'
 import { TransactionGuard } from 'src/modules/auth/guards/transaction.guard'
 import { InquiryUniversalDto } from './dto/inquiry.universal.dto'
-import { CheckoutDto, GetOrderHistoryQueryDto, OrderIdDto } from './dto/order.dto'
-import { OrderService } from './services/order.service'
+import { CheckoutDto, GetOrderHistoryQueryDto, OrderIdDto } from './dto/orders.dto'
+import { OrdersService } from './services/orders.service'
 
 @ApiSecurity('access-token')
 @Controller('order')
-export class OrderController {
-  constructor(private readonly orderService: OrderService) {}
+export class OrdersController {
+  constructor(private readonly orderService: OrdersService) {}
 
   @UseGuards(TransactionGuard)
   @Get('get-product-price/:productId')

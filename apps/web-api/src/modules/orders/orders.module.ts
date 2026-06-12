@@ -8,12 +8,12 @@ import { AuthModule } from 'src/modules/auth/auth.module'
 import { OffersModule } from 'src/modules/offers/offers.module'
 import { PaymentsModule } from 'src/modules/payments/payments.module'
 import { ProductsModule } from 'src/modules/products/products.module'
-import { OrderController } from './order.controller'
-import { OrderRepository } from './order.repository'
+import { OrdersController } from './orders.controller'
+import { OrdersRepository } from './orders.repository'
 import { DigiflazzOrderProcessor } from './processor/digiflazz.processor'
-import { OrderProcessor } from './processor/order.processor'
+import { OrdersProcessor } from './processor/orders.processor'
 import { InquiryService } from './services/inquiry.service'
-import { OrderService } from './services/order.service'
+import { OrdersService } from './services/orders.service'
 import { RefundService } from './services/refund.service'
 
 @Module({
@@ -28,15 +28,15 @@ import { RefundService } from './services/refund.service'
     ProductsModule,
     BalanceModule,
   ],
-  exports: [OrderProcessor, OrderRepository, OrderService, RefundService],
-  controllers: [OrderController],
+  exports: [OrdersProcessor, OrdersRepository, OrdersService, RefundService],
+  controllers: [OrdersController],
   providers: [
-    OrderRepository,
-    OrderService,
+    OrdersRepository,
+    OrdersService,
     InquiryService,
     RefundService,
-    OrderProcessor,
+    OrdersProcessor,
     DigiflazzOrderProcessor,
   ],
 })
-export class OrderModule {}
+export class OrdersModule {}

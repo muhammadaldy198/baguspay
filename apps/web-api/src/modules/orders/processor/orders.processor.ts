@@ -3,15 +3,15 @@ import { PaymentStatus, ProductProvider } from '@repo/db/types'
 import { DatabaseService } from 'src/core/database/database.service'
 import { OffersRepository } from 'src/modules/offers/offers.repository'
 import { ProductRepository } from 'src/modules/products/product.repository'
-import { OrderRepository } from '../order.repository'
+import { OrdersRepository } from '../orders.repository'
 import { DigiflazzOrderProcessor } from './digiflazz.processor'
 
 @Injectable()
-export class OrderProcessor {
-  private logger = new Logger(OrderProcessor.name)
+export class OrdersProcessor {
+  private logger = new Logger(OrdersProcessor.name)
 
   constructor(
-    private readonly orderRepository: OrderRepository,
+    private readonly orderRepository: OrdersRepository,
     private readonly digiflazzProcessor: DigiflazzOrderProcessor,
     private readonly databaseService: DatabaseService,
     private readonly offerRepository: OffersRepository,

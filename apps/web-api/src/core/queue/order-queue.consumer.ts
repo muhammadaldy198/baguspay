@@ -1,13 +1,13 @@
 import { Processor, WorkerHost } from '@nestjs/bullmq'
 import { Logger } from '@nestjs/common'
 import type { Job } from 'bullmq'
-import { OrderProcessor } from 'src/modules/orders/processor/order.processor'
+import { OrdersProcessor } from 'src/modules/orders/processor/orders.processor'
 
 @Processor('orders-queue')
 export class OrderQueueConsumer extends WorkerHost {
   private logger = new Logger(OrderQueueConsumer.name)
 
-  constructor(private readonly orderProcessor: OrderProcessor) {
+  constructor(private readonly orderProcessor: OrdersProcessor) {
     super()
   }
 

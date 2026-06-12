@@ -32,12 +32,12 @@ import { PaymentAuthService } from 'src/modules/payments/payment-auth.service'
 import { PaymentAuthType } from 'src/modules/payments/payment-auth.type'
 import { ProductRepository } from 'src/modules/products/product.repository'
 import { InquiryUniversalDto } from '../dto/inquiry.universal.dto'
-import { CheckoutDto, GetOrderHistoryQueryDto, OrderIdDto } from '../dto/order.dto'
-import { OrderRepository } from '../order.repository'
+import { CheckoutDto, GetOrderHistoryQueryDto, OrderIdDto } from '../dto/orders.dto'
+import { OrdersRepository } from '../orders.repository'
 import { InquiryService } from './inquiry.service'
 
 @Injectable()
-export class OrderService {
+export class OrdersService {
   constructor(
     private readonly databaseService: DatabaseService,
     private readonly configService: ConfigService,
@@ -47,7 +47,7 @@ export class OrderService {
     private readonly offerService: OffersService,
     private readonly offerRepository: OffersRepository,
     private readonly inquiryService: InquiryService,
-    private readonly orderRepository: OrderRepository,
+    private readonly orderRepository: OrdersRepository,
     private readonly productRepository: ProductRepository,
   ) {}
 

@@ -3,14 +3,14 @@ import { BullBoardModule } from '@bull-board/nestjs'
 import { BullModule } from '@nestjs/bullmq'
 import { forwardRef, Module } from '@nestjs/common'
 import { DatabaseModule } from 'src/core/database/database.module'
-import { OrderModule } from 'src/modules/orders/order.module'
+import { OrdersModule } from 'src/modules/orders/orders.module'
 import { DepositQueueConsumer } from './deposit-queue.consumer'
 import { OrderQueueConsumer } from './order-queue.consumer'
 import { QueueService } from './queue.service'
 
 @Module({
   imports: [
-    forwardRef(() => OrderModule),
+    forwardRef(() => OrdersModule),
     DatabaseModule,
     BullModule.registerQueue({
       name: 'deposits-queue',

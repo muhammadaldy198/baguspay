@@ -14,13 +14,13 @@ import { User } from 'src/common/decorators/user.decorator'
 import type { TUser } from 'src/common/types/meta.type'
 import { JwtAuthGuard } from 'src/modules/auth/guards/jwt.guard'
 import { TransactionGuard } from 'src/modules/auth/guards/transaction.guard'
-import type { GetBalanceMutationHistoryQuery } from './dto/user.dto'
-import { UserService } from './user.service'
+import type { GetBalanceMutationHistoryQuery } from './dto/users.dto'
+import { UsersService } from './users.service'
 
 @ApiSecurity('access-token')
 @Controller('user')
-export class UserController {
-  constructor(private readonly userService: UserService) {}
+export class UsersController {
+  constructor(private readonly userService: UsersService) {}
 
   @UseGuards(TransactionGuard)
   @Get('/me')
