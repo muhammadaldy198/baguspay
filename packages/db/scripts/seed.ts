@@ -1,9 +1,13 @@
-import { db } from '@/database'
+import { createDatabaseFromEnv } from '@/database'
 import { productCategorySeeds } from './seeds/product-category'
 import { userSeed } from './seeds/user'
 ;(async () => {
-  const _db = db
+  const database = createDatabaseFromEnv()
 
-  await userSeed()
-  await productCategorySeeds(_db)
+  try {
+    await userSeed(database.db)
+    await productCategorySeeds(database.db)
+  } finally {
+    await database.close()
+  }
 })()

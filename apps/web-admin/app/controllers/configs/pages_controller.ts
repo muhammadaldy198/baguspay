@@ -1,7 +1,8 @@
 import type { HttpContext } from '@adonisjs/core/http'
-import { and, db, desc, eq } from '@repo/db'
+import { and, desc, eq } from '@repo/db'
 import { ArticleType, tb } from '@repo/db/types'
 import vine from '@vinejs/vine'
+import { db } from '#database/db'
 import { createPageValidator, updatePageValidator } from '#validators/pages'
 
 export default class PagesController {

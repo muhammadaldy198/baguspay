@@ -1,8 +1,9 @@
 import type { HttpContext } from '@adonisjs/core/http'
-import { and, asc, count, db, desc, eq, type InferSelectModel, ilike, inArray } from '@repo/db'
+import { and, asc, count, desc, eq, type InferSelectModel, ilike, inArray } from '@repo/db'
 import { ProductBillingType, ProductCategoryType, tb } from '@repo/db/types'
 import slugify from '@sindresorhus/slugify'
 import vine from '@vinejs/vine'
+import { db } from '#database/db'
 import {
   createProductCategoryValidator,
   productCategoriesQueryValidator,

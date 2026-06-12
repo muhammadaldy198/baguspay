@@ -1,7 +1,8 @@
 import type { HttpContext } from '@adonisjs/core/http'
-import { and, count, db, desc, eq, ilike, type SQL } from '@repo/db'
+import { and, count, desc, eq, ilike, type SQL } from '@repo/db'
 import { tb } from '@repo/db/types'
 import vine from '@vinejs/vine'
+import { db } from '#database/db'
 import {
   createPayementMethodCategoryValidator,
   createPaymentMethodsValidator,

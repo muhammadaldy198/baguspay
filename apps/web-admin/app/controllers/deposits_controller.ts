@@ -1,7 +1,8 @@
 import type { HttpContext } from '@adonisjs/core/http'
-import { and, asc, count, db, desc, eq } from '@repo/db'
+import { and, asc, count, desc, eq } from '@repo/db'
 import { BalanceMutationRefType, BalanceMutationType, DepositStatus, tb } from '@repo/db/types'
 import vine from '@vinejs/vine'
+import { db } from '#database/db'
 import {
   changeStatusValidator,
   depositIdValidator,

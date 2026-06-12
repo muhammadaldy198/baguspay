@@ -1,7 +1,8 @@
 import type { HttpContext } from '@adonisjs/core/http'
-import { and, asc, count, db, desc, eq, gte, ilike, inArray, lte, type SQL } from '@repo/db'
+import { and, asc, count, desc, eq, gte, ilike, inArray, lte, type SQL } from '@repo/db'
 import { OfferType, tb } from '@repo/db/types'
 import vine from '@vinejs/vine'
+import { db } from '#database/db'
 import {
   addOfferPaymentMethodValidator,
   addOfferProductValidator,

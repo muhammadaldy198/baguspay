@@ -37,7 +37,7 @@ export const inquiries = pgTable(
       .notNull(),
     inquiry_provider_code: varchar('inquiry_provider_code', { length: 50 }),
     inquiry_ref_id: varchar('inquiry_ref_id', { length: 100 }),
-    inquiry_response: jsonb('inquiry_response').$type<Record<string, any>>(),
+    inquiry_response: jsonb('inquiry_response').$type<unknown>(),
 
     customer_input: jsonb('customer_input').notNull().default({}),
     customer_input_merged: varchar('customer_input_merged').notNull().default(''),

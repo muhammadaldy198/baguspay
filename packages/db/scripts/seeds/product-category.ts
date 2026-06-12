@@ -1,7 +1,7 @@
 // Anda mungkin perlu mengimpor tipe ProductCategoryTypeEnum jika belum global
 // import { ProductCategoryType } from './schema';
 
-import type { db } from '@/database'
+import type { Database } from '@/database'
 import { ProductCategoryType } from '@/schema'
 import { tb } from '@/table'
 
@@ -497,7 +497,7 @@ export const seedVoucher = [
   },
 ]
 
-export const productCategorySeeds = async (dbInstance: typeof db) => {
+export const productCategorySeeds = async (dbInstance: Database) => {
   await dbInstance
     .insert(tb.productCategories)
     .values([...seedGame, ...seedPulsa, ...seedVoucher])

@@ -4,10 +4,11 @@ import crypto from 'node:crypto'
 import fs from 'node:fs/promises'
 import type { HttpContext } from '@adonisjs/core/http'
 import drive from '@adonisjs/drive/services/main'
-import { count, db, desc, eq } from '@repo/db'
+import { count, desc, eq } from '@repo/db'
 import { tb } from '@repo/db/types'
 import vine from '@vinejs/vine'
 import sharp from 'sharp'
+import { db } from '#database/db'
 import env from '#start/env'
 import {
   deleteFilesValidator,

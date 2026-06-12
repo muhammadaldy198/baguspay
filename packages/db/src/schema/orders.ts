@@ -48,7 +48,7 @@ export const orders = pgTable(
     refund_status: refundStatusEnum('refund_status').notNull().default(RefundStatus.NONE),
 
     customer_input: varchar('customer_input'),
-    customer_input_json: jsonb('customer_input_json').$type<Record<string, any>>(),
+    customer_input_json: jsonb('customer_input_json').$type<unknown>(),
 
     customer_email: varchar('customer_email', { length: 150 }),
     customer_phone: varchar('customer_phone', { length: 50 }),
@@ -59,9 +59,9 @@ export const orders = pgTable(
     voucher_code: varchar('voucher_code', { length: 100 }),
     additional_data: varchar('additional_data'),
 
-    order_raw_response: jsonb('order_raw_response').$type<Record<string, any>>(),
-    callback_raw_response: jsonb('callback_raw_response').$type<Record<string, any>>(),
-    metadata: jsonb('metadata').$type<Record<string, any>>(),
+    order_raw_response: jsonb('order_raw_response').$type<unknown>(),
+    callback_raw_response: jsonb('callback_raw_response').$type<unknown>(),
+    metadata: jsonb('metadata').$type<unknown>(),
 
     created_at: timestamp('created_at', { withTimezone: true }).defaultNow(),
     updated_at: timestamp('updated_at', { withTimezone: true }).$onUpdate(() => new Date()),

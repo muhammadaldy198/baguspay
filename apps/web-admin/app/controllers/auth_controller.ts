@@ -1,11 +1,128 @@
+import { createHash, createHmac, randomUUID } from 'node:crypto'
 import type { HttpContext } from '@adonisjs/core/http'
-import hash from '@adonisjs/core/services/hash'
-import { db, eq, or } from '@repo/db'
-import { tb, UserRegisteredType, UserRole } from '@repo/db/types'
+import { and, eq } from '@repo/db'
+import { LoginIsFrom, tb, UserRegisteredType, UserRole } from '@repo/db/types'
 import vine from '@vinejs/vine'
+import { compare, hash } from 'bcrypt-ts'
+import { db } from '#database/db'
 import { loginValidator, registerValidator } from '#validators/auth'
 
+const ACCESS_TOKEN_EXPIRY_SECONDS = 24 * 60 * 60
+const REFRESH_TOKEN_EXPIRY_SECONDS = 7 * 24 * 60 * 60
+const ACCESS_TOKEN_MS = ACCESS_TOKEN_EXPIRY_SECONDS * 1000
+const REFRESH_TOKEN_MS = REFRESH_TOKEN_EXPIRY_SECONDS * 1000
+
+type TokenPayload = {
+  id: string
+  role: string
+}
+
+function base64UrlEncode(value: string) {
+  return Buffer.from(value).toString('base64url')
+}
+
+function signJwt(payload: TokenPayload, secret: string, expiresInSeconds: number) {
+  const now = Math.floor(Date.now() / 1000)
+  const header = base64UrlEncode(JSON.stringify({ alg: 'HS256', typ: 'JWT' }))
+  const body = base64UrlEncode(
+    JSON.stringify({
+      ...payload,
+      iat: now,
+      exp: now + expiresInSeconds,
+    }),
+  )
+  const signature = createHmac('sha256', secret).update(`${header}.${body}`).digest('base64url')
+
+  return `${header}.${body}.${signature}`
+}
+
+function getBrowser(userAgent: string) {
+  const ua = userAgent.toLowerCase()
+  if (ua.includes('edg/')) return 'Edge'
+  if (ua.includes('opr/') || ua.includes('opera')) return 'Opera'
+  if (ua.includes('chrome') && !ua.includes('chromium')) return 'Chrome'
+  if (ua.includes('safari') && !ua.includes('chrome')) return 'Safari'
+  if (ua.includes('firefox')) return 'Firefox'
+  if (ua.includes('msie') || ua.includes('trident')) return 'IE'
+  return 'Unknown'
+}
+
+function getOs(userAgent: string) {
+  const ua = userAgent.toLowerCase()
+  if (ua.includes('windows')) return 'Windows'
+  if (ua.includes('mac os x') || ua.includes('macintosh')) return 'macOS'
+  if (ua.includes('android')) return 'Android'
+  if (ua.includes('iphone') || ua.includes('ipad') || ua.includes('ipod')) return 'iOS'
+  if (ua.includes('linux')) return 'Linux'
+  return 'Unknown'
+}
+
+function getDeviceType(userAgent: string) {
+  if (/tablet|ipad|android(?!.*mobile)/i.test(userAgent)) return 'tablet'
+  if (/mobile|iphone|ipod|android.*mobile|windows phone|blackberry/i.test(userAgent))
+    return 'mobile'
+  return 'desktop'
+}
+
+function getDeviceInfo(deviceId: string, userAgent: string) {
+  const browser = getBrowser(userAgent)
+  const os = getOs(userAgent)
+  const deviceType = getDeviceType(userAgent)
+  const fingerprint = createHash('sha256')
+    .update([deviceId, browser, os, deviceType, ''].join('|'))
+    .digest('hex')
+    .substring(0, 32)
+
+  return {
+    browser,
+    os,
+    deviceType,
+    fingerprint,
+  }
+}
+
+function getLoginSource(deviceType: string): LoginIsFrom {
+  if (deviceType === 'mobile') return LoginIsFrom.MOBILE
+  if (deviceType === 'desktop') return LoginIsFrom.DESKTOP
+  return LoginIsFrom.WEB
+}
+
 export default class AuthController {
+  private generateTokens(payload: TokenPayload) {
+    const jwtSecret = process.env.JWT_SECRET
+
+    if (!jwtSecret) {
+      throw new Error('JWT_SECRET is required for admin authentication')
+    }
+
+    return {
+      accessToken: signJwt(payload, jwtSecret, ACCESS_TOKEN_EXPIRY_SECONDS),
+      refreshToken: signJwt(payload, jwtSecret, REFRESH_TOKEN_EXPIRY_SECONDS),
+      accessTokenExpiresAt: new Date(Date.now() + ACCESS_TOKEN_MS),
+      refreshTokenExpiresAt: new Date(Date.now() + REFRESH_TOKEN_MS),
+    }
+  }
+
+  private getDeviceId(ctx: HttpContext) {
+    const sessionDeviceId = ctx.session.get('auth_device_id')
+    if (sessionDeviceId) {
+      return sessionDeviceId
+    }
+
+    const generatedDeviceId = randomUUID()
+    ctx.session.put('auth_device_id', generatedDeviceId)
+    return generatedDeviceId
+  }
+
+  private getIpAddress(ctx: HttpContext) {
+    return (
+      ctx.request.header('x-forwarded-for')?.split(',')[0]?.trim() ||
+      ctx.request.header('x-real-ip') ||
+      ctx.request.ip() ||
+      '127.0.0.1'
+    )
+  }
+
   public async register({ inertia }: HttpContext) {
     return inertia.render('auth/register', {
       title: 'Register',
@@ -17,19 +134,17 @@ export default class AuthController {
     const data = await ctx.request.validateUsing(vine.compile(registerValidator))
 
     const user = await db.query.users.findFirst({
-      where: or(eq(tb.users.email, data.email), eq(tb.users.phone, data.phone)),
+      where: eq(tb.users.email, data.email),
     })
 
     if (user) {
       ctx.session.flashErrors({
-        error: 'Email or phone number already exists.',
+        error: 'Email already exists',
       })
       return ctx.response.redirect().back()
     }
 
-    // const hashedPassword = await hash(data.password, 10)
-    const hashedPassword = await hash.make(data.password)
-
+    const hashedPassword = await hash(data.password, 10)
     const newUser = await db
       .insert(tb.users)
       .values({
@@ -63,36 +178,104 @@ export default class AuthController {
   public async postLogin(ctx: HttpContext) {
     const data = await ctx.request.validateUsing(vine.compile(loginValidator))
 
-    const user = await db.query.users.findFirst({
-      where: eq(tb.users.email, data.email),
-    })
+    try {
+      const user = await db.query.users.findFirst({
+        where: eq(tb.users.email, data.email),
+      })
 
-    if (!user) {
+      if (!user) {
+        ctx.session.flashErrors({
+          error: 'Invalid email or password.',
+        })
+        return ctx.response.redirect().back()
+      }
+
+      const isPasswordValid = await compare(data.password, user.password)
+
+      if (!isPasswordValid) {
+        ctx.session.flashErrors({
+          error: 'Invalid email or password.',
+        })
+        return ctx.response.redirect().back()
+      }
+
+      if (user.role !== UserRole.ADMIN) {
+        ctx.session.flashErrors({
+          error: 'Forbidden: You do not have permission to access this resource.',
+        })
+        return ctx.response.redirect().back()
+      }
+
+      const deviceId = this.getDeviceId(ctx)
+      const userAgent = ctx.request.header('user-agent') || 'web-admin'
+      const ipAddress = this.getIpAddress(ctx)
+      const deviceInfo = getDeviceInfo(deviceId, userAgent)
+      const deviceName = `${deviceInfo.browser} on ${deviceInfo.os}`
+      const tokens = this.generateTokens({ id: user.id, role: user.role })
+
+      const sessionData = {
+        user_id: user.id,
+        device_id: deviceId,
+        device_fingerprint: deviceInfo.fingerprint,
+        device_name: deviceName,
+        ip_address: ipAddress,
+        user_agent: userAgent,
+        login_type: UserRegisteredType.LOCAL,
+        is_from: getLoginSource(deviceInfo.deviceType),
+        access_token: tokens.accessToken,
+        refresh_token: tokens.refreshToken,
+        access_token_expires_at: tokens.accessTokenExpiresAt,
+        refresh_token_expires_at: tokens.refreshTokenExpiresAt,
+      }
+
+      let existingSession = await db.query.sessions.findFirst({
+        where: and(
+          eq(tb.sessions.user_id, user.id),
+          eq(tb.sessions.device_fingerprint, deviceInfo.fingerprint),
+        ),
+      })
+
+      if (!existingSession) {
+        existingSession = await db.query.sessions.findFirst({
+          where: and(eq(tb.sessions.user_id, user.id), eq(tb.sessions.device_id, deviceId)),
+        })
+      }
+
+      if (existingSession) {
+        await db.update(tb.sessions).set(sessionData).where(eq(tb.sessions.id, existingSession.id))
+      } else {
+        await db.insert(tb.sessions).values(sessionData)
+      }
+
+      await ctx.auth.use('web').login(user)
+      ctx.session.put('auth_access_token', tokens.accessToken)
+      ctx.session.put('auth_refresh_token', tokens.refreshToken)
+
+      ctx.session.flashMessages.set('success', 'You have been logged in successfully.')
+      return ctx.response.redirect('/admin')
+    } catch {
       ctx.session.flashErrors({
         error: 'Invalid email or password.',
       })
       return ctx.response.redirect().back()
     }
-
-    const isPasswordValid = await hash.verify(user.password, data.password)
-
-    if (!isPasswordValid) {
-      ctx.session.flashErrors({
-        error: 'Invalid email or password.',
-      })
-      return ctx.response.redirect().back()
-    }
-
-    await ctx.auth.use('web').login(user)
-
-    await ctx.auth.use('web').authenticate()
-    // console.log('Authenticated User:', a)
-
-    ctx.session.flashMessages.set('success', 'You have been logged in successfully.')
-    return ctx.response.redirect('/admin')
   }
 
   public async logout(ctx: HttpContext) {
+    const accessToken = ctx.session.get('auth_access_token')
+
+    if (accessToken) {
+      const session = await db.query.sessions.findFirst({
+        where: eq(tb.sessions.access_token, accessToken),
+      })
+
+      if (session) {
+        await db.delete(tb.sessions).where(eq(tb.sessions.id, session.id))
+      }
+    }
+
+    ctx.session.forget('auth_access_token')
+    ctx.session.forget('auth_refresh_token')
     ctx.auth.use('web').logout()
 
     ctx.session.flashMessages.set('success', 'You have been logged out successfully.')

@@ -1,7 +1,8 @@
 import type { HttpContext } from '@adonisjs/core/http'
-import { db, eq } from '@repo/db'
+import { eq } from '@repo/db'
 import { tb } from '@repo/db/types'
 import vine from '@vinejs/vine'
+import { db } from '#database/db'
 import { createBannerValidator } from '#validators/banners'
 export default class BannersController {
   async index(ctx: HttpContext) {
