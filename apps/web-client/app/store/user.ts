@@ -1,4 +1,4 @@
-import { UserRole } from '@repo/db/types'
+import { UserRole } from '@baguspay/db/types'
 import { atomWithQuery } from 'jotai-tanstack-query'
 import { apiClient } from '~/utils/axios'
 import { authTokenAtom } from './token'

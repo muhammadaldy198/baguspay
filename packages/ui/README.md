@@ -1,1 +1,1 @@
-# `@repo/ui`
+# `@baguspay/ui`

@@ -1,5 +1,5 @@
+import { ProductBillingType } from '@baguspay/db/types'
 import { ApiPropertyOptional } from '@nestjs/swagger'
-import { ProductBillingType } from '@repo/db/types'
 import { Type } from 'class-transformer'
 import { IsEnum, IsInt, IsOptional, IsString, IsUUID } from 'class-validator'
 

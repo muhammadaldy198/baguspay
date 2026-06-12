@@ -1,4 +1,4 @@
-import type { BannerLocation } from '@repo/db/types'
+import type { BannerLocation } from '@baguspay/db/types'
 // import "swiper/css";
 // import "swiper/css/navigation";
 // import "swiper/css/pagination";

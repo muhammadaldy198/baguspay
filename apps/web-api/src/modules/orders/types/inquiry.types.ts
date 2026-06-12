@@ -1,4 +1,4 @@
-import type { ProductBillingType, ProductProvider } from '@repo/db/types'
+import type { ProductBillingType, ProductProvider } from '@baguspay/db/types'
 
 export type GetInquiryFromProviderInput = {
   inquiry_id: string

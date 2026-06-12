@@ -1,4 +1,4 @@
-import { AppPlatform, ProductGroupingMenuType, ProductGroupingType } from '@repo/db/types'
+import { AppPlatform, ProductGroupingMenuType, ProductGroupingType } from '@baguspay/db/types'
 import vine from '@vinejs/vine'
 import type { Infer } from '@vinejs/vine/types'
 

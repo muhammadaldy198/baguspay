@@ -3,9 +3,9 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from '@repo/ui/components/ui/accordion'
-import { Badge } from '@repo/ui/components/ui/badge'
-import { Button } from '@repo/ui/components/ui/button'
+} from '@baguspay/ui/components/ui/accordion'
+import { Badge } from '@baguspay/ui/components/ui/badge'
+import { Button } from '@baguspay/ui/components/ui/button'
 import {
   Dialog,
   DialogContent,
@@ -13,7 +13,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@repo/ui/components/ui/dialog'
+} from '@baguspay/ui/components/ui/dialog'
 import { Building2, ChevronDown, CreditCard, Smartphone, Store, Wallet } from 'lucide-react'
 import { useState } from 'react'
 import type { DepositPaymentData, DepositPaymentMethod } from '~/pages/protected/user/deposit'

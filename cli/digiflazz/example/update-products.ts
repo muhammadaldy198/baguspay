@@ -65,6 +65,7 @@ const main = async () => {
     onlyProblematic: syncConfig.onlyProblematic,
     problematicCriteria: syncConfig.problematicCriteria,
     sellerFilter: syncConfig.sellerFilter,
+    sellerPriority: syncConfig.sellerPriority,
     requestDelayMs: 1000,
     logger: log,
   })

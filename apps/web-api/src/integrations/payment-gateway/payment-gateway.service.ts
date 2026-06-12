@@ -1,5 +1,5 @@
+import { PaymentMethodProvider } from '@baguspay/db/types'
 import { BadRequestException, Injectable } from '@nestjs/common'
-import { PaymentMethodProvider } from '@repo/db/types'
 import type { DBInstance } from 'src/common/types/db-instance'
 import { BalanceService } from './balance/balance.service'
 import { DuitkuService } from './duitku/duitku.service'

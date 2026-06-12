@@ -1,6 +1,6 @@
+import { and, eq } from '@baguspay/db'
+import { PaymentMethodProvider, PaymentMethodType, tb } from '@baguspay/db/types'
 import { Injectable } from '@nestjs/common'
-import { and, eq } from '@repo/db'
-import { PaymentMethodProvider, PaymentMethodType, tb } from '@repo/db/types'
 import { DatabaseService } from 'src/core/database/database.service'
 
 @Injectable()

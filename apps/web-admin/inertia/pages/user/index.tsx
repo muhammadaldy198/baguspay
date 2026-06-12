@@ -1,7 +1,6 @@
 import type { InferPageProps } from '@adonisjs/inertia/types'
-import { router, usePage } from '@inertiajs/react'
-import { DataTable } from '@repo/ui/components/data-table'
-import { Button } from '@repo/ui/components/ui/button'
+import { DataTable } from '@baguspay/ui/components/data-table'
+import { Button } from '@baguspay/ui/components/ui/button'
 import {
   Dialog,
   DialogContent,
@@ -10,22 +9,23 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@repo/ui/components/ui/dialog'
+} from '@baguspay/ui/components/ui/dialog'
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@repo/ui/components/ui/dropdown-menu'
-import { Input } from '@repo/ui/components/ui/input'
+} from '@baguspay/ui/components/ui/dropdown-menu'
+import { Input } from '@baguspay/ui/components/ui/input'
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@repo/ui/components/ui/select'
+} from '@baguspay/ui/components/ui/select'
+import { router, usePage } from '@inertiajs/react'
 import type { ColumnDef } from '@tanstack/react-table'
 import { MoreHorizontal, Trash2Icon } from 'lucide-react'
 import { useState } from 'react'

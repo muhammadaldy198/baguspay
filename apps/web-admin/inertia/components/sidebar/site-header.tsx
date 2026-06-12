@@ -1,8 +1,8 @@
 'use client'
 
+import { Button } from '@baguspay/ui/components/ui/button'
+import { useSidebar } from '@baguspay/ui/components/ui/sidebar'
 import { usePage } from '@inertiajs/react'
-import { Button } from '@repo/ui/components/ui/button'
-import { useSidebar } from '@repo/ui/components/ui/sidebar'
 import { Dot, PanelLeft } from 'lucide-react'
 import { SearchForm } from './search-form'
 

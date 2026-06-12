@@ -1,5 +1,5 @@
+import { ProductBillingType } from '@baguspay/db/types'
 import { BadRequestException, Injectable, Logger } from '@nestjs/common'
-import { ProductBillingType } from '@repo/db/types'
 import type {
   DigiflazzPostpaidCallbackData,
   DigiflazzPrepaidCallbackData,

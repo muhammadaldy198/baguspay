@@ -1,5 +1,4 @@
-import { useForm } from '@inertiajs/react'
-import { Button } from '@repo/ui/components/ui/button'
+import { Button } from '@baguspay/ui/components/ui/button'
 import {
   Dialog,
   DialogClose,
@@ -9,10 +8,11 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@repo/ui/components/ui/dialog'
-import { Input } from '@repo/ui/components/ui/input'
-import { Label } from '@repo/ui/components/ui/label'
-import { Textarea } from '@repo/ui/components/ui/textarea'
+} from '@baguspay/ui/components/ui/dialog'
+import { Input } from '@baguspay/ui/components/ui/input'
+import { Label } from '@baguspay/ui/components/ui/label'
+import { Textarea } from '@baguspay/ui/components/ui/textarea'
+import { useForm } from '@inertiajs/react'
 import { ArrowUpRightIcon } from 'lucide-react'
 import { useState } from 'react'
 import toast from 'react-hot-toast'

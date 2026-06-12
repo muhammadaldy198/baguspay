@@ -1,3 +1,5 @@
+import { eq } from '@baguspay/db'
+import { tb } from '@baguspay/db/types'
 import {
   type CanActivate,
   type ExecutionContext,
@@ -7,8 +9,6 @@ import {
 } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { JwtService } from '@nestjs/jwt'
-import { eq } from '@repo/db'
-import { tb } from '@repo/db/types'
 import type { Request } from 'express'
 import { GUEST_USER } from 'src/common/constants/guest-user'
 import { DatabaseService } from 'src/core/database/database.service'

@@ -1,6 +1,6 @@
-import type { InferSelectModel } from '@repo/db'
-import type { tb } from '@repo/db/types'
-import { Button } from '@repo/ui/components/ui/button'
+import type { InferSelectModel } from '@baguspay/db'
+import type { tb } from '@baguspay/db/types'
+import { Button } from '@baguspay/ui/components/ui/button'
 import {
   Dialog,
   DialogContent,
@@ -9,8 +9,8 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@repo/ui/components/ui/dialog'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@repo/ui/components/ui/tabs'
+} from '@baguspay/ui/components/ui/dialog'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@baguspay/ui/components/ui/tabs'
 import { useInfiniteQuery, useMutation } from '@tanstack/react-query'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useDropzone } from 'react-dropzone'

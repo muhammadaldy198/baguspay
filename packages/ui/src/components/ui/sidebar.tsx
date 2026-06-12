@@ -1,25 +1,25 @@
 'use client'
 
-import { Slot } from '@radix-ui/react-slot'
-import { Button } from '@repo/ui/components/ui/button'
-import { Input } from '@repo/ui/components/ui/input'
-import { Separator } from '@repo/ui/components/ui/separator'
+import { Button } from '@baguspay/ui/components/ui/button'
+import { Input } from '@baguspay/ui/components/ui/input'
+import { Separator } from '@baguspay/ui/components/ui/separator'
 import {
   Sheet,
   SheetContent,
   SheetDescription,
   SheetHeader,
   SheetTitle,
-} from '@repo/ui/components/ui/sheet'
-import { Skeleton } from '@repo/ui/components/ui/skeleton'
+} from '@baguspay/ui/components/ui/sheet'
+import { Skeleton } from '@baguspay/ui/components/ui/skeleton'
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from '@repo/ui/components/ui/tooltip'
-import { useIsMobile } from '@repo/ui/hooks/use-mobile'
-import { cn } from '@repo/ui/lib/utils'
+} from '@baguspay/ui/components/ui/tooltip'
+import { useIsMobile } from '@baguspay/ui/hooks/use-mobile'
+import { cn } from '@baguspay/ui/lib/utils'
+import { Slot } from '@radix-ui/react-slot'
 import { cva, type VariantProps } from 'class-variance-authority'
 import { PanelLeftIcon } from 'lucide-react'
 import * as React from 'react'

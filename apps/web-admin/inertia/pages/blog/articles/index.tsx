@@ -1,15 +1,15 @@
 import type { InferPageProps } from '@adonisjs/inertia/types'
-import { Link, router } from '@inertiajs/react'
-import { Badge } from '@repo/ui/components/ui/badge'
-import { Button } from '@repo/ui/components/ui/button'
-import { Card, CardContent, CardFooter } from '@repo/ui/components/ui/card'
+import { Badge } from '@baguspay/ui/components/ui/badge'
+import { Button } from '@baguspay/ui/components/ui/button'
+import { Card, CardContent, CardFooter } from '@baguspay/ui/components/ui/card'
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@repo/ui/components/ui/select'
+} from '@baguspay/ui/components/ui/select'
+import { Link, router } from '@inertiajs/react'
 import { format } from 'date-fns'
 import { id } from 'date-fns/locale'
 import { Edit, Eye, EyeOff, Plus, Star, StarOff, Trash2 } from 'lucide-react'

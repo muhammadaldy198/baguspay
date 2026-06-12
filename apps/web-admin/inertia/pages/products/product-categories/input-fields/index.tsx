@@ -1,6 +1,6 @@
 import type { InferPageProps } from '@adonisjs/inertia/types'
+import { Button } from '@baguspay/ui/components/ui/button'
 import { router } from '@inertiajs/react'
-import { Button } from '@repo/ui/components/ui/button'
 import { LoaderCircle, Trash2Icon } from 'lucide-react'
 import { useState } from 'react'
 import type ProductsCategoriesController from '#controllers/product_categories_controller'

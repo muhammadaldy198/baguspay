@@ -1,11 +1,10 @@
 'use client'
 
-import { Link, usePage } from '@inertiajs/react'
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from '@repo/ui/components/ui/collapsible'
+} from '@baguspay/ui/components/ui/collapsible'
 import {
   SidebarGroup,
   SidebarGroupLabel,
@@ -15,7 +14,8 @@ import {
   SidebarMenuSub,
   SidebarMenuSubButton,
   SidebarMenuSubItem,
-} from '@repo/ui/components/ui/sidebar'
+} from '@baguspay/ui/components/ui/sidebar'
+import { Link, usePage } from '@inertiajs/react'
 import { ChevronRight, type LucideIcon } from 'lucide-react'
 
 export function NavMain({

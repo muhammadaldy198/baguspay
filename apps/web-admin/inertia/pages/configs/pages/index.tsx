@@ -1,7 +1,6 @@
 import type { InferPageProps } from '@adonisjs/inertia/types'
-import { Link, router } from '@inertiajs/react'
-import { Badge } from '@repo/ui/components/ui/badge'
-import { Button } from '@repo/ui/components/ui/button'
+import { Badge } from '@baguspay/ui/components/ui/badge'
+import { Button } from '@baguspay/ui/components/ui/button'
 import {
   Table,
   TableBody,
@@ -9,7 +8,8 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@repo/ui/components/ui/table'
+} from '@baguspay/ui/components/ui/table'
+import { Link, router } from '@inertiajs/react'
 import { Edit, Plus, Trash2 } from 'lucide-react'
 import toast from 'react-hot-toast'
 import type PagesController from '#controllers/configs/pages_controller'

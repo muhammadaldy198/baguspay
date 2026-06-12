@@ -1,12 +1,11 @@
 import type { InferPageProps } from '@adonisjs/inertia/types'
-import { useForm } from '@inertiajs/react'
 import {
   PaymentMethodAllowAccess,
   PaymentMethodFeeType,
   PaymentMethodProvider,
   PaymentMethodType,
-} from '@repo/db/types'
-import { Button } from '@repo/ui/components/ui/button'
+} from '@baguspay/db/types'
+import { Button } from '@baguspay/ui/components/ui/button'
 import {
   Dialog,
   DialogContent,
@@ -14,16 +13,17 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@repo/ui/components/ui/dialog'
-import { Input } from '@repo/ui/components/ui/input'
-import { Label } from '@repo/ui/components/ui/label'
+} from '@baguspay/ui/components/ui/dialog'
+import { Input } from '@baguspay/ui/components/ui/input'
+import { Label } from '@baguspay/ui/components/ui/label'
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@repo/ui/components/ui/select'
+} from '@baguspay/ui/components/ui/select'
+import { useForm } from '@inertiajs/react'
 import { type FormEvent, useState } from 'react'
 import type PaymentsController from '#controllers/payments_controller'
 import type { CreatePaymentMethodsValidator } from '#validators/payments'

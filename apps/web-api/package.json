@@ -40,8 +40,8 @@
     "@nestjs/passport": "^11.0.5",
     "@nestjs/platform-express": "^11.0.1",
     "@nestjs/swagger": "^11.2.0",
-    "@repo/db": "workspace:*",
-    "@scalar/nestjs-api-reference": "^0.5.10",
+    "@baguspay/db": "workspace:*",
+    "@scalar/nestjs-api-reference": "^1.2.3",
     "axios": "^1.10.0",
     "bcrypt": "^6.0.0",
     "bullmq": "^5.56.4",
@@ -105,11 +105,5 @@
     ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
-  },
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "@nestjs/core",
-      "@swc/core"
-    ]
   }
 }

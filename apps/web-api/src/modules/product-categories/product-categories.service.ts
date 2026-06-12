@@ -2,9 +2,9 @@
 
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 
+import { and, asc, eq, gte, lte, ne, or } from '@baguspay/db'
+import { OfferType, tb } from '@baguspay/db/types'
 import { Injectable, NotFoundException } from '@nestjs/common'
-import { and, asc, eq, gte, lte, ne, or } from '@repo/db'
-import { OfferType, tb } from '@repo/db/types'
 import { SendResponse } from 'src/common/utils/response'
 import { DatabaseService } from 'src/core/database/database.service'
 import { StorageService } from 'src/core/storage/storage.service'

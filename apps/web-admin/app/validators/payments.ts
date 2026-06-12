@@ -3,7 +3,7 @@ import {
   PaymentMethodFeeType,
   PaymentMethodProvider,
   PaymentMethodType,
-} from '@repo/db/types'
+} from '@baguspay/db/types'
 import vine from '@vinejs/vine'
 import type { Infer } from '@vinejs/vine/types'
 

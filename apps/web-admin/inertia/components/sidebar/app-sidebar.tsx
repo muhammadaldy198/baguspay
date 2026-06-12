@@ -1,6 +1,5 @@
 'use client'
 
-import { Link } from '@inertiajs/react'
 import {
   Sidebar,
   SidebarContent,
@@ -9,7 +8,8 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from '@repo/ui/components/ui/sidebar'
+} from '@baguspay/ui/components/ui/sidebar'
+import { Link } from '@inertiajs/react'
 import {
   Activity,
   ArrowLeftRight,

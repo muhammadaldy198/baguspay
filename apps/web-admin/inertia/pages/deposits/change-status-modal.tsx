@@ -1,22 +1,22 @@
-import { useForm } from '@inertiajs/react'
-import { DepositStatus } from '@repo/db/types'
-import { Button } from '@repo/ui/components/ui/button'
-import { Checkbox } from '@repo/ui/components/ui/checkbox'
+import { DepositStatus } from '@baguspay/db/types'
+import { Button } from '@baguspay/ui/components/ui/button'
+import { Checkbox } from '@baguspay/ui/components/ui/checkbox'
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@repo/ui/components/ui/dialog'
-import { Label } from '@repo/ui/components/ui/label'
+} from '@baguspay/ui/components/ui/dialog'
+import { Label } from '@baguspay/ui/components/ui/label'
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@repo/ui/components/ui/select'
+} from '@baguspay/ui/components/ui/select'
+import { useForm } from '@inertiajs/react'
 import { PencilIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'

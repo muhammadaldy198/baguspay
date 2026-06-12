@@ -8,7 +8,7 @@ Panduan ini khusus untuk agent yang bekerja di package `apps/web-api`.
 - Entry point ada di `src/main.ts`, root module ada di `src/app.module.ts`.
 - API docs: Swagger + Scalar (`/reference`).
 - Queue: BullMQ (`@nestjs/bullmq`) + Bull Board (`/queues`).
-- DB: modul internal `DatabaseModule` dari `src/database` dan workspace package `@repo/db`.
+- DB: modul internal `DatabaseModule` dari `src/core/database` dan workspace package `@baguspay/db`.
 
 ## Struktur Arsitektur
 

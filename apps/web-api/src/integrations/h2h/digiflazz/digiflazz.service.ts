@@ -1,7 +1,7 @@
 import crypto from 'node:crypto'
+import { OrderStatus } from '@baguspay/db/types'
 import { BadRequestException, GatewayTimeoutException, Injectable } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
-import { OrderStatus } from '@repo/db/types'
 import axios, { type AxiosInstance } from 'axios'
 import type {
   DigiflazzApiTopupResponse,

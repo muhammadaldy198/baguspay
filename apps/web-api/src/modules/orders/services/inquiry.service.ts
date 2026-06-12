@@ -1,6 +1,6 @@
+import { OrderStatus, ProductProvider } from '@baguspay/db/types'
 import { BadRequestException, Injectable } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
-import { OrderStatus, ProductProvider } from '@repo/db/types'
 import { DatabaseService } from 'src/core/database/database.service'
 import { QueueService } from 'src/core/queue/queue.service'
 import { StorageService } from 'src/core/storage/storage.service'

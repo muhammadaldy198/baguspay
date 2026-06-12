@@ -10,7 +10,7 @@ import {
 
 export const sessions = pgTable('sessions', {
   id: uuid('id').primaryKey().defaultRandom(),
-  id_token: varchar('id_token', { length: 255 }),
+  id_token: text('id_token'),
   login_type: userRegisteredTypeEnum('login_type').notNull().default(UserRegisteredType.LOCAL),
   user_id: uuid('user_id')
     .references(() => users.id)

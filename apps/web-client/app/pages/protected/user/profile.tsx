@@ -1,7 +1,7 @@
-import { Badge } from '@repo/ui/components/ui/badge'
-import { Button } from '@repo/ui/components/ui/button'
-import { Card, CardContent, CardHeader, CardTitle } from '@repo/ui/components/ui/card'
-import { Tooltip, TooltipContent, TooltipTrigger } from '@repo/ui/components/ui/tooltip'
+import { Badge } from '@baguspay/ui/components/ui/badge'
+import { Button } from '@baguspay/ui/components/ui/button'
+import { Card, CardContent, CardHeader, CardTitle } from '@baguspay/ui/components/ui/card'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@baguspay/ui/components/ui/tooltip'
 import { useQuery } from '@tanstack/react-query'
 import {
   BadgeAlertIcon,

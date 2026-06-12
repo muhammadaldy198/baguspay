@@ -1,17 +1,17 @@
-import { DepositStatus, type PaymentMethodType } from '@repo/db/types'
-import { DataTable } from '@repo/ui/components/data-table'
-import { Badge } from '@repo/ui/components/ui/badge'
-import { Button } from '@repo/ui/components/ui/button'
-import { Calendar } from '@repo/ui/components/ui/calendar'
-import { Input } from '@repo/ui/components/ui/input'
-import { Popover, PopoverContent, PopoverTrigger } from '@repo/ui/components/ui/popover'
+import { DepositStatus, type PaymentMethodType } from '@baguspay/db/types'
+import { DataTable } from '@baguspay/ui/components/data-table'
+import { Badge } from '@baguspay/ui/components/ui/badge'
+import { Button } from '@baguspay/ui/components/ui/button'
+import { Calendar } from '@baguspay/ui/components/ui/calendar'
+import { Input } from '@baguspay/ui/components/ui/input'
+import { Popover, PopoverContent, PopoverTrigger } from '@baguspay/ui/components/ui/popover'
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@repo/ui/components/ui/select'
+} from '@baguspay/ui/components/ui/select'
 import { useQuery } from '@tanstack/react-query'
 import type { ColumnDef } from '@tanstack/react-table'
 import { CalendarIcon } from 'lucide-react'

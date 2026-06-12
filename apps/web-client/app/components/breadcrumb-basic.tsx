@@ -4,7 +4,7 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from '@repo/ui/components/ui/breadcrumb'
+} from '@baguspay/ui/components/ui/breadcrumb'
 import React, { useId } from 'react'
 import { Link } from 'react-router'
 

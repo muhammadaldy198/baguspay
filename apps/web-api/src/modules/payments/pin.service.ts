@@ -1,6 +1,6 @@
+import { eq } from '@baguspay/db'
+import { tb } from '@baguspay/db/types'
 import { BadRequestException, Injectable } from '@nestjs/common'
-import { eq } from '@repo/db'
-import { tb } from '@repo/db/types'
 import { compare, hash } from 'bcrypt'
 import { DatabaseService } from 'src/core/database/database.service'
 

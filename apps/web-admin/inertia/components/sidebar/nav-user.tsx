@@ -1,7 +1,6 @@
 'use client'
 
-import { Link } from '@inertiajs/react'
-import { Avatar, AvatarFallback, AvatarImage } from '@repo/ui/components/ui/avatar'
+import { Avatar, AvatarFallback, AvatarImage } from '@baguspay/ui/components/ui/avatar'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,13 +9,14 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@repo/ui/components/ui/dropdown-menu'
+} from '@baguspay/ui/components/ui/dropdown-menu'
 import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
-} from '@repo/ui/components/ui/sidebar'
+} from '@baguspay/ui/components/ui/sidebar'
+import { Link } from '@inertiajs/react'
 import { useAtom } from 'jotai'
 import { BadgeCheck, ChevronsUpDown, LogOut, Mail, ShieldCheck } from 'lucide-react'
 import { userAtom } from '~/store/user'

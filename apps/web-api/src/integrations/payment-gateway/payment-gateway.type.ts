@@ -1,4 +1,4 @@
-import type { PaymentMethodFeeType, PaymentMethodProvider, PaymentStatus } from '@repo/db/types'
+import type { PaymentMethodFeeType, PaymentMethodProvider, PaymentStatus } from '@baguspay/db/types'
 
 export interface PaymentGatewayOrderItem {
   name: string

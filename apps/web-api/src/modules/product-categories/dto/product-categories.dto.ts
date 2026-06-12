@@ -1,5 +1,5 @@
+import { ProductBillingType, ProductCategoryType } from '@baguspay/db/types'
 import { ApiProperty } from '@nestjs/swagger'
-import { ProductBillingType, ProductCategoryType } from '@repo/db/types'
 import { IsEnum, IsOptional, IsString } from 'class-validator'
 
 export class ProductCategoriesQueryDto {

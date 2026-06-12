@@ -1,6 +1,5 @@
 import crypto from 'node:crypto'
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common'
-import { eq, gte, lte, type SQL } from '@repo/db'
+import { eq, gte, lte, type SQL } from '@baguspay/db'
 import {
   BalanceMutationRefType,
   BalanceMutationType,
@@ -8,7 +7,8 @@ import {
   PaymentMethodFeeType,
   PaymentStatus,
   tb,
-} from '@repo/db/types'
+} from '@baguspay/db/types'
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common'
 import type { TUser } from 'src/common/types/meta.type'
 import { SendResponse } from 'src/common/utils/response'
 import { DatabaseService } from 'src/core/database/database.service'

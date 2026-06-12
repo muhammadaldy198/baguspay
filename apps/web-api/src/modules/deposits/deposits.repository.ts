@@ -1,4 +1,3 @@
-import { Injectable } from '@nestjs/common'
 import {
   and,
   arrayContains,
@@ -10,14 +9,15 @@ import {
   lte,
   ne,
   type SQL,
-} from '@repo/db'
+} from '@baguspay/db'
 import {
   type DepositStatus,
   PaymentMethodAllowAccess,
   PaymentMethodProvider,
   PaymentMethodType,
   tb,
-} from '@repo/db/types'
+} from '@baguspay/db/types'
+import { Injectable } from '@nestjs/common'
 import type { DBInstance } from 'src/common/types/db-instance'
 import { DatabaseService } from 'src/core/database/database.service'
 import type { DepositHistoryQuery } from './dto/deposits.dto'

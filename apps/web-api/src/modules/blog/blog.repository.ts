@@ -1,6 +1,6 @@
+import { and, asc, count, desc, eq, ilike, type SQL } from '@baguspay/db'
+import { type ArticleType, tb } from '@baguspay/db/types'
 import { Injectable } from '@nestjs/common'
-import { and, asc, count, desc, eq, ilike, type SQL } from '@repo/db'
-import { type ArticleType, tb } from '@repo/db/types'
 import { DatabaseService } from 'src/core/database/database.service'
 import { GetBlogPostsDto } from './dto/blog.dto'
 

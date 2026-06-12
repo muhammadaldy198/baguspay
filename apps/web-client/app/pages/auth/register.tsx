@@ -1,5 +1,5 @@
+import { Button } from '@baguspay/ui/components/ui/button'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Button } from '@repo/ui/components/ui/button'
 import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'

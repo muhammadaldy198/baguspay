@@ -1,4 +1,4 @@
-@import "@repo/tailwind-config";
+@import "@baguspay/tailwind-config";
 @custom-variant dark (&:where(.dark, .dark *));
 @import "tw-animate-css";
 @source "../../../../packages/ui/src/**/*.{js,ts,jsx,tsx}";

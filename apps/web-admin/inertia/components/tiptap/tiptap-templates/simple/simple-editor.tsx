@@ -59,7 +59,7 @@ import { useWindowSize } from '~/hooks/use-window-size'
 // --- Styles ---
 import StarterKit from '@tiptap/starter-kit'
 import '~/components/tiptap/tiptap-templates/simple/simple-editor.scss'
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@repo/ui/components/ui/dialog'
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@baguspay/ui/components/ui/dialog'
 import FileManager from '~/components/file-manager'
 import { ImagePlusIcon } from '~/components/tiptap/tiptap-icons/image-plus-icon'
 import { DetailsButton } from '~/components/tiptap/tiptap-ui/details-button/details-button'

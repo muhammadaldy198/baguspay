@@ -1,3 +1,3 @@
-import type { DatabaseTransaction } from '@repo/db'
+import type { DatabaseTransaction } from '@baguspay/db'
 
 export type DBInstance = DatabaseTransaction

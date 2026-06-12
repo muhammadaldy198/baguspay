@@ -1,4 +1,4 @@
-// Barrel exports for @repo/ui
+// Barrel exports for @baguspay/ui
 export * from './components/ui/accordion'
 export * from './components/ui/avatar'
 export * from './components/ui/badge'

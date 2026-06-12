@@ -1,5 +1,5 @@
-import { Label } from '@repo/ui/components/ui/label'
-import { SidebarInput } from '@repo/ui/components/ui/sidebar'
+import { Label } from '@baguspay/ui/components/ui/label'
+import { SidebarInput } from '@baguspay/ui/components/ui/sidebar'
 import { Search } from 'lucide-react'
 
 export function SearchForm({ ...props }: React.ComponentProps<'form'>) {

@@ -1,4 +1,4 @@
-@import "@repo/ui/globals.css";
+@import "@baguspay/ui/globals.css";
 @plugin "@tailwindcss/typography";
 
 :root {

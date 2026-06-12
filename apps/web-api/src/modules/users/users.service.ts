@@ -1,6 +1,6 @@
+import { eq, gte, lte, type SQL } from '@baguspay/db'
+import { BalanceMutationType, LoginIsFrom, tb } from '@baguspay/db/types'
 import { Injectable, NotFoundException } from '@nestjs/common'
-import { eq, gte, lte, type SQL } from '@repo/db'
-import { BalanceMutationType, LoginIsFrom, tb } from '@repo/db/types'
 import type { MetaPaginated, TUser } from 'src/common/types/meta.type'
 import { getDeviceInfo, isBagusPayMobileApp } from 'src/common/utils/device-fingerprint'
 import { SendResponse } from 'src/common/utils/response'

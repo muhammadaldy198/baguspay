@@ -1,4 +1,3 @@
-import { Injectable } from '@nestjs/common'
 import {
   and,
   arrayContains,
@@ -10,7 +9,7 @@ import {
   type InferInsertModel,
   lte,
   type SQL,
-} from '@repo/db'
+} from '@baguspay/db'
 import {
   type InquiryStatus,
   type OrderStatus,
@@ -18,7 +17,8 @@ import {
   type PaymentStatus,
   type RefundStatus,
   tb,
-} from '@repo/db/types'
+} from '@baguspay/db/types'
+import { Injectable } from '@nestjs/common'
 import type { DBInstance } from 'src/common/types/db-instance'
 import { DatabaseService } from 'src/core/database/database.service'
 import { GetOrderHistoryQueryDto } from './dto/orders.dto'

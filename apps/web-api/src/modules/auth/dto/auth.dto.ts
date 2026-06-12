@@ -73,12 +73,7 @@ export class RegisterDto {
 export class GoogleLoginDto {
   @ApiProperty()
   @IsString()
-  access_token: string
-
-  @ApiProperty()
-  @IsOptional()
-  @IsString()
-  id_token?: string
+  id_token: string
 }
 
 export class RefreshTokenDto {

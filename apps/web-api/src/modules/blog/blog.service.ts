@@ -1,5 +1,5 @@
+import { ArticleType } from '@baguspay/db/types'
 import { Injectable, NotFoundException } from '@nestjs/common'
-import { ArticleType } from '@repo/db/types'
 import { SendResponse } from 'src/common/utils/response'
 import { StorageService } from 'src/core/storage/storage.service'
 import { BlogRepository } from './blog.repository'

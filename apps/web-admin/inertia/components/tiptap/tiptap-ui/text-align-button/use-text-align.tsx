@@ -1,7 +1,6 @@
 'use client'
 
-import type { ChainedCommands } from '@tiptap/react'
-import type { Editor } from '@tiptap/react'
+import type { ChainedCommands, Editor } from '@tiptap/react'
 import * as React from 'react'
 import { useHotkeys } from 'react-hotkeys-hook'
 // --- Icons ---

@@ -3,8 +3,8 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from '@repo/ui/components/ui/accordion'
-import { Badge } from '@repo/ui/components/ui/badge'
+} from '@baguspay/ui/components/ui/accordion'
+import { Badge } from '@baguspay/ui/components/ui/badge'
 import {
   BuildingIcon,
   CreditCardIcon,

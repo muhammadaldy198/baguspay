@@ -1,4 +1,4 @@
-import { Button } from '@repo/ui/components/ui/button'
+import { Button } from '@baguspay/ui/components/ui/button'
 import { CopyIcon } from 'lucide-react'
 import { memo, useCallback, useMemo } from 'react'
 

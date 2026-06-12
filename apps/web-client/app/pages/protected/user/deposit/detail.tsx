@@ -1,6 +1,6 @@
-import { DepositStatus, PaymentMethodType } from '@repo/db/types'
-import { Badge } from '@repo/ui/components/ui/badge'
-import { Button } from '@repo/ui/components/ui/button'
+import { DepositStatus, PaymentMethodType } from '@baguspay/db/types'
+import { Badge } from '@baguspay/ui/components/ui/badge'
+import { Button } from '@baguspay/ui/components/ui/button'
 import {
   Dialog,
   DialogClose,
@@ -9,7 +9,7 @@ import {
   DialogFooter,
   DialogTitle,
   DialogTrigger,
-} from '@repo/ui/components/ui/dialog'
+} from '@baguspay/ui/components/ui/dialog'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import {
   AlertCircleIcon,

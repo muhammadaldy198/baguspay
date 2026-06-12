@@ -1,4 +1,4 @@
-import { Button } from '@repo/ui/components/ui/button'
+import { Button } from '@baguspay/ui/components/ui/button'
 import { useAtomValue } from 'jotai'
 import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'

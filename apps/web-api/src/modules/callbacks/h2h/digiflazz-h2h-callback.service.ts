@@ -1,5 +1,5 @@
+import { OrderStatus } from '@baguspay/db/types'
 import { BadRequestException, Injectable, Logger } from '@nestjs/common'
-import { OrderStatus } from '@repo/db/types'
 import { DigiflazzService } from 'src/integrations/h2h/digiflazz/digiflazz.service'
 import type {
   DigiflazzPostpaidCallbackData,

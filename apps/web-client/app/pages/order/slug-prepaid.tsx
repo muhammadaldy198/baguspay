@@ -1,8 +1,8 @@
+import { Badge } from '@baguspay/ui/components/ui/badge'
+import { Button } from '@baguspay/ui/components/ui/button'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@baguspay/ui/components/ui/tabs'
+import { cn } from '@baguspay/ui/lib/utils'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Badge } from '@repo/ui/components/ui/badge'
-import { Button } from '@repo/ui/components/ui/button'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@repo/ui/components/ui/tabs'
-import { cn } from '@repo/ui/lib/utils'
 import { useAtomValue } from 'jotai'
 import {
   CheckIcon,

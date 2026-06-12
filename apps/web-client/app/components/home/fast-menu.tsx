@@ -1,5 +1,10 @@
-import { ProductGroupingType } from '@repo/db/types'
-import { Dialog, DialogContent, DialogHeader, DialogTrigger } from '@repo/ui/components/ui/dialog'
+import { ProductGroupingType } from '@baguspay/db/types'
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTrigger,
+} from '@baguspay/ui/components/ui/dialog'
 import {
   Sheet,
   SheetContent,
@@ -7,7 +12,7 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from '@repo/ui/components/ui/sheet'
+} from '@baguspay/ui/components/ui/sheet'
 import { useQuery } from '@tanstack/react-query'
 import { useId, useMemo, useState } from 'react'
 import { Link } from 'react-router'

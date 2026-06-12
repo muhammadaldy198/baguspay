@@ -1,5 +1,5 @@
-import { OrderStatus, PaymentStatus, RefundStatus } from '@repo/db/types'
-import { Badge } from '@repo/ui/components/ui/badge'
+import { OrderStatus, PaymentStatus, RefundStatus } from '@baguspay/db/types'
+import { Badge } from '@baguspay/ui/components/ui/badge'
 import {
   AlertCircleIcon,
   CheckCircleIcon,

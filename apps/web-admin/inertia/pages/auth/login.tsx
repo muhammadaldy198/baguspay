@@ -1,7 +1,7 @@
+import { Button } from '@baguspay/ui/components/ui/button'
+import { Input } from '@baguspay/ui/components/ui/input'
+import { Label } from '@baguspay/ui/components/ui/label'
 import { useForm } from '@inertiajs/react'
-import { Button } from '@repo/ui/components/ui/button'
-import { Input } from '@repo/ui/components/ui/input'
-import { Label } from '@repo/ui/components/ui/label'
 import toast from 'react-hot-toast'
 import type { LoginValidator } from '#validators/auth'
 

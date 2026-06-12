@@ -1,7 +1,7 @@
+import { and, eq } from '@baguspay/db'
+import { DepositStatus, tb } from '@baguspay/db/types'
 import { Processor, WorkerHost } from '@nestjs/bullmq'
 import { Logger } from '@nestjs/common'
-import { and, eq } from '@repo/db'
-import { DepositStatus, tb } from '@repo/db/types'
 import type { Job } from 'bullmq'
 import { DatabaseService } from 'src/core/database/database.service'
 

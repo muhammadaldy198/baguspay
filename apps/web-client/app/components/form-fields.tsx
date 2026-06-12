@@ -1,13 +1,13 @@
-import { Input } from '@repo/ui/components/ui/input'
-import { Label } from '@repo/ui/components/ui/label'
+import { Input } from '@baguspay/ui/components/ui/input'
+import { Label } from '@baguspay/ui/components/ui/label'
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@repo/ui/components/ui/select'
-import { cn } from '@repo/ui/lib/utils'
+} from '@baguspay/ui/components/ui/select'
+import { cn } from '@baguspay/ui/lib/utils'
 import * as React from 'react'
 
 interface UnderlinedInputProps extends React.ComponentProps<typeof Input> {

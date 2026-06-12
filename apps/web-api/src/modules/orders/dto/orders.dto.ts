@@ -1,5 +1,5 @@
+import { OrderStatus, PaymentStatus, RefundStatus } from '@baguspay/db/types'
 import { ApiProperty } from '@nestjs/swagger'
-import { OrderStatus, PaymentStatus, RefundStatus } from '@repo/db/types'
 import { Type } from 'class-transformer'
 import {
   IsDateString,

@@ -1,6 +1,6 @@
+import { Badge } from '@baguspay/ui/components/ui/badge'
+import { Button } from '@baguspay/ui/components/ui/button'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Badge } from '@repo/ui/components/ui/badge'
-import { Button } from '@repo/ui/components/ui/button'
 import { BoltIcon, CheckCircle2Icon, InfoIcon, LoaderCircleIcon, ZapIcon } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { UnderlinedInput } from '~/components/form-fields'

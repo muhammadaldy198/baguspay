@@ -1,6 +1,5 @@
 import type { InferPageProps } from '@adonisjs/inertia/types'
-import { router } from '@inertiajs/react'
-import { Button } from '@repo/ui/components/ui/button'
+import { Button } from '@baguspay/ui/components/ui/button'
 import {
   Dialog,
   DialogContent,
@@ -9,8 +8,9 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@repo/ui/components/ui/dialog'
-import { cn } from '@repo/ui/lib/utils'
+} from '@baguspay/ui/components/ui/dialog'
+import { cn } from '@baguspay/ui/lib/utils'
+import { router } from '@inertiajs/react'
 import { Trash2 } from 'lucide-react'
 import type ProductsCategoriesController from '#controllers/product_categories_controller'
 import Image from '~/components/image'

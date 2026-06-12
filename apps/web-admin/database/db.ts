@@ -1,4 +1,4 @@
-import { createDatabase } from '@repo/db'
+import { createDatabase } from '@baguspay/db'
 import env from '#start/env'
 
 const database = createDatabase(env.get('DATABASE_URL'))

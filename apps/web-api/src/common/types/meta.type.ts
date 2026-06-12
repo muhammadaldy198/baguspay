@@ -1,4 +1,4 @@
-import type { UserRole } from '@repo/db/types'
+import type { UserRole } from '@baguspay/db/types'
 
 export interface MetaPaginated {
   meta: {

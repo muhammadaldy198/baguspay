@@ -2,9 +2,9 @@
 
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 
+import { and, asc, count, eq, gte, lte, ne, or, type SQL } from '@baguspay/db'
+import { OfferType, tb } from '@baguspay/db/types'
 import { Injectable, NotFoundException } from '@nestjs/common'
-import { and, asc, count, eq, gte, lte, ne, or, type SQL } from '@repo/db'
-import { OfferType, tb } from '@repo/db/types'
 import type { MetaPaginated } from 'src/common/types/meta.type'
 import { SendResponse } from 'src/common/utils/response'
 import { DatabaseService } from 'src/core/database/database.service'

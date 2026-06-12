@@ -1,4 +1,4 @@
-import { PaymentMethodType } from '@repo/db/types'
+import { PaymentMethodType } from '@baguspay/db/types'
 import {
   BuildingIcon,
   CreditCardIcon,

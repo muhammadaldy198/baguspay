@@ -1,5 +1,5 @@
+import { PaymentStatus, ProductProvider } from '@baguspay/db/types'
 import { Injectable, Logger } from '@nestjs/common'
-import { PaymentStatus, ProductProvider } from '@repo/db/types'
 import { DatabaseService } from 'src/core/database/database.service'
 import { OffersRepository } from 'src/modules/offers/offers.repository'
 import { ProductRepository } from 'src/modules/products/product.repository'

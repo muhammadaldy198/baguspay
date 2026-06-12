@@ -1,6 +1,6 @@
-import { UserRole } from '@repo/db/types'
-import { Button } from '@repo/ui/components/ui/button'
-import { cn } from '@repo/ui/lib/utils'
+import { UserRole } from '@baguspay/db/types'
+import { Button } from '@baguspay/ui/components/ui/button'
+import { cn } from '@baguspay/ui/lib/utils'
 import { useAtom, useAtomValue, useSetAtom } from 'jotai'
 import {
   Fingerprint,

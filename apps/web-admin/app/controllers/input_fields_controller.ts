@@ -1,6 +1,6 @@
 import type { HttpContext } from '@adonisjs/core/http'
-import { and, desc, eq } from '@repo/db'
-import { tb } from '@repo/db/types'
+import { and, desc, eq } from '@baguspay/db'
+import { tb } from '@baguspay/db/types'
 import vine from '@vinejs/vine'
 import { db } from '#database/db'
 import {

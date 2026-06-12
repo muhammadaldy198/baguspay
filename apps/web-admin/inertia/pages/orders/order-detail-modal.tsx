@@ -1,6 +1,6 @@
-import type { InferSelectModel } from '@repo/db'
-import { OrderStatus, PaymentStatus, RefundStatus, type tb } from '@repo/db/types'
-import { Button } from '@repo/ui/components/ui/button'
+import type { InferSelectModel } from '@baguspay/db'
+import { OrderStatus, PaymentStatus, RefundStatus, type tb } from '@baguspay/db/types'
+import { Button } from '@baguspay/ui/components/ui/button'
 import {
   Dialog,
   DialogContent,
@@ -9,10 +9,10 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@repo/ui/components/ui/dialog'
-import { Label } from '@repo/ui/components/ui/label'
-import { Skeleton } from '@repo/ui/components/ui/skeleton'
-import { cn } from '@repo/ui/lib/utils'
+} from '@baguspay/ui/components/ui/dialog'
+import { Label } from '@baguspay/ui/components/ui/label'
+import { Skeleton } from '@baguspay/ui/components/ui/skeleton'
+import { cn } from '@baguspay/ui/lib/utils'
 import { useMutation } from '@tanstack/react-query'
 import { EyeIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'

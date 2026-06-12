@@ -1,6 +1,6 @@
+import { createDatabase, type Database, type DatabaseConnection } from '@baguspay/db'
 import { Injectable, Logger, type OnModuleDestroy, type OnModuleInit } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
-import { createDatabase, type Database, type DatabaseConnection } from '@repo/db'
 
 @Injectable()
 export class DatabaseService implements OnModuleInit, OnModuleDestroy {

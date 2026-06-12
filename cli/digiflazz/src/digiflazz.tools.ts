@@ -34,6 +34,36 @@ export type SellerFilterConfig = {
   enforceMaxPrice: boolean
 }
 
+export type SellerPriorityRule = {
+  seller?: string[]
+  blacklist?: string[]
+}
+
+export type SellerPriorityPriceGapRule = {
+  enabled?: boolean
+  allowCheapestNonListFallback?: boolean
+  maxPriceGap: number
+  minRating: number
+  minBuyerCount: number
+}
+
+export type SellerPriorityConfig = {
+  global?: SellerPriorityRule
+  perBrand?: Record<string, SellerPriorityRule>
+  perSubBrand?: Record<string, SellerPriorityRule>
+  listPriceGapRule?: SellerPriorityPriceGapRule
+}
+
+type SelectedPriorityScope = 'product' | 'sub-brand' | 'brand' | 'global'
+
+type BestSellerSelection = {
+  seller: Seller
+  source: 'priority-list' | 'priority-overridden' | 'fallback'
+  priorityScope?: SelectedPriorityScope
+  overriddenPrioritySeller?: string
+  priceGap?: number
+}
+
 export type DigiflazzUpdateConfig = {
   cookies: Cookie[]
   categories?: string[]
@@ -49,6 +79,7 @@ export type DigiflazzUpdateConfig = {
     priceOverMax: boolean
   }
   sellerFilter?: SellerFilterConfig
+  sellerPriority?: SellerPriorityConfig
   requestDelayMs?: number
   logger?: Partial<UpdateLogger>
 }
@@ -165,6 +196,21 @@ const extractErrorMessages = (detail: UpdateErrorDetail) => {
 
 const normalizeConfigKey = (value: string) => value.toLowerCase()
 
+const normalizeMatchKey = (value: string) => normalizeConfigKey(value).trim()
+
+const toComparableKeys = (value: string) => {
+  const normalized = normalizeMatchKey(value)
+  if (!normalized) {
+    return []
+  }
+
+  const keys = new Set<string>([normalized])
+  if (normalized.endsWith('s') && normalized.length > 1) {
+    keys.add(normalized.slice(0, -1))
+  }
+  return [...keys]
+}
+
 const buildPerProductConfigMap = (perProduct: Record<string, PerProductConfig>) => {
   const entries = Object.entries(perProduct)
   return new Map(entries.map(([key, value]) => [normalizeConfigKey(key), value]))
@@ -187,7 +233,7 @@ const isProblematic = (
   const checks: boolean[] = []
 
   if (criteria.inactiveSeller) {
-    checks.push(!product.status || product.status_sellerSku === 0)
+    checks.push(!product.status || product.status_sellerSku < 0)
   }
 
   if (criteria.priceOverMax) {
@@ -202,6 +248,7 @@ const isSellerAllowed = (
   product: ProductCategory,
   minRating: number,
   filter: SellerFilterConfig,
+  blockedSellers: Set<string>,
 ) => {
   if (filter.requireActive && (!seller.status || seller.status_sellerSku === 0)) {
     return false
@@ -211,10 +258,7 @@ const isSellerAllowed = (
     return false
   }
 
-  if (
-    filter.blacklist.length > 0 &&
-    filter.blacklist.some((blocked) => blocked.toLowerCase() === seller.seller.toLowerCase())
-  ) {
+  if (blockedSellers.has(normalizeSellerName(seller.seller))) {
     return false
   }
 
@@ -225,41 +269,305 @@ const isSellerAllowed = (
   return true
 }
 
+const normalizeNames = (names?: string[]) =>
+  (names ?? []).map((name) => name.trim().toLowerCase()).filter(Boolean)
+
+const normalizeSellerName = (name: string) => name.trim().toLowerCase()
+
+const getSellerPriorityRuleForBrand = (
+  sellerPriority: SellerPriorityConfig,
+  brandId: string,
+  brandName: string,
+  categoryId: string,
+  categoryName: string,
+) => {
+  const perBrand = sellerPriority.perBrand ?? {}
+  const comparableTargets = new Set<string>([
+    ...toComparableKeys(brandId),
+    ...toComparableKeys(brandName),
+    ...toComparableKeys(categoryId),
+    ...toComparableKeys(categoryName),
+  ])
+
+  for (const [key, rule] of Object.entries(perBrand)) {
+    const keyVariants = toComparableKeys(key)
+    if (keyVariants.some((candidate) => comparableTargets.has(candidate))) {
+      return rule
+    }
+  }
+
+  return undefined
+}
+
+const getSellerPriorityRuleForSubBrand = (
+  sellerPriority: SellerPriorityConfig,
+  subBrandId: string,
+  subBrandName: string,
+) => {
+  const perSubBrand = sellerPriority.perSubBrand ?? {}
+  const normalizedSubBrandId = normalizeConfigKey(subBrandId)
+  const normalizedSubBrandName = normalizeConfigKey(subBrandName)
+
+  for (const [key, rule] of Object.entries(perSubBrand)) {
+    const normalizedKey = normalizeConfigKey(key)
+    if (normalizedKey === normalizedSubBrandId || normalizedKey === normalizedSubBrandName) {
+      return rule
+    }
+  }
+
+  return undefined
+}
+
+const buildBlockedSellers = (
+  filter: SellerFilterConfig,
+  sellerPriority: SellerPriorityConfig,
+  brandRule?: SellerPriorityRule,
+  subBrandRule?: SellerPriorityRule,
+) => {
+  const globalBlocked = normalizeNames([
+    ...filter.blacklist,
+    ...(sellerPriority.global?.blacklist ?? []),
+  ])
+  const brandBlocked = normalizeNames(brandRule?.blacklist)
+  const subBrandBlocked = normalizeNames(subBrandRule?.blacklist)
+  const brandAllowed = new Set(normalizeNames(brandRule?.seller))
+  const subBrandAllowed = new Set(normalizeNames(subBrandRule?.seller))
+
+  return new Set(
+    [...globalBlocked, ...brandBlocked, ...subBrandBlocked].filter((name) => {
+      // Brand/sub-brand level seller priority can explicitly allow names blocked globally.
+      if (brandAllowed.has(name) || subBrandAllowed.has(name)) {
+        return false
+      }
+      return true
+    }),
+  )
+}
+
+const pickByPriorityNames = (candidates: Seller[], names: string[]) => {
+  if (names.length === 0) {
+    return null
+  }
+
+  const priorityPool = new Set(names)
+  const prioritizedCandidates = candidates.filter((seller) =>
+    priorityPool.has(normalizeSellerName(seller.seller)),
+  )
+
+  if (prioritizedCandidates.length === 0) {
+    return null
+  }
+
+  return prioritizedCandidates.sort((left, right) => left.price - right.price)[0]
+}
+
+const parseRatingCount = (value: string) => {
+  const source = value.trim()
+  const inParentheses = source.match(/\(([^)]*)\)/)?.[1]?.trim() ?? source
+
+  const lessThanMatch = inParentheses.match(/<\s*(\d+)/)
+  if (lessThanMatch) {
+    const threshold = Number.parseInt(lessThanMatch[1], 10)
+    return Number.isNaN(threshold) ? 0 : Math.max(0, threshold - 1)
+  }
+
+  const plusMatch = inParentheses.match(/(\d+)\s*\+/)
+  if (plusMatch) {
+    const minValue = Number.parseInt(plusMatch[1], 10)
+    return Number.isNaN(minValue) ? 0 : minValue
+  }
+
+  const exactMatch = inParentheses.match(/(\d+)/)
+  if (exactMatch) {
+    const exactValue = Number.parseInt(exactMatch[1], 10)
+    return Number.isNaN(exactValue) ? 0 : exactValue
+  }
+
+  return 0
+}
+
+const isBuyerCountEligible = (ratingQty: string, minBuyerCount: number) => {
+  const buyerCount = parseRatingCount(ratingQty)
+  if (buyerCount > minBuyerCount) {
+    return true
+  }
+
+  // Example: "5 (10+ rating)" should pass for minBuyerCount=10,
+  // while "5 (10 rating)" should not.
+  const isPlusFormat = /\(\s*\d+\s*\+/.test(ratingQty)
+  return isPlusFormat && buyerCount >= minBuyerCount
+}
+
+const pickByPriceGapRule = (
+  candidates: Seller[],
+  selectedFromPriority: Seller,
+  allPriorityNames: Set<string>,
+  rule: SellerPriorityPriceGapRule,
+) => {
+  if (rule.enabled === false || rule.allowCheapestNonListFallback === false) {
+    return {
+      seller: selectedFromPriority,
+      overridden: false,
+    }
+  }
+
+  const nonPriorityCandidates = candidates.filter((seller) => {
+    const isPrioritySeller = allPriorityNames.has(normalizeSellerName(seller.seller))
+    if (isPrioritySeller) {
+      return false
+    }
+
+    if (seller.reviewAvg < rule.minRating) {
+      return false
+    }
+
+    return isBuyerCountEligible(seller.rating_qty, rule.minBuyerCount)
+  })
+
+  if (nonPriorityCandidates.length === 0) {
+    return {
+      seller: selectedFromPriority,
+      overridden: false,
+    }
+  }
+
+  const cheapestNonPriority = nonPriorityCandidates.sort((left, right) => {
+    if (left.price !== right.price) {
+      return left.price - right.price
+    }
+
+    if (left.reviewAvg !== right.reviewAvg) {
+      return right.reviewAvg - left.reviewAvg
+    }
+
+    return parseRatingCount(right.rating_qty) - parseRatingCount(left.rating_qty)
+  })[0]
+
+  const priceGap = selectedFromPriority.price - cheapestNonPriority.price
+  if (priceGap > rule.maxPriceGap) {
+    return {
+      seller: cheapestNonPriority,
+      overridden: true,
+      overriddenPrioritySeller: selectedFromPriority.seller,
+      priceGap,
+    }
+  }
+
+  return {
+    seller: selectedFromPriority,
+    overridden: false,
+  }
+}
+
 const pickBestSeller = (
   product: ProductCategory,
   sellers: Seller[],
   filter: SellerFilterConfig,
+  sellerPriority: SellerPriorityConfig,
+  categoryId: string,
+  categoryName: string,
+  brandId: string,
+  brandName: string,
+  subBrandId: string,
+  subBrandName: string,
   perProduct?: PerProductConfig,
-) => {
+): BestSellerSelection | null => {
   const ratingSteps = filter.minRatingSteps?.length
     ? [...filter.minRatingSteps]
     : [filter.minRating]
   const allowedSku = perProduct?.allowedSellerSkuCodes?.map((code) => code.toLowerCase()) ?? []
+  const brandRule = getSellerPriorityRuleForBrand(
+    sellerPriority,
+    brandId,
+    brandName,
+    categoryId,
+    categoryName,
+  )
+  const subBrandRule = getSellerPriorityRuleForSubBrand(sellerPriority, subBrandId, subBrandName)
+  const blockedSellers = buildBlockedSellers(filter, sellerPriority, brandRule, subBrandRule)
+  const globalPriority = normalizeNames(sellerPriority.global?.seller)
+  const brandPriority = normalizeNames(brandRule?.seller)
+  const subBrandPriority = normalizeNames(subBrandRule?.seller)
+  const perProductPriority = normalizeNames(perProduct?.preferredSellers)
+  const listPriceGapRule = sellerPriority.listPriceGapRule
+  const allowCheapestNonListFallback = listPriceGapRule?.allowCheapestNonListFallback ?? true
 
   for (const minRating of ratingSteps) {
     const candidates = sellers.filter((seller) => {
       if (allowedSku.length > 0 && !allowedSku.includes(seller.seller_sku_code.toLowerCase())) {
         return false
       }
-      return isSellerAllowed(seller, product, minRating, filter)
+      return isSellerAllowed(seller, product, minRating, filter, blockedSellers)
     })
 
     if (candidates.length === 0) {
       continue
     }
 
-    if (perProduct?.preferredSellers?.length) {
-      for (const name of perProduct.preferredSellers) {
-        const match = candidates.find(
-          (seller) => seller.seller.toLowerCase() === name.toLowerCase(),
-        )
-        if (match) {
-          return match
-        }
+    const priorityBuckets: Array<{ names: string[]; scope: SelectedPriorityScope }> = [
+      { names: perProductPriority, scope: 'product' },
+      { names: subBrandPriority, scope: 'sub-brand' },
+      { names: brandPriority, scope: 'brand' },
+      { names: globalPriority, scope: 'global' },
+    ]
+    let selectedFromPriority: Seller | null = null
+    let selectedPriorityScope: SelectedPriorityScope | undefined
+
+    for (const bucket of priorityBuckets) {
+      selectedFromPriority = pickByPriorityNames(candidates, bucket.names)
+      if (selectedFromPriority) {
+        selectedPriorityScope = bucket.scope
+        break
       }
     }
 
-    return candidates.sort((left, right) => left.price - right.price)[0]
+    if (selectedFromPriority) {
+      if (!listPriceGapRule) {
+        return {
+          seller: selectedFromPriority,
+          source: 'priority-list',
+          priorityScope: selectedPriorityScope,
+        }
+      }
+
+      const allPriorityNames = new Set([
+        ...perProductPriority,
+        ...subBrandPriority,
+        ...brandPriority,
+        ...globalPriority,
+      ])
+      const picked = pickByPriceGapRule(
+        candidates,
+        selectedFromPriority,
+        allPriorityNames,
+        listPriceGapRule,
+      )
+
+      if (picked.overridden) {
+        return {
+          seller: picked.seller,
+          source: 'priority-overridden',
+          priorityScope: selectedPriorityScope,
+          overriddenPrioritySeller: picked.overriddenPrioritySeller,
+          priceGap: picked.priceGap,
+        }
+      }
+
+      return {
+        seller: picked.seller,
+        source: 'priority-list',
+        priorityScope: selectedPriorityScope,
+      }
+    }
+
+    if (!allowCheapestNonListFallback) {
+      return null
+    }
+
+    return {
+      seller: candidates.sort((left, right) => left.price - right.price)[0],
+      source: 'fallback',
+    }
   }
 
   return null
@@ -421,6 +729,21 @@ const normalizeConfig = (config: DigiflazzUpdateConfig) => {
       requireActive: true,
       enforceMaxPrice: false,
     },
+    sellerPriority: config.sellerPriority ?? {
+      global: {
+        seller: [],
+        blacklist: [],
+      },
+      perBrand: {},
+      perSubBrand: {},
+      listPriceGapRule: {
+        enabled: true,
+        allowCheapestNonListFallback: true,
+        maxPriceGap: 1000,
+        minRating: 4,
+        minBuyerCount: 10,
+      },
+    },
     requestDelayMs: config.requestDelayMs ?? 1000,
   }
 }
@@ -437,7 +760,9 @@ export const digiflazzTools = {
 
     const categoryResponse = await digiflazz.getProductCategory()
     const brandResponse = await digiflazz.getProductBrand()
+    const typeResponse = await digiflazz.getProductType()
     const brandNameById = new Map(brandResponse.data.map((brand) => [brand.id, brand.name]))
+    const typeNameById = new Map(typeResponse.data.map((type) => [type.id, type.name]))
     const categories = categoryResponse.data.filter((category) =>
       matchesSelector(normalized.categories, category.id, category.name),
     )
@@ -587,12 +912,22 @@ export const digiflazzTools = {
                 continue
               }
 
-              const bestSeller = pickBestSeller(
+              const bestSellerSelection = pickBestSeller(
                 product,
                 sellerResponse.data,
                 normalized.sellerFilter,
+                normalized.sellerPriority,
+                category.id,
+                category.name,
+                brandId,
+                brandInfo.name,
+                product.product_details.type.id,
+                typeNameById.get(product.product_details.type.id) ??
+                  product.product_details.type.id,
                 perProductConfig,
               )
+
+              const bestSeller = bestSellerSelection?.seller
 
               if (!bestSeller) {
                 report.stats.skippedNoSeller += 1
@@ -625,9 +960,27 @@ export const digiflazzTools = {
               const sellerLabel = sellerChanged
                 ? `seller ${product.seller || '-'} -> ${bestSeller.seller}`
                 : `seller ${bestSeller.seller}`
+
+              let sourceLabel = 'source fallback termurah'
+              if (bestSellerSelection?.source === 'priority-list') {
+                sourceLabel = `source list ${bestSellerSelection.priorityScope ?? 'unknown'}`
+              }
+              if (bestSellerSelection?.source === 'priority-overridden') {
+                const gap = bestSellerSelection.priceGap ?? 0
+                sourceLabel = `source list ${bestSellerSelection.priorityScope ?? 'unknown'} terkalahkan: ${bestSellerSelection.overriddenPrioritySeller ?? '-'} -> ${bestSeller.seller} (selisih ${gap})`
+              }
+
               logger.info(
-                `${product.product} (${product.product_id}) ${sellerLabel} | price ${bestSeller.price}`,
+                `${product.product} (${product.product_id}) ${sellerLabel} | price ${bestSeller.price} | ${sourceLabel}`,
               )
+
+              const selectionReason =
+                bestSellerSelection?.source === 'priority-overridden'
+                  ? `seller-priority-overridden-${bestSellerSelection.priorityScope ?? 'unknown'}`
+                  : bestSellerSelection?.source === 'priority-list'
+                    ? `seller-priority-${bestSellerSelection.priorityScope ?? 'unknown'}`
+                    : 'seller-fallback-cheapest'
+
               report.items.push({
                 productId: product.product_id,
                 productName: product.product,
@@ -640,7 +993,7 @@ export const digiflazzTools = {
                 codeBefore: product.code,
                 codeAfter: updatedProduct.code,
                 status: 'updated',
-                reason: sellerChanged ? 'seller-changed' : 'seller-confirmed',
+                reason: `${sellerChanged ? 'seller-changed' : 'seller-confirmed'}|${selectionReason}`,
               })
             } catch (error) {
               const detail = extractErrorDetail(error)

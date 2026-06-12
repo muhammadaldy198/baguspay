@@ -1,4 +1,4 @@
-import { BannerLocation } from '@repo/db/types'
+import { BannerLocation } from '@baguspay/db/types'
 import vine from '@vinejs/vine'
 import type { Infer } from '@vinejs/vine/types'
 

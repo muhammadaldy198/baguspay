@@ -1,8 +1,7 @@
 import type { InferPageProps } from '@adonisjs/inertia/types'
-import { router } from '@inertiajs/react'
-import { OrderStatus, PaymentStatus } from '@repo/db/types'
-import { DataTable } from '@repo/ui/components/data-table'
-import { Button } from '@repo/ui/components/ui/button'
+import { OrderStatus, PaymentStatus } from '@baguspay/db/types'
+import { DataTable } from '@baguspay/ui/components/data-table'
+import { Button } from '@baguspay/ui/components/ui/button'
 import {
   Dialog,
   DialogContent,
@@ -11,17 +10,18 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@repo/ui/components/ui/dialog'
-import { Input } from '@repo/ui/components/ui/input'
-import { Label } from '@repo/ui/components/ui/label'
+} from '@baguspay/ui/components/ui/dialog'
+import { Input } from '@baguspay/ui/components/ui/input'
+import { Label } from '@baguspay/ui/components/ui/label'
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@repo/ui/components/ui/select'
-import { cn } from '@repo/ui/lib/utils'
+} from '@baguspay/ui/components/ui/select'
+import { cn } from '@baguspay/ui/lib/utils'
+import { router } from '@inertiajs/react'
 import type { ColumnDef } from '@tanstack/react-table'
 import { type FormEvent, useState } from 'react'
 import type OfferController from '#controllers/offer_controller'

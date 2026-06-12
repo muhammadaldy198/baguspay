@@ -1,5 +1,5 @@
-import { Avatar, AvatarFallback, AvatarImage } from '@repo/ui/components/ui/avatar'
-import { cn } from '@repo/ui/lib/utils'
+import { Avatar, AvatarFallback, AvatarImage } from '@baguspay/ui/components/ui/avatar'
+import { cn } from '@baguspay/ui/lib/utils'
 import { useAtomValue } from 'jotai'
 import { userAtom } from '~/store/user'
 import { navData } from '../header'

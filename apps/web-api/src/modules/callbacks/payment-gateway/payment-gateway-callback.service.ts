@@ -1,5 +1,5 @@
+import { PaymentMethodProvider, PaymentStatus } from '@baguspay/db/types'
 import { BadRequestException, Injectable } from '@nestjs/common'
-import { PaymentMethodProvider, PaymentStatus } from '@repo/db/types'
 import { SendResponse } from 'src/common/utils/response'
 import { DuitkuService } from 'src/integrations/payment-gateway/duitku/duitku.service'
 import type { DuitkuCallbackPayload } from 'src/integrations/payment-gateway/duitku/duitku.type'

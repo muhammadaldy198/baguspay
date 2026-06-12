@@ -1,4 +1,4 @@
-import { Badge } from '@repo/ui/components/ui/badge'
+import { Badge } from '@baguspay/ui/components/ui/badge'
 import { AlertCircleIcon, CalendarIcon, ClockIcon, XCircleIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
 

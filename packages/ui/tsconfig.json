@@ -1,10 +1,10 @@
 {
-  "extends": "@repo/typescript-config/react-library.json",
+  "extends": "@baguspay/typescript-config/react-library.json",
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
       "@ui/*": ["./src/*"],
-      "@repo/ui/*": ["./src/*"]
+      "@baguspay/ui/*": ["./src/*"]
     },
     "types": ["react", "react-dom"]
   },

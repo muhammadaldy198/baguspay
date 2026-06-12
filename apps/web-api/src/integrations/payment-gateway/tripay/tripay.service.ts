@@ -1,7 +1,7 @@
 import crypto from 'node:crypto'
+import { PaymentMethodFeeType, PaymentStatus } from '@baguspay/db/types'
 import { HttpException, Injectable, InternalServerErrorException } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
-import { PaymentMethodFeeType, PaymentStatus } from '@repo/db/types'
 import { ApiServiceException } from 'src/common/exceptions/api-service.exception'
 import type { PaymentGateway } from '../payment.interface'
 import { calculatePaymentFee } from '../payment-fee'

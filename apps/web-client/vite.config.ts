@@ -11,6 +11,6 @@ export default defineConfig({
   //   preserveSymlinks: true,
   // },
   ssr: {
-    noExternal: ['@repo/ui'],
+    noExternal: ['@baguspay/ui'],
   },
 })

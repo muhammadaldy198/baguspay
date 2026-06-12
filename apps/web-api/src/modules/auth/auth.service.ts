@@ -1,7 +1,7 @@
+import { LoginIsFrom, OAuthProvider, UserRegisteredType, UserRole } from '@baguspay/db/types'
 import { BadRequestException, Injectable } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { JwtService } from '@nestjs/jwt'
-import { LoginIsFrom, OAuthProvider, UserRegisteredType, UserRole } from '@repo/db/types'
 import axios from 'axios'
 import { compare, hash } from 'bcrypt'
 import { type DeviceInfo, getDeviceInfo, isSameDevice } from 'src/common/utils/device-fingerprint'
@@ -32,14 +32,6 @@ type GoogleTokenInfo = {
   name?: string
   picture?: string
   aud?: string
-}
-
-type GoogleUserInfo = {
-  sub: string
-  email: string
-  email_verified: boolean
-  name?: string
-  picture?: string
 }
 
 // Token expiration constants
@@ -110,28 +102,6 @@ export class AuthService {
       return data
     } catch {
       throw new BadRequestException('Failed to verify Google token')
-    }
-  }
-
-  private async fetchGoogleUserInfo(accessToken: string): Promise<GoogleUserInfo> {
-    try {
-      const { data } = await axios.get<GoogleUserInfo>(
-        'https://www.googleapis.com/oauth2/v3/userinfo',
-        {
-          headers: { Authorization: `Bearer ${accessToken}` },
-        },
-      )
-
-      if (!data?.email || !data?.sub) {
-        throw new BadRequestException('Invalid Google user info')
-      }
-
-      return {
-        ...data,
-        email_verified: Boolean((data as any).email_verified),
-      }
-    } catch {
-      throw new BadRequestException('Failed to fetch Google user info')
     }
   }
 
@@ -254,15 +224,7 @@ export class AuthService {
   }
 
   async loginWithGoogle(data: GoogleLoginDto, headers: LoginHeaders) {
-    let tokenInfo: GoogleTokenInfo | GoogleUserInfo
-
-    if (data.id_token) {
-      tokenInfo = await this.verifyGoogleIdToken(data.id_token)
-    } else if (data.access_token) {
-      tokenInfo = await this.fetchGoogleUserInfo(data.access_token)
-    } else {
-      throw new BadRequestException('Token Google tidak lengkap')
-    }
+    const tokenInfo = await this.verifyGoogleIdToken(data.id_token)
 
     const user = await this.authRepository.findUserByEmail(tokenInfo.email)
 
@@ -312,7 +274,6 @@ export class AuthService {
       refresh_token: tokens.refreshToken,
       access_token_expires_at: tokens.accessTokenExpiresAt,
       refresh_token_expires_at: tokens.refreshTokenExpiresAt,
-      id_token: data.id_token,
     }
 
     // Find existing session using fingerprint (primary) or device_id (fallback)

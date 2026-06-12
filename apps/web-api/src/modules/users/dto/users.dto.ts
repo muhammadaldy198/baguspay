@@ -1,5 +1,5 @@
+import { BalanceMutationRefType, BalanceMutationType } from '@baguspay/db/types'
 import { ApiProperty } from '@nestjs/swagger'
-import { BalanceMutationRefType, BalanceMutationType } from '@repo/db/types'
 import { Type } from 'class-transformer'
 import { IsDateString, IsEnum, IsNumber, IsOptional, Min } from 'class-validator'
 

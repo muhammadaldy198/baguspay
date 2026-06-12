@@ -1,6 +1,6 @@
 import type { HttpContext } from '@adonisjs/core/http'
-import { and, asc, count, desc, eq, gte, lte } from '@repo/db'
-import { tb } from '@repo/db/types'
+import { and, asc, count, desc, eq, gte, lte } from '@baguspay/db'
+import { tb } from '@baguspay/db/types'
 import vine from '@vinejs/vine'
 import { db } from '#database/db'
 import { getBalanceMutationQueryValidator } from '#validators/balance_mutation'

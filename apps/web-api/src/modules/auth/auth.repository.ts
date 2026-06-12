@@ -1,6 +1,6 @@
+import { and, eq, type InferInsertModel } from '@baguspay/db'
+import { OAuthProvider, tb } from '@baguspay/db/types'
 import { Injectable } from '@nestjs/common'
-import { and, eq, type InferInsertModel } from '@repo/db'
-import { OAuthProvider, tb } from '@repo/db/types'
 import type { DBInstance } from 'src/common/types/db-instance'
 import { DatabaseService } from 'src/core/database/database.service'
 
