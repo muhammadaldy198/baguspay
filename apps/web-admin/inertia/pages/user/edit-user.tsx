@@ -59,7 +59,7 @@ export default function EditUserModal({ user }: Props) {
   return (
     <Dialog onOpenChange={setOpen} open={open}>
       <DialogTrigger asChild>
-        <button className="flex justify-start items-center text-sm p-2 hover:bg-primary/10 w-full rounded">
+        <button className="flex justify-start items-center text-sm p-2 hover:bg-primary/10 w-full rounded-md">
           <PencilIcon className="h-4 w-4 mr-2" />
           Edit
         </button>

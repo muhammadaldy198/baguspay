@@ -208,7 +208,7 @@ export default function Login({ loaderData }: Route.ComponentProps) {
               </Link>
             </div>
           </div>
-          <Button type="submit" size="lg" className="w-full rounded-2xl" disabled={login.isPending}>
+          <Button type="submit" size="lg" className="w-full rounded-lg" disabled={login.isPending}>
             {login.isPending ? 'Loading...' : t('submitButton')}
           </Button>
         </form>

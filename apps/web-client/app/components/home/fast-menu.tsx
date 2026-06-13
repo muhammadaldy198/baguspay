@@ -49,7 +49,7 @@ export default function FastMenu() {
   if (fastmenus.isLoading) {
     return (
       <section className="mt-4 space-y-3">
-        <div className="h-5 w-28 rounded bg-muted animate-pulse" />
+        <div className="h-5 w-28 rounded-sm bg-muted animate-pulse" />
         <div className="flex flex-wrap gap-3">
           {Array.from({ length: 6 }).map((_) => (
             <div
@@ -58,8 +58,8 @@ export default function FastMenu() {
             >
               <div className="h-10 w-10 md:h-12 md:w-12 rounded-lg bg-muted" />
               <div className="space-y-2 flex-1">
-                <div className="h-3 w-20 rounded bg-muted" />
-                <div className="h-3 w-14 rounded bg-muted" />
+                <div className="h-3 w-20 rounded-sm bg-muted" />
+                <div className="h-3 w-14 rounded-sm bg-muted" />
               </div>
             </div>
           ))}
@@ -93,7 +93,7 @@ export default function FastMenu() {
                 : undefined
 
           const card = (
-            <div className="mt-1.5 dark:bg-secondary dark:border-0 hover:-translate-y-0.5 hover:scale-105 ease-in-out duration-100 rounded-2xl border p-2 border-border flex flex-col md:flex-row items-center gap-2 w-16 md:w-32 cursor-pointer hover:border-primary transition-colors">
+            <div className="mt-1.5 dark:bg-secondary dark:border-0 hover:-translate-y-0.5 hover:scale-105 ease-in-out duration-100 rounded-xl border p-2 border-border flex flex-col md:flex-row items-center gap-2 w-16 md:w-32 cursor-pointer hover:border-primary transition-colors">
               <Image
                 src={menu.image_url}
                 alt={menu.name}

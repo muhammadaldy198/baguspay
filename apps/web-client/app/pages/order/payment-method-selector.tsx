@@ -160,7 +160,7 @@ export default function PaymentMethodSelector({
             <div
               onClick={handleBalanceSelect}
               className={`
-                relative p-3 rounded-xl border cursor-pointer transition-all duration-300
+                relative p-3 rounded-lg border cursor-pointer transition-all duration-300
                 ${
                   isBalanceSelected
                     ? 'border-primary bg-primary/5 shadow-lg shadow-primary/10 ring-1 ring-primary/20 dark:bg-primary/10 dark:border-primary/50'
@@ -170,7 +170,7 @@ export default function PaymentMethodSelector({
               `}
             >
               {!isBalanceSufficient && (
-                <div className="absolute inset-0 bg-background/50 backdrop-blur-[1px] flex items-center justify-center rounded-xl z-10">
+                <div className="absolute inset-0 bg-background/50 backdrop-blur-[1px] flex items-center justify-center rounded-lg z-10">
                   <span className="text-xs font-semibold bg-destructive/10 text-destructive border border-destructive/20 px-3 py-1 rounded-full">
                     Saldo Tidak Cukup
                   </span>
@@ -213,7 +213,7 @@ export default function PaymentMethodSelector({
               </div>
             </div>
           ) : (
-            <div className="flex items-center gap-3 p-3 rounded-xl border border-dashed border-border/70 bg-muted/30">
+            <div className="flex items-center gap-3 p-3 rounded-lg border border-dashed border-border/70 bg-muted/30">
               <div className="p-2 rounded-lg bg-muted text-muted-foreground shrink-0 border border-border/70">
                 <LogInIcon className="w-5 h-5" />
               </div>
@@ -285,7 +285,7 @@ export default function PaymentMethodSelector({
                           key={item.id}
                           onClick={() => itemAvailable && onSelectPayment(item)}
                           className={`
-                          relative p-3 rounded-xl border cursor-pointer transition-all duration-300 group
+                          relative p-3 rounded-lg border cursor-pointer transition-all duration-300 group
                           ${
                             selectedPayment?.id === item.id
                               ? 'border-primary bg-primary/5 shadow-lg shadow-primary/10 ring-1 ring-primary/20 dark:bg-primary/10 dark:border-primary/50'
@@ -296,7 +296,7 @@ export default function PaymentMethodSelector({
                         >
                           {/* Unavailable Overlay */}
                           {!itemAvailable && (
-                            <div className="absolute inset-0 bg-background/50 backdrop-blur-[1px] flex items-center justify-center rounded-xl z-10">
+                            <div className="absolute inset-0 bg-background/50 backdrop-blur-[1px] flex items-center justify-center rounded-lg z-10">
                               <span className="text-xs font-semibold bg-muted text-muted-foreground px-3 py-1 rounded-full border border-border">
                                 Tidak Tersedia
                               </span>

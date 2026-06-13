@@ -60,7 +60,7 @@ export default function Faq() {
       </section>
 
       {/* FAQ list */}
-      <section className="mt-10 rounded-2xl border border-border bg-card/50 p-4 md:p-6">
+      <section className="mt-10 rounded-xl border border-border bg-card/50 p-4 md:p-6">
         <div className="divide-y divide-border">
           {faqs.map((item) => (
             <details key={randId} className="group py-3">
@@ -84,7 +84,7 @@ export default function Faq() {
       </section>
 
       {/* Still need help */}
-      <section className="mt-10 rounded-2xl border border-border bg-secondary/30 p-5 md:p-6">
+      <section className="mt-10 rounded-xl border border-border bg-secondary/30 p-5 md:p-6">
         <h2 className="text-base md:text-lg font-semibold text-foreground">Masih butuh bantuan?</h2>
         <p className="text-sm text-muted-foreground mt-1">
           Hubungi tim kami dan kami akan dengan senang hati membantu Anda.

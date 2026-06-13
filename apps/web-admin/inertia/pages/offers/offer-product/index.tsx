@@ -66,14 +66,14 @@ export default function OfferProductSection({ offerId }: { offerId: string }) {
             </span>
             <div className="flex gap-2">
               <button
-                className="px-3 py-1 rounded border disabled:opacity-50"
+                className="px-3 py-1 rounded-md border disabled:opacity-50"
                 disabled={productOffers.data.meta.page <= 1}
                 onClick={() => setQuery((q) => ({ ...q, page: (q.page ?? 1) - 1 }))}
               >
                 Previous
               </button>
               <button
-                className="px-3 py-1 rounded border disabled:opacity-50"
+                className="px-3 py-1 rounded-md border disabled:opacity-50"
                 disabled={productOffers.data.meta.page >= productOffers.data.meta.totalPages}
                 onClick={() => setQuery((q) => ({ ...q, page: (q.page ?? 1) + 1 }))}
               >

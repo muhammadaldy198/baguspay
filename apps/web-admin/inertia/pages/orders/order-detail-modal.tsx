@@ -115,7 +115,7 @@ export default function OrderDetailModal({ orderId }: Props) {
                   <div>
                     <Label className="mb-1">Status</Label>
                     <div
-                      className={cn('capitalize font-semibold p-1 rounded', {
+                      className={cn('capitalize font-semibold p-1 rounded-md', {
                         'bg-red-200 text-red-500':
                           detailOrder.data?.order.order_status === OrderStatus.FAILED,
                         'bg-yellow-200 text-yellow-500':
@@ -133,7 +133,7 @@ export default function OrderDetailModal({ orderId }: Props) {
                   <div>
                     <Label className="mb-1">Payment Status</Label>
                     <div
-                      className={cn('capitalize font-semibold p-1 rounded', {
+                      className={cn('capitalize font-semibold p-1 rounded-md', {
                         'bg-red-200 text-red-500':
                           detailOrder.data?.order.payment_status === PaymentStatus.FAILED,
                         'bg-yellow-200 text-yellow-500':
@@ -151,7 +151,7 @@ export default function OrderDetailModal({ orderId }: Props) {
                   <div>
                     <Label className="mb-1">Refund Status</Label>
                     <div
-                      className={cn('capitalize font-semibold p-1 rounded', {
+                      className={cn('capitalize font-semibold p-1 rounded-md', {
                         'bg-red-200 text-red-500':
                           detailOrder.data?.order.refund_status === RefundStatus.FAILED,
                         'bg-yellow-200 text-yellow-500':

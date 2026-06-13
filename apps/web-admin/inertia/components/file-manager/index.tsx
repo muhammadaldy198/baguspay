@@ -339,7 +339,7 @@ export default function FileManager({
                         src={`${import.meta.env.VITE_S3_URL}${file.url}`}
                         alt={file.name || ''}
                         onClick={() => setSelectedFile(file)}
-                        className={`shadow rounded border transition-colors w-full object-contain ${selectedFile?.id === file.id ? 'border-primary/40 ring-1 ring-primary/15' : 'border-transparent'}`}
+                        className={`shadow rounded-md border transition-colors w-full object-contain ${selectedFile?.id === file.id ? 'border-primary/40 ring-1 ring-primary/15' : 'border-transparent'}`}
                       />
                     </label>
                   ))}

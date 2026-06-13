@@ -84,7 +84,7 @@ const columns: ColumnDef<Props['recentOrders'][number]>[] = [
 
       return (
         <span
-          className={`inline-flex items-center px-2 py-1 rounded text-xs font-medium ${badgeColor}`}
+          className={`inline-flex items-center px-2 py-1 rounded-md text-xs font-medium ${badgeColor}`}
         >
           {row.getValue('payment_status')}
         </span>
@@ -117,7 +117,7 @@ const columns: ColumnDef<Props['recentOrders'][number]>[] = [
 
       return (
         <span
-          className={`inline-flex items-center px-2 py-1 rounded text-xs font-medium ${badgeColor}`}
+          className={`inline-flex items-center px-2 py-1 rounded-md text-xs font-medium ${badgeColor}`}
         >
           {row.getValue('order_status')}
         </span>

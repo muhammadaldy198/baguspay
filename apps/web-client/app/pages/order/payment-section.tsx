@@ -188,7 +188,7 @@ export default function PaymentSection({ products, form }: Props) {
                     : `https://is3.cloudhost.id/bagusok${selectedPayment.image_url}`
                 }
                 alt={selectedPayment.name}
-                className="w-10 rounded object-cover"
+                className="w-10 rounded-md object-cover"
               />
               <div className="text-left">
                 <p className="font-medium text-sm">{selectedPayment.name}</p>

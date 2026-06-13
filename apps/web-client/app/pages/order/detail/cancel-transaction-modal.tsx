@@ -32,7 +32,7 @@ export default function CancelTransactionModal({
         </DialogHeader>
         <DialogDescription className="text-left mt-4">
           Apakah Anda yakin ingin membatalkan transaksi dengan Order ID{' '}
-          <code className="px-1 py-0.5 bg-muted rounded text-sm font-mono">{orderId}</code>
+          <code className="px-1 py-0.5 bg-muted rounded-md text-sm font-mono">{orderId}</code>
           ?
           <br />
           <br />

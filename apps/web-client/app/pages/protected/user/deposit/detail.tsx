@@ -223,7 +223,7 @@ export default function DepositDetail({ params }: Route.ComponentProps) {
                 <div>
                   <p className="text-xs text-muted-foreground">Deposit ID</p>
                   <div className="flex items-center gap-2">
-                    <code className="px-2 py-1 bg-muted rounded text-sm font-mono">
+                    <code className="px-2 py-1 bg-muted rounded-md text-sm font-mono">
                       {data.deposit_id}
                     </code>
                     <Button
@@ -256,7 +256,7 @@ export default function DepositDetail({ params }: Route.ComponentProps) {
                 <img
                   src={data.payment_method.image_url}
                   alt={data.payment_method.name}
-                  className="w-12 h-auto max-h-12 object-contain rounded"
+                  className="w-12 h-auto max-h-12 object-contain rounded-md"
                 />
                 <div className="flex-1">
                   <p className="font-semibold">{data.payment_method.name}</p>

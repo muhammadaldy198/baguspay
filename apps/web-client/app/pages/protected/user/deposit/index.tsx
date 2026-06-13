@@ -176,7 +176,7 @@ export default function UserDeposit() {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="space-y-6 rounded-2xl lg:border border-border lg:p-6 bg-card"
+      className="space-y-6 rounded-xl lg:border border-border lg:p-6 bg-card"
     >
       <BreadcrumbBasic
         items={[

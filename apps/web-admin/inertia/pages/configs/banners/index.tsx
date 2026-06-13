@@ -297,7 +297,7 @@ export default function BannersIndex({ banners }: Props) {
         accessorKey: 'image_url',
         header: 'Image',
         cell: ({ row }) => (
-          <div className="w-16 h-10 border rounded overflow-hidden bg-muted flex items-center justify-center">
+          <div className="w-16 h-10 border rounded-md overflow-hidden bg-muted flex items-center justify-center">
             {row.original.image_url ? (
               <Image
                 src={row.original.image_url}

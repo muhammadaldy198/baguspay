@@ -68,10 +68,10 @@ export default function PaymentMethodModal({
                   <Image
                     src={selectedPaymentMethod.image_url}
                     alt={selectedPaymentMethod.name}
-                    className="w-8 h-8 object-contain rounded"
+                    className="w-8 h-8 object-contain rounded-md"
                   />
                 ) : (
-                  <div className="w-8 h-8 bg-muted rounded flex items-center justify-center">
+                  <div className="w-8 h-8 bg-muted rounded-md flex items-center justify-center">
                     {getPaymentMethodIcon(selectedPaymentMethod.type)}
                   </div>
                 )}
@@ -87,7 +87,7 @@ export default function PaymentMethodModal({
             </div>
           ) : (
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 bg-muted rounded flex items-center justify-center">
+              <div className="w-8 h-8 bg-muted rounded-md flex items-center justify-center">
                 <CreditCard className="w-4 h-4 text-muted-foreground" />
               </div>
               <div className="text-left">
@@ -152,10 +152,10 @@ export default function PaymentMethodModal({
                                   <Image
                                     src={method.image_url}
                                     alt={method.name}
-                                    className="w-12 h-12 object-contain rounded"
+                                    className="w-12 h-12 object-contain rounded-md"
                                   />
                                 ) : (
-                                  <div className="w-12 h-12 bg-muted rounded flex items-center justify-center">
+                                  <div className="w-12 h-12 bg-muted rounded-md flex items-center justify-center">
                                     {getPaymentMethodIcon(method.type)}
                                   </div>
                                 )}

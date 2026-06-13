@@ -146,7 +146,7 @@ export default function UserDashboard() {
     return input
   }
 
-  const LoadingSkeleton = () => <div className="animate-pulse bg-muted rounded h-4 w-20"></div>
+  const LoadingSkeleton = () => <div className="animate-pulse bg-muted rounded-sm h-4 w-20"></div>
 
   const data = dashboard.data?.data
   const isLoading = dashboard.isLoading
@@ -303,13 +303,13 @@ export default function UserDashboard() {
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 bg-muted rounded-lg animate-pulse"></div>
                     <div className="space-y-2">
-                      <div className="h-4 bg-muted rounded animate-pulse w-32"></div>
-                      <div className="h-3 bg-muted rounded animate-pulse w-24"></div>
+                      <div className="h-4 bg-muted rounded-sm animate-pulse w-32"></div>
+                      <div className="h-3 bg-muted rounded-sm animate-pulse w-24"></div>
                     </div>
                   </div>
                   <div className="space-y-2">
-                    <div className="h-6 bg-muted rounded animate-pulse w-16"></div>
-                    <div className="h-3 bg-muted rounded animate-pulse w-20"></div>
+                    <div className="h-6 bg-muted rounded-sm animate-pulse w-16"></div>
+                    <div className="h-3 bg-muted rounded-sm animate-pulse w-20"></div>
                   </div>
                 </div>
               ))

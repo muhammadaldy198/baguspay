@@ -50,7 +50,7 @@ export function PasskeyLoginSection({
         type="button"
         variant="outline"
         size="lg"
-        className="w-full border-dashed border-border/70 rounded-2xl hover:border-primary/30"
+        className="w-full border-dashed border-border/70 rounded-lg hover:border-primary/30"
         disabled={isDisabled || isLoading}
         onClick={() => void handlePasskeyLogin()}
         title="Use your device's biometric or security key to login"

@@ -60,7 +60,7 @@ export default function SectionProductSubCategory({
                     <Image
                       src={`${sub.image_url}`}
                       alt={sub.name}
-                      className="w-8 h-8 rounded object-cover"
+                      className="w-8 h-8 rounded-md object-cover"
                     />
                   )}
                   <h3 className="font-medium text-foreground">{sub.name}</h3>

@@ -55,7 +55,7 @@ export default function DeductAddBalanceModal({
   return (
     <Dialog onOpenChange={setOpen} open={open}>
       <DialogTrigger asChild>
-        <button className="flex justify-start items-center text-sm p-2 hover:bg-primary/10 w-full rounded text-red-500">
+        <button className="flex justify-start items-center text-sm p-2 hover:bg-primary/10 w-full rounded-md text-red-500">
           <ArrowDownLeftIcon className="h-4 w-4 mr-2" />
           Deduct Balance
         </button>

@@ -160,7 +160,7 @@ export default function ArticleCategoriesIndex(props: Props) {
                 <TableRow key={category.id}>
                   <TableCell className="font-medium">{category.name}</TableCell>
                   <TableCell>
-                    <code className="text-sm bg-muted px-2 py-1 rounded">{category.slug}</code>
+                    <code className="text-sm bg-muted px-2 py-1 rounded-md">{category.slug}</code>
                   </TableCell>
                   <TableCell className="max-w-xs truncate">{category.description || '-'}</TableCell>
                   <TableCell className="text-right">

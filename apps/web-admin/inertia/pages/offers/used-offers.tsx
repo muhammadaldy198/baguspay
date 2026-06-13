@@ -101,7 +101,7 @@ const columns: ColumnDef<Props['usedOffer'][number]>[] = [
       if (!order) {
         return (
           <div className="flex gap-2">
-            <span className="inline-flex items-center px-2 py-1 rounded text-xs font-medium text-muted-foreground bg-muted">
+            <span className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium text-muted-foreground bg-muted">
               N/A
             </span>
           </div>
@@ -129,7 +129,7 @@ const columns: ColumnDef<Props['usedOffer'][number]>[] = [
       return (
         <div className="flex gap-2">
           <span
-            className={`inline-flex items-center px-2 py-1 rounded text-xs font-medium ${badgeColor}`}
+            className={`inline-flex items-center px-2 py-1 rounded-md text-xs font-medium ${badgeColor}`}
           >
             {row.original.order?.payment_status}
           </span>
@@ -147,7 +147,7 @@ const columns: ColumnDef<Props['usedOffer'][number]>[] = [
       if (!order) {
         return (
           <div className="flex gap-2">
-            <span className="inline-flex items-center px-2 py-1 rounded text-xs font-medium text-muted-foreground bg-muted">
+            <span className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium text-muted-foreground bg-muted">
               N/A
             </span>
           </div>
@@ -175,7 +175,7 @@ const columns: ColumnDef<Props['usedOffer'][number]>[] = [
       return (
         <div className="flex gap-2">
           <span
-            className={`inline-flex items-center px-2 py-1 rounded text-xs font-medium ${badgeColor}`}
+            className={`inline-flex items-center px-2 py-1 rounded-md text-xs font-medium ${badgeColor}`}
           >
             {row.original.order?.order_status}
           </span>

@@ -499,7 +499,7 @@ export default function CheckoutModal({ data }: Props) {
                             : `https://is3.cloudhost.id/bagusok${selectedPayment.image_url}`
                         }
                         alt={selectedPayment.name}
-                        className="w-10 h-auto max-h-12 rounded object-cover"
+                        className="w-10 h-auto max-h-12 rounded-md object-cover"
                       />
                       <div className="text-left">
                         <p className="text-xs font-medium">{selectedPayment.name}</p>

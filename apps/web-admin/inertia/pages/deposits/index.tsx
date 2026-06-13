@@ -86,7 +86,7 @@ const columns: ColumnDef<Props['deposits'][number]>[] = [
       return (
         <div className="flex gap-2">
           <span
-            className={`inline-flex items-center px-2 py-1 rounded text-xs font-medium ${badgeColor}`}
+            className={`inline-flex items-center px-2 py-1 rounded-md text-xs font-medium ${badgeColor}`}
           >
             {row.getValue('status')}
           </span>

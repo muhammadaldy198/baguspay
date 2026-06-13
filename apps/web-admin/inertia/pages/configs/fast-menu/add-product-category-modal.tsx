@@ -166,7 +166,7 @@ export default function AddProductCategoryModal({
             </span>
             <div className="flex items-center gap-2">
               <select
-                className="h-7 rounded border px-2 text-xs"
+                className="h-7 rounded-md border px-2 text-xs"
                 value={limit}
                 onChange={(e) => {
                   setLimit(Number(e.target.value))

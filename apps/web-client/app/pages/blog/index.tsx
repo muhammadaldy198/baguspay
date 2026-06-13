@@ -104,7 +104,7 @@ export default function Blog() {
                   to={`/blog/${post.category?.slug || 'uncategorized'}/${post.slug}`}
                   className="group h-full flex"
                 >
-                  <article className="overflow-hidden flex flex-col rounded-2xl w-full border border-border bg-card hover:shadow-md hover:border-primary/30 transition-all duration-300">
+                  <article className="overflow-hidden flex flex-col rounded-xl w-full border border-border bg-card hover:shadow-md hover:border-primary/30 transition-all duration-300">
                     <div className="overflow-hidden aspect-video bg-muted/30 relative border-b border-border/50">
                       <img
                         src={post.image_url}

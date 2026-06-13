@@ -78,7 +78,7 @@ export default function PasskeyRegisterPage({ loaderData }: Route.ComponentProps
             <Button
               type="button"
               size="lg"
-              className="w-full rounded-2xl"
+              className="w-full rounded-lg"
               onClick={handleRegisterPasskey}
               disabled={isLoading}
             >

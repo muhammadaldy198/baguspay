@@ -94,7 +94,7 @@ const columns: ColumnDef<Props['users'][number]>[] = [
           <EditUserModal user={row.original} />
           <Dialog>
             <DialogTrigger asChild>
-              <button className="flex justify-start items-center text-sm p-2 hover:bg-red-100 w-full rounded">
+              <button className="flex justify-start items-center text-sm p-2 hover:bg-red-100 w-full rounded-md">
                 <Trash2Icon className="h-4 w-4 mr-2" />
                 Delete
               </button>

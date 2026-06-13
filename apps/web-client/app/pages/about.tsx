@@ -87,7 +87,7 @@ export default function About() {
       </section>
 
       {/* How it works */}
-      <section className="mt-12 rounded-2xl border border-border p-6 md:p-8 bg-card/50">
+      <section className="mt-12 rounded-xl border border-border p-6 md:p-8 bg-card/50">
         <h2 className="text-lg md:text-xl font-semibold text-foreground">Cara Kerja</h2>
         <p className="text-sm text-muted-foreground mt-1">
           4 langkah mudah untuk menyelesaikan transaksi Anda.
@@ -106,7 +106,7 @@ export default function About() {
       </section>
 
       {/* Support */}
-      <section className="mt-12 rounded-2xl border border-border p-6 md:p-8 bg-secondary/30">
+      <section className="mt-12 rounded-xl border border-border p-6 md:p-8 bg-secondary/30">
         <div className="flex items-start gap-4">
           <div className="shrink-0 rounded-lg border border-border bg-background p-2">
             <Headphones className="size-5" />
@@ -139,7 +139,7 @@ function FeatureCard({
   desc: string
 }) {
   return (
-    <div className="rounded-2xl border border-border bg-card p-5">
+    <div className="rounded-xl border border-border bg-card p-5">
       <div className="flex items-start gap-3">
         <div className="shrink-0 rounded-lg border border-border bg-background p-2 text-foreground/90">
           {icon}

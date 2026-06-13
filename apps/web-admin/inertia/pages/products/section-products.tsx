@@ -267,7 +267,7 @@ export default function SectionProducts({ productSubCategoryId, selectedSubCateg
               </span>
               <div className="flex items-center gap-2 rounded-md bg-muted/50 px-3 py-2">
                 <select
-                  className="h-8 rounded border px-2 text-sm"
+                  className="h-8 rounded-md border px-2 text-sm"
                   value={products.data.meta.limit}
                   onChange={(e) => handleLimitChange(Number(e.target.value))}
                 >

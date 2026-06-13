@@ -186,7 +186,7 @@ export default function OrderDetailPage({ params }: Route.ComponentProps) {
                 <div>
                   <p className="text-xs text-muted-foreground">Order ID</p>
                   <div className="flex items-center gap-2">
-                    <code className="px-2 py-1 bg-muted rounded text-sm font-mono">
+                    <code className="px-2 py-1 bg-muted rounded-md text-sm font-mono">
                       {data.order_id}
                     </code>
                     <Button
@@ -239,7 +239,7 @@ export default function OrderDetailPage({ params }: Route.ComponentProps) {
               <div>
                 <p className="text-xs text-muted-foreground mb-1">ID Akun</p>
                 <div className="flex items-center gap-2">
-                  <code className="px-2 py-1 bg-muted rounded text-sm font-mono flex-1">
+                  <code className="px-2 py-1 bg-muted rounded-md text-sm font-mono flex-1">
                     {data.customer_input}
                   </code>
                   <Button
@@ -257,7 +257,7 @@ export default function OrderDetailPage({ params }: Route.ComponentProps) {
                 <div>
                   <p className="text-xs text-muted-foreground mb-1">Serial Number</p>
                   <div className="flex items-center gap-2">
-                    <code className="px-2 py-1 bg-green-100 dark:bg-green-800/30 rounded text-sm font-mono flex-1 text-green-800 dark:text-green-400">
+                    <code className="px-2 py-1 bg-green-100 dark:bg-green-800/30 rounded-md text-sm font-mono flex-1 text-green-800 dark:text-green-400">
                       {data.sn_number}
                     </code>
                     <Button
@@ -386,7 +386,7 @@ export default function OrderDetailPage({ params }: Route.ComponentProps) {
                   <div>
                     <p className="text-xs text-muted-foreground mb-1">Kode Voucher</p>
                     <div className="flex items-center gap-2">
-                      <code className="px-2 py-1 bg-muted rounded text-sm font-mono flex-1">
+                      <code className="px-2 py-1 bg-muted rounded-md text-sm font-mono flex-1">
                         {data.voucher_code}
                       </code>
                       <Button

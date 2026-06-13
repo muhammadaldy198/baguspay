@@ -62,7 +62,7 @@ export default function ListProductPricePage() {
                 <Image
                   src={p.image_url}
                   alt={p.name}
-                  className="h-6 w-6 object-cover rounded"
+                  className="h-6 w-6 object-cover rounded-md"
                   loading="lazy"
                   decoding="async"
                 />
@@ -197,7 +197,7 @@ export default function ListProductPricePage() {
       </section>
 
       {/* Categories & Search */}
-      <section className="mt-10 rounded-2xl border border-border bg-card/50 p-4 md:p-6 space-y-5">
+      <section className="mt-10 rounded-xl border border-border bg-card/50 p-4 md:p-6 space-y-5">
         <div className="flex gap-2 overflow-x-auto pb-1">
           {categoriesQuery.isLoading &&
             Array.from({ length: 6 }).map((_) => (
@@ -225,7 +225,7 @@ export default function ListProductPricePage() {
                       alt={c.name}
                       loading="lazy"
                       decoding="async"
-                      className="h-4 w-4 object-cover rounded"
+                      className="h-4 w-4 object-cover rounded-sm"
                     />
                   )}
                   {c.name}
@@ -256,13 +256,13 @@ export default function ListProductPricePage() {
       </section>
 
       {/* Table Section */}
-      <section className="mt-10 rounded-2xl border border-border bg-card/50 p-4 md:p-6">
+      <section className="mt-10 rounded-xl border border-border bg-card/50 p-4 md:p-6">
         {productsQuery.isLoading ? (
           <div className="rounded-md border border-border overflow-hidden">
             <div className="p-4 space-y-4">
               {Array.from({ length: 5 }).map((_, i) => (
                 <div key={`row-skel-${i}`} className="flex gap-4">
-                  <Skeleton className="h-10 w-10 rounded bg-muted/40" />
+                  <Skeleton className="h-10 w-10 rounded-md bg-muted/40" />
                   <div className="space-y-2 flex-1">
                     <Skeleton className="h-4 w-[30%]" />
                     <Skeleton className="h-3 w-[20%]" />

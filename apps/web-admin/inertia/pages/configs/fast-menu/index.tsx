@@ -42,7 +42,7 @@ const columns: ColumnDef<Props['productSections'][number]>[] = [
     accessorKey: 'image_url',
     header: 'Image',
     cell: ({ row }) => (
-      <div className="w-12 h-12 rounded border overflow-hidden flex items-center justify-center bg-muted">
+      <div className="w-12 h-12 rounded-md border overflow-hidden flex items-center justify-center bg-muted">
         {row.original.image_url ? (
           <img
             className="object-contain w-full h-full"

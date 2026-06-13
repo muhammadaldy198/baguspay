@@ -56,7 +56,7 @@ const columns: ColumnDef<Props['orders'][number]>[] = [
       return (
         <span
           className={cn(
-            'inline-flex items-center px-2 py-1 rounded text-xs font-medium',
+            'inline-flex items-center px-2 py-1 rounded-md text-xs font-medium',
             billingType === ProductBillingType.PREPAID
               ? 'text-primary bg-primary/10'
               : 'text-purple-500 bg-purple-100',
@@ -162,7 +162,7 @@ const columns: ColumnDef<Props['orders'][number]>[] = [
       return (
         <div className="flex gap-2">
           <span
-            className={`inline-flex items-center px-2 py-1 rounded text-xs font-medium ${badgeColor}`}
+            className={`inline-flex items-center px-2 py-1 rounded-md text-xs font-medium ${badgeColor}`}
           >
             {row.getValue('payment_status')}
           </span>
@@ -201,7 +201,7 @@ const columns: ColumnDef<Props['orders'][number]>[] = [
       return (
         <div className="flex gap-2">
           <span
-            className={`inline-flex items-center px-2 py-1 rounded text-xs font-medium ${badgeColor}`}
+            className={`inline-flex items-center px-2 py-1 rounded-md text-xs font-medium ${badgeColor}`}
           >
             {row.getValue('order_status')}
           </span>
@@ -237,7 +237,7 @@ const columns: ColumnDef<Props['orders'][number]>[] = [
       return (
         <div className="flex gap-2">
           <span
-            className={`inline-flex items-center px-2 py-1 rounded text-xs font-medium ${badgeColor}`}
+            className={`inline-flex items-center px-2 py-1 rounded-md text-xs font-medium ${badgeColor}`}
           >
             {row.getValue('refund_status')}
           </span>

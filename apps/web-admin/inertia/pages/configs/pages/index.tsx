@@ -84,7 +84,7 @@ export default function PagesIndex(props: Props) {
                 <TableRow key={page.id}>
                   <TableCell className="font-medium">{page.title}</TableCell>
                   <TableCell>
-                    <code className="text-sm bg-muted px-2 py-1 rounded">{page.slug}</code>
+                    <code className="text-sm bg-muted px-2 py-1 rounded-md">{page.slug}</code>
                   </TableCell>
                   <TableCell>
                     {page.is_published ? (

@@ -134,7 +134,7 @@ export default function DetailDepositModal(props: Props) {
                 <div>
                   <Label className="mb-1">Status</Label>
                   <div
-                    className={cn('capitalize font-semibold p-1 rounded', {
+                    className={cn('capitalize font-semibold p-1 rounded-md', {
                       'bg-red-200 text-red-500':
                         detailDeposit.data?.data.status === DepositStatus.FAILED,
                       'bg-yellow-200 text-yellow-500':

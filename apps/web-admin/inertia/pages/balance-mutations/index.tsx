@@ -81,7 +81,7 @@ const columns: ColumnDef<Props['mutations'][number]>[] = [
     cell: ({ row }) => {
       return (
         <span
-          className={cn('capitalize px-2 py-0.5 text-xs rounded font-medium', {
+          className={cn('capitalize px-2 py-0.5 text-xs rounded-md font-medium', {
             'bg-pink-200 text-pink-700': row.getValue('ref_type') === BalanceMutationRefType.ORDER,
             'bg-purple-200 text-purple-700':
               row.getValue('ref_type') === BalanceMutationRefType.DEPOSIT,
