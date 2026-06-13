@@ -18,7 +18,7 @@ import {
 } from '@baguspay/ui/components/ui/select'
 import { useForm } from '@inertiajs/react'
 import { PencilIcon } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import toast from 'react-hot-toast'
 import type { ChangeStatusValidator } from '#validators/deposit'
 
@@ -35,6 +35,7 @@ export default function ChangeStatusModal({
     status: status,
     updateBalance: true,
   })
+  const { data, setData } = form
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -49,14 +50,15 @@ export default function ChangeStatusModal({
     })
   }
 
-  useEffect(() => {
-    if (open) {
-      form.setData('status', status)
+  const handleOpenChange = (value: boolean) => {
+    setOpen(value)
+    if (value) {
+      setData('status', status)
     }
-  }, [open, form, status])
+  }
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>
         <Button size="icon" variant="ghost">
           <PencilIcon className="h-4 w-4" />
@@ -72,8 +74,8 @@ export default function ChangeStatusModal({
               Status
             </Label>
             <Select
-              onValueChange={(value) => form.setData('status', value as DepositStatus)}
-              value={form.data.status}
+              onValueChange={(value) => setData('status', value as DepositStatus)}
+              value={data.status}
             >
               <SelectTrigger>
                 <SelectValue placeholder="Select status" />
@@ -90,15 +92,15 @@ export default function ChangeStatusModal({
               <p className="text-red-500 text-sm mt-1">{form.errors.status}</p>
             )}
           </div>
-          {(status !== DepositStatus.COMPLETED && form.data.status === DepositStatus.COMPLETED) ||
-          (status === DepositStatus.COMPLETED && form.data.status !== DepositStatus.COMPLETED) ? (
+          {(status !== DepositStatus.COMPLETED && data.status === DepositStatus.COMPLETED) ||
+          (status === DepositStatus.COMPLETED && data.status !== DepositStatus.COMPLETED) ? (
             <div>
               <Label htmlFor="status" className="block mb-2">
                 Update Balance
               </Label>
               <Checkbox
-                checked={form.data.updateBalance}
-                onCheckedChange={(c) => form.setData('updateBalance', !!c)}
+                checked={data.updateBalance}
+                onCheckedChange={(c) => setData('updateBalance', !!c)}
               />
               {form.errors.status && (
                 <p className="text-red-500 text-sm mt-1">{form.errors.status}</p>

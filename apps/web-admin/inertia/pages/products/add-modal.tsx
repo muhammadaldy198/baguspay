@@ -18,8 +18,10 @@ import {
   SelectValue,
 } from '@baguspay/ui/components/ui/select'
 import { Textarea } from '@baguspay/ui/components/ui/textarea'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@baguspay/ui/components/ui/tooltip'
 import { useForm } from '@inertiajs/react'
 import { useQueryClient } from '@tanstack/react-query'
+import { PlusIcon } from 'lucide-react'
 import { type FormEvent, useEffect, useMemo, useState } from 'react'
 import type { CreateProductValidator } from '#validators/product'
 import FileManager from '~/components/file-manager'
@@ -85,9 +87,16 @@ export default function AddProductModal({ productSubCategoryId }: Props) {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <Button size="sm">Add Product</Button>
-      </DialogTrigger>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <DialogTrigger asChild>
+            <Button size="icon" aria-label="Add Product">
+              <PlusIcon className="size-4" aria-hidden="true" />
+            </Button>
+          </DialogTrigger>
+        </TooltipTrigger>
+        <TooltipContent>Add Product</TooltipContent>
+      </Tooltip>
       <DialogContent className="w-full md:min-w-2/3">
         <DialogHeader>
           <DialogTitle className="text-start">Add Product</DialogTitle>

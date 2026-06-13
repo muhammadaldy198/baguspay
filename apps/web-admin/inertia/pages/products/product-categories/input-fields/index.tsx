@@ -1,5 +1,6 @@
 import type { InferPageProps } from '@adonisjs/inertia/types'
 import { Button } from '@baguspay/ui/components/ui/button'
+import { Card, CardContent } from '@baguspay/ui/components/ui/card'
 import { router } from '@inertiajs/react'
 import { LoaderCircle, Trash2Icon } from 'lucide-react'
 import { useState } from 'react'
@@ -33,24 +34,26 @@ export default function SectionInputFields({ productCategory }: Props) {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {productCategory.input_on_product_category.map((input) => (
-            <div key={input.id} className="border p-2 rounded-lg flex justify-between items-center">
-              <div>
-                <h4 className="font-semibold text-sm">{input.input_field.identifier}</h4>
-                <p className="text-sm text-muted-foreground">{input.input_field.type}</p>
-              </div>
-              <Button
-                variant="destructive"
-                size="sm"
-                disabled={isLoading}
-                onClick={() => handleDeleteInput(input.id)}
-              >
-                {isLoading ? (
-                  <LoaderCircle className="animate-spin duration-300" />
-                ) : (
-                  <Trash2Icon />
-                )}
-              </Button>
-            </div>
+            <Card key={input.id} className="py-0 shadow-none">
+              <CardContent className="flex items-center justify-between gap-3 p-3">
+                <div>
+                  <h4 className="font-semibold text-sm">{input.input_field.identifier}</h4>
+                  <p className="text-sm text-muted-foreground">{input.input_field.type}</p>
+                </div>
+                <Button
+                  variant="destructive"
+                  size="sm"
+                  disabled={isLoading}
+                  onClick={() => handleDeleteInput(input.id)}
+                >
+                  {isLoading ? (
+                    <LoaderCircle className="animate-spin duration-300" />
+                  ) : (
+                    <Trash2Icon />
+                  )}
+                </Button>
+              </CardContent>
+            </Card>
           ))}
         </div>
       </div>

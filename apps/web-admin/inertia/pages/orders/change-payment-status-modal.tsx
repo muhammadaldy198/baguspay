@@ -17,7 +17,7 @@ import {
 } from '@baguspay/ui/components/ui/select'
 import { useForm } from '@inertiajs/react'
 import { PencilIcon } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import toast from 'react-hot-toast'
 import type { UpdateOrderPaymentStatusValidator } from '#validators/order'
 
@@ -33,6 +33,7 @@ export default function ChangePaymentStatusModal({
   const form = useForm<UpdateOrderPaymentStatusValidator>({
     status: status,
   })
+  const { data, setData } = form
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -47,14 +48,15 @@ export default function ChangePaymentStatusModal({
     })
   }
 
-  useEffect(() => {
-    if (open) {
-      form.setData('status', status)
+  const handleOpenChange = (value: boolean) => {
+    setOpen(value)
+    if (value) {
+      setData('status', status)
     }
-  }, [open, form, status])
+  }
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>
         <button className="hover:opacity-70 cursor-pointer">
           <PencilIcon className="w-3.5 h-3.5" />
@@ -70,8 +72,8 @@ export default function ChangePaymentStatusModal({
               Status
             </Label>
             <Select
-              onValueChange={(value) => form.setData('status', value as PaymentStatus)}
-              value={form.data.status}
+              onValueChange={(value) => setData('status', value as PaymentStatus)}
+              value={data.status}
             >
               <SelectTrigger>
                 <SelectValue placeholder="Select status" />
