@@ -11,6 +11,7 @@ export enum UserRegisteredType {
   GOOGLE = 'google',
   FACEBOOK = 'facebook',
   GITHUB = 'github',
+  PASSKEY = 'passkey',
   LOCAL = 'local',
 }
 export const userRoleEnum = pgEnum('user_role', enumToPgEnum(UserRole))
@@ -18,6 +19,14 @@ export const userRegisteredTypeEnum = pgEnum(
   'user_registered_type',
   enumToPgEnum(UserRegisteredType),
 )
+
+export enum OAuthProvider {
+  GOOGLE = 'google',
+  FACEBOOK = 'facebook',
+  GITHUB = 'github',
+}
+
+export const oauthProviderEnum = pgEnum('oauth_provider', enumToPgEnum(OAuthProvider))
 
 export enum BalanceMutationType {
   CREDIT = 'credit',

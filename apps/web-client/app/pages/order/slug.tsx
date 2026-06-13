@@ -1,4 +1,4 @@
-import { ProductBillingType } from '@repo/db/types'
+import { ProductBillingType } from '@baguspay/db/types'
 import { data } from 'react-router'
 import z from 'zod'
 import { apiClient } from '~/utils/axios'

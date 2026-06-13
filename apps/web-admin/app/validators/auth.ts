@@ -17,7 +17,7 @@ export const registerValidator = vine.object({
   password: vine
     .string()
     .minLength(8)
-    .regex(/^(?=.*[A-Z])(?=.*[A-Za-z0-9]).{8,}$/),
+    .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z\d]).{8,}$/),
   password_confirmation: vine.string().minLength(8).sameAs('password'),
 })
 
@@ -37,7 +37,7 @@ export const loginValidator = vine.object({
   password: vine
     .string()
     .minLength(8)
-    .regex(/^(?=.*[A-Z])(?=.*[A-Za-z0-9]).{8,}$/),
+    .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z\d]).{8,}$/),
 })
 
 export type LoginValidator = Infer<typeof loginValidator>

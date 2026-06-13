@@ -1,34 +1,35 @@
+import { PaymentMethodProvider } from '@baguspay/db/types'
 import { BadRequestException, Injectable } from '@nestjs/common'
-import { PaymentMethodProvider } from '@repo/db/types'
 import type { DBInstance } from 'src/common/types/db-instance'
 import { BalanceService } from './balance/balance.service'
 import { DuitkuService } from './duitku/duitku.service'
-import type { CreatePaymentGatewayRequest } from './payment-gateway.type'
+import type { PaymentCreator } from './payment.interface'
+import type { CreatePaymentRequest } from './payment-gateway.type'
 import { TripayService } from './tripay/tripay.service'
 
 @Injectable()
 export class PaymentGatewayService {
+  private readonly providers: Partial<Record<PaymentMethodProvider, PaymentCreator>>
+
   constructor(
-    private readonly tripayService: TripayService,
-    private readonly duitkuService: DuitkuService,
-    private readonly balanceService: BalanceService,
-  ) {}
-
-  async createPayment(data: CreatePaymentGatewayRequest, dbInstance?: DBInstance) {
-    switch (data.provider_name) {
-      case PaymentMethodProvider.TRIPAY: {
-        return this.tripayService.createTransaction(data)
-      }
-      case PaymentMethodProvider.BALANCE: {
-        return this.balanceService.createTransaction(data, dbInstance)
-      }
-
-      case PaymentMethodProvider.DUITKU: {
-        return this.duitkuService.createTransaction(data)
-      }
-
-      default:
-        throw new BadRequestException('Unsupported payment provider')
+    tripayService: TripayService,
+    duitkuService: DuitkuService,
+    balanceService: BalanceService,
+  ) {
+    this.providers = {
+      [PaymentMethodProvider.TRIPAY]: tripayService,
+      [PaymentMethodProvider.DUITKU]: duitkuService,
+      [PaymentMethodProvider.BALANCE]: balanceService,
     }
+  }
+
+  async createPayment(data: CreatePaymentRequest, tx?: DBInstance) {
+    const paymentProvider = this.providers[data.provider_name]
+
+    if (!paymentProvider) {
+      throw new BadRequestException('Unsupported payment provider')
+    }
+
+    return paymentProvider.createTransaction(data, tx)
   }
 }

@@ -89,7 +89,7 @@ export const productSnapshots = pgTable('product_snapshots', {
   // new fields 👇
   is_special_feature: boolean('is_special_feature').notNull().default(false),
   special_feature_key: varchar('special_feature_key', { length: 50 }),
-  metadata: jsonb('metadata').$type<Record<string, any>>(),
+  metadata: jsonb('metadata').$type<unknown>(),
 
   provider_ref_id: varchar('provider_ref_id', { length: 100 }).notNull(),
   name: varchar('name', { length: 100 }).notNull(),

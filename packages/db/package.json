@@ -1,5 +1,5 @@
 {
-  "name": "@repo/db",
+  "name": "@baguspay/db",
   "version": "0.0.0",
   "private": true,
   "main": "./dist/index.js",
@@ -35,7 +35,7 @@
     "check:fix": "biome check --write ."
   },
   "devDependencies": {
-    "@repo/typescript-config": "workspace:*",
+    "@baguspay/typescript-config": "workspace:*",
     "@types/node": "^20.8.4",
     "drizzle-kit": "^0.31.4",
     "tsup": "^8.5.1",

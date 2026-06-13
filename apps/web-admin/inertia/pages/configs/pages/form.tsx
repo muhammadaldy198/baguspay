@@ -1,10 +1,10 @@
 import type { InferPageProps } from '@adonisjs/inertia/types'
+import { Button } from '@baguspay/ui/components/ui/button'
+import { Input } from '@baguspay/ui/components/ui/input'
+import { Label } from '@baguspay/ui/components/ui/label'
+import { Separator } from '@baguspay/ui/components/ui/separator'
+import { Switch } from '@baguspay/ui/components/ui/switch'
 import { Link, useForm } from '@inertiajs/react'
-import { Button } from '@repo/ui/components/ui/button'
-import { Input } from '@repo/ui/components/ui/input'
-import { Label } from '@repo/ui/components/ui/label'
-import { Separator } from '@repo/ui/components/ui/separator'
-import { Switch } from '@repo/ui/components/ui/switch'
 import { ArrowLeft } from 'lucide-react'
 import toast from 'react-hot-toast'
 import type PagesController from '#controllers/configs/pages_controller'
@@ -103,7 +103,7 @@ export default function PageForm(props: Props) {
       </div>
 
       <form onSubmit={handleSubmit} className="mt-6 space-y-6">
-        <div className="rounded-lg border bg-white p-6 space-y-4">
+        <div className="rounded-lg border bg-card p-6 space-y-4">
           <h2 className="text-sm font-semibold">Informasi Halaman</h2>
           <Separator />
 
@@ -165,7 +165,7 @@ export default function PageForm(props: Props) {
           </div>
         </div>
 
-        <div className="rounded-lg border bg-white p-6 space-y-4">
+        <div className="rounded-lg border bg-card p-6 space-y-4">
           <h2 className="text-sm font-semibold">Konten Halaman</h2>
           <Separator />
 

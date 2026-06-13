@@ -1,4 +1,4 @@
-@import "@repo/tailwind-config";
+@import "@baguspay/tailwind-config";
 @custom-variant dark (&:where(.dark, .dark *));
 @import "tw-animate-css";
 @source "../../../../packages/ui/src/**/*.{js,ts,jsx,tsx}";
@@ -36,6 +36,12 @@
 
   --destructive: oklch(0.6 0.2 25);
   --destructive-foreground: oklch(0.98 0.005 25);
+  --success: oklch(0.58 0.16 155);
+  --success-foreground: oklch(0.98 0.01 160);
+  --warning: oklch(0.72 0.16 75);
+  --warning-foreground: oklch(0.16 0.03 75);
+  --info: oklch(0.58 0.14 230);
+  --info-foreground: oklch(0.98 0.01 230);
 
   --border: oklch(0.92 0.01 160);
   --input: oklch(0.92 0.01 160);
@@ -107,6 +113,12 @@
 
   --destructive: oklch(0.6 0.2 25);
   --destructive-foreground: oklch(0.98 0.005 25);
+  --success: oklch(0.68 0.16 155);
+  --success-foreground: oklch(0.1 0.03 160);
+  --warning: oklch(0.76 0.16 75);
+  --warning-foreground: oklch(0.1 0.03 160);
+  --info: oklch(0.72 0.14 230);
+  --info-foreground: oklch(0.1 0.03 160);
 
   --border: oklch(0.2 0.03 160);
   --input: oklch(0.2 0.03 160);
@@ -159,6 +171,12 @@
   --color-accent-foreground: var(--accent-foreground);
   --color-destructive: var(--destructive);
   --color-destructive-foreground: var(--destructive-foreground);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-info: var(--info);
+  --color-info-foreground: var(--info-foreground);
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);

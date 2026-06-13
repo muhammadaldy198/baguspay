@@ -1,9 +1,11 @@
-import type { InferSelectModel } from '@repo/db'
-import type { tb } from '@repo/db/types'
-import { DataTable } from '@repo/ui/components/data-table'
-import { Button } from '@repo/ui/components/ui/button'
+import type { InferSelectModel } from '@baguspay/db'
+import type { tb } from '@baguspay/db/types'
+import { DataTable } from '@baguspay/ui/components/data-table'
+import { Button } from '@baguspay/ui/components/ui/button'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@baguspay/ui/components/ui/tooltip'
 import { useQuery } from '@tanstack/react-query'
 import type { ColumnDef } from '@tanstack/react-table'
+import { Trash2Icon } from 'lucide-react'
 import { useEffect, useMemo, useState } from 'react'
 import toast from 'react-hot-toast'
 import type { GetAllProductsQueryValidator } from '#validators/product'
@@ -85,8 +87,14 @@ export default function SectionProducts({ productSubCategoryId, selectedSubCateg
 
   useEffect(() => {
     if (!products.data?.data) return
-    setSelectedIds((prev) => prev.filter((id) => visibleIds.includes(id)))
-  }, [products.data?.data, visibleIds])
+    setSelectedIds((prev) => {
+      const next = prev.filter((id) => visibleIds.includes(id))
+      if (next.length === prev.length && next.every((id, index) => id === prev[index])) {
+        return prev
+      }
+      return next
+    })
+  }, [products.data?.data])
 
   const toggleSelectAll = () => {
     if (visibleIds.length === 0) return
@@ -205,7 +213,7 @@ export default function SectionProducts({ productSubCategoryId, selectedSubCateg
         id: 'actions',
         header: 'Actions',
         cell: ({ row }) => (
-          <div className="flex space-x-2">
+          <div className="flex flex-wrap gap-2">
             <EditProductModal productId={row.original.id} />
             <DeleteProductModal productId={row.original.id} />
           </div>
@@ -216,19 +224,25 @@ export default function SectionProducts({ productSubCategoryId, selectedSubCateg
   )
 
   return (
-    <section className="mt-4">
-      <div className="flex justify-between gap-4 items-end flex-wrap">
+    <section className="mt-4 min-w-0">
+      <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
         <h2 className="text-lg font-semibold">Products</h2>
         {productSubCategoryId && (
-          <div className="flex items-center gap-2">
-            <Button
-              size="sm"
-              variant="destructive"
-              disabled={selectedIds.length === 0}
-              onClick={handleBulkDelete}
-            >
-              Delete Selected ({selectedIds.length})
-            </Button>
+          <div className="flex flex-wrap items-center gap-2 rounded-md bg-muted/50 px-3 py-2">
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  size="icon"
+                  variant="destructive"
+                  disabled={selectedIds.length === 0}
+                  onClick={handleBulkDelete}
+                  aria-label={`Delete Selected (${selectedIds.length})`}
+                >
+                  <Trash2Icon className="size-4" aria-hidden="true" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>Delete Selected ({selectedIds.length})</TooltipContent>
+            </Tooltip>
             <UpdateProviderPriceModal
               productSubCategoryId={productSubCategoryId}
               isSubCategoryActive={!!selectedSubCategory?.is_available}
@@ -247,7 +261,7 @@ export default function SectionProducts({ productSubCategoryId, selectedSubCateg
           Sub category is inactive. Activate it to add products from provider.
         </p>
       )}
-      <div className="mt-4 grid">
+      <div className="mt-4 grid min-w-0">
         {products.isLoading && <p className="text-center">Loading products...</p>}
         {products.isError && (
           <p className="text-red-500 text-center">Failed to load products. Please try again.</p>
@@ -255,13 +269,13 @@ export default function SectionProducts({ productSubCategoryId, selectedSubCateg
         {products.isSuccess && (
           <>
             <DataTable columns={columns} data={products.data.data} />
-            <div className="flex flex-wrap items-center justify-between gap-2 mt-4">
+            <div className="flex flex-col gap-2 mt-4 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between">
               <span className="text-xs text-muted-foreground">
                 Page {products.data.meta.page} of {products.data.meta.totalPages}
               </span>
-              <div className="flex items-center gap-2">
+              <div className="flex flex-wrap items-center gap-2 rounded-md bg-muted/50 px-3 py-2">
                 <select
-                  className="h-8 rounded border px-2 text-sm"
+                  className="h-8 rounded-md border px-2 text-sm"
                   value={products.data.meta.limit}
                   onChange={(e) => handleLimitChange(Number(e.target.value))}
                 >

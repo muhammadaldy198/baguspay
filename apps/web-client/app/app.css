@@ -1,4 +1,4 @@
-@import "@repo/ui/custom-theme-2.css";
+@import "@baguspay/ui/theme.css";
 
 body {
   font-family: var(--font-sans);

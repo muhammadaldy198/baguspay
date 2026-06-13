@@ -176,7 +176,7 @@ export default function Terms() {
 
 function Block({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="rounded-2xl border border-border bg-card/50 p-5 md:p-6">
+    <div className="rounded-xl border border-border bg-card/50 p-5 md:p-6">
       <h2 className="text-base md:text-lg font-semibold text-foreground">{title}</h2>
       <div className="mt-2 text-sm leading-6 text-foreground/90">{children}</div>
     </div>

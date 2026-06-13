@@ -22,7 +22,7 @@ export default function ProductCategoryDetail({ productCategory }: Props) {
         />
       </div>
       <div className="flex flex-col md:flex-row justify-items-center items-center md:items-start gap-4 mt-4">
-        <div className="aspect-square w-28 rounded overflow-hidden flex-none h-fit">
+        <div className="aspect-square w-28 rounded-md overflow-hidden flex-none h-fit">
           <Image
             src={`${productCategory.image_url}`}
             alt=""
@@ -32,18 +32,20 @@ export default function ProductCategoryDetail({ productCategory }: Props) {
         <div className="space-y-2 text-center md:text-start">
           <h2 className="text-lg font-semibold">{productCategory.name}</h2>
           <h2 className="text-sm italic">{productCategory.sub_name}</h2>
-          <p className="text-sm text-slate-500 line-clamp-2">{productCategory.description}</p>
+          <p className="text-sm text-muted-foreground line-clamp-2">
+            {productCategory.description}
+          </p>
           <div className="flex flex-wrap gap-2">
-            <p className="text-xs bg-pink-200 text-pink-500 font-medium w-fit px-2 py-0.5 rounded">
+            <p className="text-xs bg-pink-200 text-pink-500 font-medium w-fit px-2 py-0.5 rounded-md">
               Label: {productCategory.label}
             </p>
-            <p className="text-xs bg-purple-200 text-purple-500 font-medium w-fit px-2 py-0.5 rounded">
+            <p className="text-xs bg-purple-200 text-purple-500 font-medium w-fit px-2 py-0.5 rounded-md">
               Featured: {productCategory.is_featured ? 'Yes' : 'No'}
             </p>
-            <p className="text-xs bg-green-200 text-green-500 font-medium w-fit px-2 py-0.5 rounded">
+            <p className="text-xs bg-green-200 text-green-500 font-medium w-fit px-2 py-0.5 rounded-md">
               Available: {productCategory.is_available ? 'Yes' : 'No'}
             </p>
-            <p className="text-xs bg-blue-200 text-blue-500 font-medium w-fit px-2 py-0.5 rounded">
+            <p className="text-xs bg-primary/15 text-primary font-medium w-fit px-2 py-0.5 rounded-md">
               Delivery: {productCategory.delivery_type}
             </p>
           </div>

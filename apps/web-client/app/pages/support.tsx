@@ -1,6 +1,6 @@
-import { Button } from '@repo/ui/components/ui/button'
-import { Input } from '@repo/ui/components/ui/input'
-import { Label } from '@repo/ui/components/ui/label'
+import { Button } from '@baguspay/ui/components/ui/button'
+import { Input } from '@baguspay/ui/components/ui/input'
+import { Label } from '@baguspay/ui/components/ui/label'
 import {
   AlertTriangle,
   CheckCircle2,
@@ -99,7 +99,7 @@ export default function Support() {
 
       {/* Order tools */}
       <section className="mt-10 grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6">
-        <div className="lg:col-span-2 rounded-2xl border border-border bg-card/50 p-5 md:p-6">
+        <div className="lg:col-span-2 rounded-xl border border-border bg-card/50 p-5 md:p-6">
           <h2 className="text-base md:text-lg font-semibold text-foreground">Cek Status Pesanan</h2>
           <p className="text-sm text-muted-foreground mt-1">
             Masukkan Order ID dan email/no. HP yang digunakan saat pemesanan.
@@ -139,7 +139,7 @@ export default function Support() {
           )}
         </div>
 
-        <div className="rounded-2xl border border-border bg-card/50 p-5 md:p-6">
+        <div className="rounded-xl border border-border bg-card/50 p-5 md:p-6">
           <h3 className="text-base font-semibold text-foreground">Tindakan Cepat</h3>
           <p className="text-xs text-muted-foreground mt-1">
             Perlu Order ID dan email/no. HP yang sama dengan saat pemesanan.
@@ -171,7 +171,7 @@ export default function Support() {
       </section>
 
       {/* Troubleshooting */}
-      <section className="mt-10 rounded-2xl border border-border bg-card/50 p-5 md:p-6">
+      <section className="mt-10 rounded-xl border border-border bg-card/50 p-5 md:p-6">
         <h2 className="text-base md:text-lg font-semibold text-foreground">Panduan Cepat</h2>
         <div className="divide-y divide-border mt-3">
           <details className="group py-3">
@@ -235,7 +235,7 @@ export default function Support() {
       </section>
 
       {/* Service status (placeholder) */}
-      <section className="mt-10 rounded-2xl border border-border bg-background p-5 md:p-6">
+      <section className="mt-10 rounded-xl border border-border bg-background p-5 md:p-6">
         <h2 className="text-base md:text-lg font-semibold text-foreground">Status Layanan</h2>
         <p className="text-sm text-muted-foreground mt-1">
           Informasi ringkas kondisi sistem dan mitra (placeholder).
@@ -263,7 +263,7 @@ export default function Support() {
       </section>
 
       {/* Contact channels */}
-      <section className="mt-10 rounded-2xl border border-border bg-secondary/30 p-5 md:p-6">
+      <section className="mt-10 rounded-xl border border-border bg-secondary/30 p-5 md:p-6">
         <h2 className="text-base md:text-lg font-semibold text-foreground">
           Butuh bantuan langsung?
         </h2>
@@ -336,14 +336,14 @@ function StatusItem({
 }) {
   const toneClass =
     tone === 'ok'
-      ? 'bg-green-500/10 text-green-600 border-green-500/20'
+      ? 'bg-success/10 text-success border-success/30'
       : tone === 'warn'
-        ? 'bg-yellow-500/10 text-yellow-700 border-yellow-500/20'
-        : 'bg-red-500/10 text-red-600 border-red-500/20'
+        ? 'bg-warning/10 text-warning border-warning/40'
+        : 'bg-red-500/10 text-red-600 border-destructive/30'
   return (
-    <div className="rounded-xl border border-border bg-card p-4 flex items-center justify-between">
+    <div className="rounded-xl border border-border/70 bg-card p-4 flex items-center justify-between">
       <div className="flex items-center gap-2">
-        <div className="rounded-md border border-border bg-background p-1.5 text-foreground/90">
+        <div className="rounded-md border border-border/70 bg-background p-1.5 text-foreground/90">
           {icon}
         </div>
         <span className="text-sm text-foreground">{label}</span>

@@ -18,6 +18,6 @@ export default defineConfig({
   ],
   esbuildOptions(options) {
     // keep JSX as React 17+ automatic by default
-    options.jsx = 'automatic' as any
+    options.jsx = 'automatic'
   },
 })

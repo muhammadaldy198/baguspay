@@ -1,18 +1,18 @@
 import type { InferPageProps } from '@adonisjs/inertia/types'
-import { useForm } from '@inertiajs/react'
-import { ProductFullfillmentType } from '@repo/db/types'
-import { Button } from '@repo/ui/components/ui/button'
-import { Input } from '@repo/ui/components/ui/input'
-import { Label } from '@repo/ui/components/ui/label'
+import { ProductFullfillmentType } from '@baguspay/db/types'
+import { Button } from '@baguspay/ui/components/ui/button'
+import { Input } from '@baguspay/ui/components/ui/input'
+import { Label } from '@baguspay/ui/components/ui/label'
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@repo/ui/components/ui/select'
-import { Switch } from '@repo/ui/components/ui/switch'
-import { Textarea } from '@repo/ui/components/ui/textarea'
+} from '@baguspay/ui/components/ui/select'
+import { Switch } from '@baguspay/ui/components/ui/switch'
+import { Textarea } from '@baguspay/ui/components/ui/textarea'
+import { useForm } from '@inertiajs/react'
 import toast from 'react-hot-toast'
 import type ProductsCategoriesController from '#controllers/product_categories_controller'
 import FileManager from '~/components/file-manager'
@@ -65,21 +65,34 @@ export default function EditProductCategory(
 
   return (
     <AdminLayout>
-      <h2 className="text-2xl font-bold mt-4">Edit Other Prepaid Product Category</h2>
-      <form className="w-full mx-auto bg-white rounded-lg space-y-4 mt-6" onSubmit={handleSubmit}>
+      <h2 className="mt-4 text-2xl font-semibold text-foreground">
+        Edit Other Prepaid Product Category
+      </h2>
+      <p className="mt-1 text-sm text-muted-foreground">
+        Lengkapi data produk dengan rapi untuk memudahkan publikasi dan maintenance.
+      </p>
+
+      <form
+        className="mt-6 grid w-full max-w-6xl grid-cols-1 gap-5 md:grid-cols-2"
+        onSubmit={handleSubmit}
+      >
+        <div className="md:col-span-2 border-b border-border pb-2">
+          <p className="text-sm font-semibold text-foreground">Section: Media</p>
+          <p className="text-xs text-muted-foreground">Upload image, icon, dan banner produk.</p>
+        </div>
         {/* File Image */}
         <div>
           <Label htmlFor="file_image_id" className="mb-2">
             Image
           </Label>
-          <div className="flex items-center gap-2 mt-1">
+          <div className="mt-2 flex items-center gap-2">
             <FileManager
               onFilesSelected={(file) => setData('file_image_id', file.id)}
               defaultFileId={props.image.file_image_id}
             />
           </div>
           {errors.file_image_id && (
-            <p className="text-xs text-red-500 mt-1">{errors.file_image_id}</p>
+            <p className="mt-1 text-xs text-rose-600">{errors.file_image_id}</p>
           )}
         </div>
         {/* File Icon */}
@@ -87,14 +100,14 @@ export default function EditProductCategory(
           <Label htmlFor="file_icon_id" className="mb-2">
             Image (Icon APK)
           </Label>
-          <div className="flex items-center gap-2 mt-1">
+          <div className="mt-2 flex items-center gap-2">
             <FileManager
               onFilesSelected={(file) => setData('file_icon_id', file.id)}
               defaultFileId={props.image.file_icon_id}
             />
           </div>
           {errors.file_icon_id && (
-            <p className="text-xs text-red-500 mt-1">{errors.file_icon_id}</p>
+            <p className="mt-1 text-xs text-rose-600">{errors.file_icon_id}</p>
           )}
         </div>
 
@@ -103,24 +116,28 @@ export default function EditProductCategory(
           <Label htmlFor="file_banner_id" className="mb-2">
             Banner
           </Label>
-          <div className="flex items-center gap-2 mt-1">
+          <div className="mt-2 flex items-center gap-2">
             <FileManager
               onFilesSelected={(file) => setData('file_banner_id', file.id)}
               defaultFileId={props.image.file_banner_id}
             />
           </div>
           {errors.file_banner_id && (
-            <p className="text-xs text-red-500 mt-1">{errors.file_banner_id}</p>
+            <p className="mt-1 text-xs text-rose-600">{errors.file_banner_id}</p>
           )}
         </div>
 
+        <div className="md:col-span-2 border-b border-border pb-2 pt-1">
+          <p className="text-sm font-semibold text-foreground">Section: Product Info</p>
+          <p className="text-xs text-muted-foreground">Informasi utama produk untuk pengguna.</p>
+        </div>
         {/* Name */}
         <div>
           <Label htmlFor="name" className="mb-2">
             Name
           </Label>
           <Input id="name" value={data.name} onChange={(e) => setData('name', e.target.value)} />
-          {errors.name && <p className="text-xs text-red-500 mt-1">{errors.name}</p>}
+          {errors.name && <p className="mt-1 text-xs text-rose-600">{errors.name}</p>}
         </div>
 
         {/* Sub Name */}
@@ -133,7 +150,7 @@ export default function EditProductCategory(
             value={data.sub_name || ''}
             onChange={(e) => setData('sub_name', e.target.value)}
           />
-          {errors.sub_name && <p className="text-xs text-red-500 mt-1">{errors.sub_name}</p>}
+          {errors.sub_name && <p className="mt-1 text-xs text-rose-600">{errors.sub_name}</p>}
         </div>
 
         {/* Description */}
@@ -142,11 +159,12 @@ export default function EditProductCategory(
             Description
           </Label>
           <Textarea
+            className="min-h-24"
             id="description"
             value={data.description}
             onChange={(e) => setData('description', e.target.value)}
           />
-          {errors.description && <p className="text-xs text-red-500 mt-1">{errors.description}</p>}
+          {errors.description && <p className="mt-1 text-xs text-rose-600">{errors.description}</p>}
         </div>
 
         {/* Publisher */}
@@ -159,9 +177,15 @@ export default function EditProductCategory(
             value={data.publisher}
             onChange={(e) => setData('publisher', e.target.value)}
           />
-          {errors.publisher && <p className="text-xs text-red-500 mt-1">{errors.publisher}</p>}
+          {errors.publisher && <p className="mt-1 text-xs text-rose-600">{errors.publisher}</p>}
         </div>
 
+        <div className="md:col-span-2 border-b border-border pb-2 pt-1">
+          <p className="text-sm font-semibold text-foreground">Section: Visibility</p>
+          <p className="text-xs text-muted-foreground">
+            Kontrol status tampil dan penandaan produk.
+          </p>
+        </div>
         {/* Is Active */}
         <div className="flex items-center gap-2">
           <Switch
@@ -173,7 +197,7 @@ export default function EditProductCategory(
             Active
           </Label>
         </div>
-        {errors.is_available && <p className="text-xs text-red-500 mt-1">{errors.is_available}</p>}
+        {errors.is_available && <p className="mt-1 text-xs text-rose-600">{errors.is_available}</p>}
 
         {/* Is Featured */}
         <div className="flex items-center gap-2">
@@ -186,7 +210,7 @@ export default function EditProductCategory(
             Featured
           </Label>
         </div>
-        {errors.is_featured && <p className="text-xs text-red-500 mt-1">{errors.is_featured}</p>}
+        {errors.is_featured && <p className="mt-1 text-xs text-rose-600">{errors.is_featured}</p>}
 
         {/* Label */}
         <div>
@@ -198,7 +222,7 @@ export default function EditProductCategory(
             value={data.label || ''}
             onChange={(e) => setData('label', e.target.value)}
           />
-          {errors.label && <p className="text-xs text-red-500 mt-1">{errors.label}</p>}
+          {errors.label && <p className="mt-1 text-xs text-rose-600">{errors.label}</p>}
         </div>
 
         {/* Delivery Type */}
@@ -219,12 +243,12 @@ export default function EditProductCategory(
             </SelectContent>
           </Select>
           {errors.delivery_type && (
-            <p className="text-xs text-red-500 mt-1">{errors.delivery_type}</p>
+            <p className="mt-1 text-xs text-rose-600">{errors.delivery_type}</p>
           )}
         </div>
 
         {/* Biliing type & Fullfillment Type */}
-        <div className="form-group flex gap-4 ">
+        <div className="grid gap-4 md:grid-cols-2">
           {/* <div>
             <Label htmlFor="billing_type" className="mb-2">
               Billing Type
@@ -245,7 +269,7 @@ export default function EditProductCategory(
               </SelectContent>
             </Select>
             {errors.product_billing_type && (
-              <p className="text-xs text-red-500 mt-1">{errors.product_billing_type}</p>
+              <p className="mt-1 text-xs text-rose-600">{errors.product_billing_type}</p>
             )}
           </div> */}
           <div>
@@ -268,11 +292,17 @@ export default function EditProductCategory(
               </SelectContent>
             </Select>
             {errors.product_fullfillment_type && (
-              <p className="text-xs text-red-500 mt-1">{errors.product_fullfillment_type}</p>
+              <p className="mt-1 text-xs text-rose-600">{errors.product_fullfillment_type}</p>
             )}
           </div>
         </div>
 
+        <div className="md:col-span-2 border-b border-border pb-2 pt-1">
+          <p className="text-sm font-semibold text-foreground">Section: SEO</p>
+          <p className="text-xs text-muted-foreground">
+            Opsional: optimasi mesin pencari untuk halaman produk.
+          </p>
+        </div>
         {/* SEO Enabled */}
 
         <div className="flex items-center gap-2">
@@ -286,7 +316,7 @@ export default function EditProductCategory(
           </Label>
         </div>
         {errors.is_seo_enabled && (
-          <p className="text-xs text-red-500 mt-1">{errors.is_seo_enabled}</p>
+          <p className="mt-1 text-xs text-rose-600">{errors.is_seo_enabled}</p>
         )}
 
         {data.is_seo_enabled && (
@@ -301,7 +331,7 @@ export default function EditProductCategory(
                 value={data.seo_title || ''}
                 onChange={(e) => setData('seo_title', e.target.value)}
               />
-              {errors.seo_title && <p className="text-xs text-red-500 mt-1">{errors.seo_title}</p>}
+              {errors.seo_title && <p className="mt-1 text-xs text-rose-600">{errors.seo_title}</p>}
             </div>
 
             {/* SEO Description */}
@@ -310,12 +340,13 @@ export default function EditProductCategory(
                 SEO Description
               </Label>
               <Textarea
+                className="min-h-24"
                 id="seo_description"
                 value={data.seo_description || ''}
                 onChange={(e) => setData('seo_description', e.target.value)}
               />
               {errors.seo_description && (
-                <p className="text-xs text-red-500 mt-1">{errors.seo_description}</p>
+                <p className="mt-1 text-xs text-rose-600">{errors.seo_description}</p>
               )}
             </div>
 
@@ -324,20 +355,20 @@ export default function EditProductCategory(
               <Label htmlFor="seo_image_id" className="mb-2">
                 SEO Image
               </Label>
-              <div className="flex items-center gap-2 mt-1">
+              <div className="mt-2 flex items-center gap-2">
                 <FileManager
                   onFilesSelected={(file) => setData('seo_image_id', file.id)}
                   defaultFileId={props.image.seo_image_id}
                 />
               </div>
               {errors.seo_image_id && (
-                <p className="text-xs text-red-500 mt-1">{errors.seo_image_id}</p>
+                <p className="mt-1 text-xs text-rose-600">{errors.seo_image_id}</p>
               )}
             </div>
           </>
         )}
 
-        <div className="pt-4 flex justify-end">
+        <div className="flex justify-end pt-4 md:col-span-2">
           <Button type="submit" disabled={processing}>
             {processing ? 'Saving...' : 'Save Category'}
           </Button>

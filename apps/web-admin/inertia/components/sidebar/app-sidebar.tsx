@@ -1,6 +1,5 @@
 'use client'
 
-import { Link } from '@inertiajs/react'
 import {
   Sidebar,
   SidebarContent,
@@ -9,21 +8,24 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from '@repo/ui/components/ui/sidebar'
+} from '@baguspay/ui/components/ui/sidebar'
+import { Link } from '@inertiajs/react'
 import {
+  Activity,
   ArrowLeftRight,
   BanknoteArrowDown,
-  Command,
-  DollarSignIcon,
+  Building2,
+  CreditCard,
   FileTextIcon,
-  LayoutGrid,
+  Home,
   NewspaperIcon,
   PenIcon,
-  RefreshCcwIcon,
+  ReceiptText,
   Settings2Icon,
   ShoppingBagIcon,
-  TicketIcon,
-  UserIcon,
+  TicketPercent,
+  Users,
+  Zap,
 } from 'lucide-react'
 import type * as React from 'react'
 import { NavMain } from './nav-main'
@@ -83,7 +85,7 @@ const data = {
     {
       title: 'Products Pascabayar',
       url: '#',
-      icon: ShoppingBagIcon,
+      icon: ReceiptText,
       isActive: false,
       items: [
         {
@@ -127,7 +129,7 @@ const data = {
     {
       title: 'Products Fitur Khusus',
       url: '#',
-      icon: ShoppingBagIcon,
+      icon: Zap,
       isActive: false,
       items: [
         {
@@ -157,7 +159,7 @@ const data = {
     {
       title: 'Payments',
       url: '#',
-      icon: DollarSignIcon,
+      icon: CreditCard,
       items: [
         {
           title: 'Categories',
@@ -172,7 +174,7 @@ const data = {
     {
       title: 'Offers',
       url: '#',
-      icon: TicketIcon,
+      icon: TicketPercent,
       items: [
         {
           title: 'Vouchers',
@@ -207,13 +209,13 @@ const data = {
     {
       title: 'Balance Mutations',
       url: '/admin/balance-mutations',
-      icon: RefreshCcwIcon,
+      icon: Activity,
       items: [],
     },
     {
       title: 'User Managements',
       url: '/admin/users',
-      icon: UserIcon,
+      icon: Users,
       items: [],
     },
     {
@@ -236,7 +238,7 @@ const data = {
     {
       title: 'Home',
       url: '#',
-      icon: LayoutGrid,
+      icon: Home,
       isActive: true,
       items: [
         {
@@ -280,29 +282,38 @@ const data = {
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
-    <Sidebar className="top-(--header-height) h-[calc(100svh-var(--header-height))]!" {...props}>
-      <SidebarHeader>
+    <Sidebar
+      className="top-(--header-height) h-[calc(100svh-var(--header-height))]! border-r border-border/70 bg-sidebar"
+      {...props}
+    >
+      <SidebarHeader className="border-b border-border/70 px-3 py-3">
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton size="lg" asChild>
+            <SidebarMenuButton
+              size="lg"
+              asChild
+              className="rounded-md border border-border/70 bg-card/85 shadow-sm transition-colors hover:bg-card"
+            >
               <Link href="/admin">
-                <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
-                  <Command className="size-4" />
+                <div className="flex aspect-square size-9 items-center justify-center rounded-md bg-primary text-primary-foreground shadow-sm">
+                  <Building2 className="size-4" />
                 </div>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-medium">Baguspay</span>
-                  <span className="truncate text-xs">Admin Page</span>
+                  <span className="truncate text-[13px] font-semibold tracking-[0.08em] text-foreground uppercase">
+                    Baguspay
+                  </span>
+                  <span className="truncate text-xs text-muted-foreground">Control Center</span>
                 </div>
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
-      <SidebarContent>
+      <SidebarContent className="px-2.5 py-3">
         <NavMain items={data.navMain} />
         <NavMain items={data.config} title="Config" />
       </SidebarContent>
-      <SidebarFooter>
+      <SidebarFooter className="border-t border-border/70 bg-card/70 p-2.5">
         <NavUser user={data.user} />
       </SidebarFooter>
     </Sidebar>

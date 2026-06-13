@@ -1,7 +1,7 @@
-import type { InferSelectModel } from '@repo/db'
-import { type tb, UserRegisteredType, UserRole } from '@repo/db/types'
+import { UserRole } from '@baguspay/db/types'
+import type { TUser } from 'src/common/types/meta.type'
 
-export const GUEST_USER: InferSelectModel<typeof tb.users> = {
+export const GUEST_USER: TUser = {
   id: '00000000-0000-0000-0000-000000000000',
   email: 'guest@baguspay.web.id',
   name: 'Guest User',
@@ -12,12 +12,7 @@ export const GUEST_USER: InferSelectModel<typeof tb.users> = {
   image_url: null,
   is_banned: false,
   is_email_verified: false,
-  registered_type: UserRegisteredType.LOCAL,
   phone: null,
-  deleted_at: null,
-  is_deleted: false,
-  oauth_id: null,
-  password: 'ini_password_guest_user_baguspay',
   pin_attempts: 0,
   pin_hash: null,
   pin_locked_until: null,

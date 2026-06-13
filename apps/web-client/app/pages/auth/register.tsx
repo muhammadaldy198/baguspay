@@ -1,5 +1,5 @@
+import { Button } from '@baguspay/ui/components/ui/button'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Button } from '@repo/ui/components/ui/button'
 import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 import { useTranslation } from 'react-i18next'
@@ -132,7 +132,7 @@ export default function Register({ loaderData }: Route.ComponentProps) {
               error={form.formState.errors.confirm_password?.message}
             />
           </div>
-          <Button type="submit" className="w-full">
+          <Button type="submit" size="lg" className="w-full rounded-lg">
             {register.isPending ? 'Loading...' : t('submitButton')}
           </Button>
         </form>

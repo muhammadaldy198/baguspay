@@ -1,4 +1,4 @@
-import { DepositStatus } from '@repo/db/types'
+import { DepositStatus } from '@baguspay/db/types'
 import vine from '@vinejs/vine'
 import type { Infer } from '@vinejs/vine/types'
 

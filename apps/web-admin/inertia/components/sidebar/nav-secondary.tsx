@@ -1,11 +1,11 @@
-import { Link, usePage } from '@inertiajs/react'
 import {
   SidebarGroup,
   SidebarGroupContent,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from '@repo/ui/components/ui/sidebar'
+} from '@baguspay/ui/components/ui/sidebar'
+import { Link, usePage } from '@inertiajs/react'
 import type { LucideIcon } from 'lucide-react'
 import type * as React from 'react'
 

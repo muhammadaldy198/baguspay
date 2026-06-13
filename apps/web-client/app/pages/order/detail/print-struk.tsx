@@ -1,6 +1,6 @@
-﻿import { Button } from '@repo/ui/components/ui/button'
-import { Input } from '@repo/ui/components/ui/input'
-import { Label } from '@repo/ui/components/ui/label'
+import { Button } from '@baguspay/ui/components/ui/button'
+import { Input } from '@baguspay/ui/components/ui/input'
+import { Label } from '@baguspay/ui/components/ui/label'
 import { PrinterIcon } from 'lucide-react'
 import { useRef, useState } from 'react'
 import { useReactToPrint } from 'react-to-print'
@@ -62,7 +62,7 @@ export default function PrintStruk({ data }: Props) {
   return (
     <div className="flex flex-col md:flex-row gap-8 items-start w-full">
       {/* Panel Form Editor */}
-      <div className="w-full md:w-1/2 space-y-6 p-6 border border-gray-200 dark:border-zinc-800 rounded-xl bg-card shadow-sm h-fit">
+      <div className="w-full md:w-1/2 space-y-6 p-6 border border-border/70 dark:border-border/70 rounded-xl bg-card shadow-sm h-fit">
         <div>
           <h3 className="text-lg font-bold">Pengaturan Harga</h3>
           <p className="text-sm text-muted-foreground mt-1">
@@ -76,7 +76,7 @@ export default function PrintStruk({ data }: Props) {
             <Input
               disabled
               value={formatRupiah(receiptData.basePrice)}
-              className="bg-muted/50 border-gray-200 dark:border-zinc-800 disabled:opacity-75"
+              className="bg-muted/50 border-border/70 dark:border-border/70 disabled:opacity-75"
             />
           </div>
 
@@ -106,7 +106,7 @@ export default function PrintStruk({ data }: Props) {
       </div>
 
       {/* Panel Preview Struk */}
-      <div className="w-full md:w-1/2 flex justify-center items-start bg-gray-100 dark:bg-zinc-900/50 p-6 md:p-8 rounded-xl overflow-x-auto min-w-[340px] border border-gray-100 dark:border-zinc-800 h-full">
+      <div className="w-full md:w-1/2 flex justify-center items-start bg-gray-100 dark:bg-zinc-900/50 p-6 md:p-8 rounded-xl overflow-x-auto min-w-[340px] border border-border/50 dark:border-border/70 h-full">
         {/* Area Print yang dituju oleh useReactToPrint */}
         <div
           ref={contentRef}
@@ -126,7 +126,7 @@ export default function PrintStruk({ data }: Props) {
             <p className="m-0 text-[10px]">Platform Pembayaran Digital</p>
           </div>
 
-          <div className="border-b-[1.5px] border-dashed border-gray-400 mb-2 mt-2"></div>
+          <div className="border-b-[1.5px] border-dashed border-border/70 mb-2 mt-2"></div>
 
           {/* Rincian Trx */}
           <div className="mb-2">
@@ -158,7 +158,7 @@ export default function PrintStruk({ data }: Props) {
             </table>
           </div>
 
-          <div className="border-b-[1.5px] border-dashed border-gray-400 mb-2 mt-2"></div>
+          <div className="border-b-[1.5px] border-dashed border-border/70 mb-2 mt-2"></div>
 
           {/* Serial Number */}
           <div className="mb-2 text-center">
@@ -166,7 +166,7 @@ export default function PrintStruk({ data }: Props) {
             <p className="m-0 text-[11px] break-all leading-tight mt-1">{receiptData.sn || '-'}</p>
           </div>
 
-          <div className="border-b-[1.5px] border-dashed border-gray-400 mb-2 mt-2"></div>
+          <div className="border-b-[1.5px] border-dashed border-border/70 mb-2 mt-2"></div>
 
           {/* Total Harga */}
           <div className="mb-4 mt-2">
@@ -181,7 +181,7 @@ export default function PrintStruk({ data }: Props) {
           </div>
 
           {/* Footer text */}
-          <div className="border-t-[1.5px] border-dashed border-gray-400 pt-2 pb-2 text-center flex flex-col gap-1">
+          <div className="border-t-[1.5px] border-dashed border-border/70 pt-2 pb-2 text-center flex flex-col gap-1">
             <p className="m-0 font-bold text-xs">BERHASIL</p>
             <p className="m-0 text-[10px]">Terima kasih telah berbelanja.</p>
             <p className="m-0 text-[9px] mt-1 text-gray-700">

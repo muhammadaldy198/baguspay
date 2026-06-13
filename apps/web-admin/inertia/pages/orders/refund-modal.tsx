@@ -1,5 +1,4 @@
-import { useForm } from '@inertiajs/react'
-import { Button } from '@repo/ui/components/ui/button'
+import { Button } from '@baguspay/ui/components/ui/button'
 import {
   Dialog,
   DialogContent,
@@ -7,9 +6,10 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@repo/ui/components/ui/dialog'
+} from '@baguspay/ui/components/ui/dialog'
+import { useForm } from '@inertiajs/react'
 import { RecycleIcon } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import toast from 'react-hot-toast'
 
 export default function RefundOrderModal({ orderId }: { orderId: string }) {
@@ -29,12 +29,6 @@ export default function RefundOrderModal({ orderId }: { orderId: string }) {
       },
     })
   }
-
-  useEffect(() => {
-    if (open) {
-      form.setData('status', status)
-    }
-  }, [open, form])
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>

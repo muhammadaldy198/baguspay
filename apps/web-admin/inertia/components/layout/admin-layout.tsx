@@ -1,6 +1,6 @@
 import type { SharedProps } from '@adonisjs/inertia/types'
+import { SidebarInset, SidebarProvider } from '@baguspay/ui/components/ui/sidebar'
 import { usePage } from '@inertiajs/react'
-import { SidebarInset, SidebarProvider } from '@repo/ui/components/ui/sidebar'
 import { QueryClient } from '@tanstack/react-query'
 import { useEffect } from 'react'
 import toast from 'react-hot-toast'
@@ -27,13 +27,13 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   }, [props])
 
   return (
-    <div className="[--header-height:calc(--spacing(14))]">
+    <div className="[--header-height:calc(--spacing(16))]">
       <SidebarProvider className="flex flex-col">
         <SiteHeader />
         <div className="flex flex-1">
           <AppSidebar />
           <SidebarInset>
-            <div className="flex flex-1 flex-col gap-4 p-6 lg:p-12">{children}</div>
+            <div className="flex flex-1 flex-col gap-4 p-4 sm:p-6 lg:p-8">{children}</div>
           </SidebarInset>
         </div>
       </SidebarProvider>

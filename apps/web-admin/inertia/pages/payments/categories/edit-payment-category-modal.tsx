@@ -1,5 +1,4 @@
-import { router, useForm } from '@inertiajs/react'
-import { Button } from '@repo/ui/components/ui/button'
+import { Button } from '@baguspay/ui/components/ui/button'
 import {
   Dialog,
   DialogContent,
@@ -7,20 +6,25 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@repo/ui/components/ui/dialog'
-import { Input } from '@repo/ui/components/ui/input'
-import { Label } from '@repo/ui/components/ui/label'
-import { type FormEvent, useEffect, useState } from 'react'
+} from '@baguspay/ui/components/ui/dialog'
+import { Input } from '@baguspay/ui/components/ui/input'
+import { Label } from '@baguspay/ui/components/ui/label'
+import { router, useForm } from '@inertiajs/react'
+import { type FormEvent, useState } from 'react'
 
 export function EditPaymentCategoryModal({ id, name }: { id: number | string; name: string }) {
   const [open, setOpen] = useState(false)
   const form = useForm<{ name: string }>({
     name: name || '',
   })
+  const { data, setData } = form
 
-  useEffect(() => {
-    form.setData('name', name)
-  }, [name, form])
+  const handleOpenChange = (value: boolean) => {
+    setOpen(value)
+    if (value) {
+      setData('name', name)
+    }
+  }
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
@@ -33,7 +37,7 @@ export function EditPaymentCategoryModal({ id, name }: { id: number | string; na
   }
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>
         <Button variant="outline" size="sm">
           Edit
@@ -51,8 +55,8 @@ export function EditPaymentCategoryModal({ id, name }: { id: number | string; na
             <Input
               id="edit-name"
               placeholder="Name"
-              value={form.data.name}
-              onChange={(e) => form.setData('name', e.target.value)}
+              value={data.name}
+              onChange={(e) => setData('name', e.target.value)}
               required
             />
             {form.errors.name && (

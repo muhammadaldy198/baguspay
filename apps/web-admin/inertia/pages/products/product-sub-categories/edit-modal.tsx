@@ -1,5 +1,4 @@
-import { useForm } from '@inertiajs/react'
-import { Button } from '@repo/ui/components/ui/button'
+import { Button } from '@baguspay/ui/components/ui/button'
 import {
   Dialog,
   DialogClose,
@@ -8,11 +7,12 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@repo/ui/components/ui/dialog'
-import { Input } from '@repo/ui/components/ui/input'
-import { Label } from '@repo/ui/components/ui/label'
-import { Switch } from '@repo/ui/components/ui/switch'
-import { Textarea } from '@repo/ui/components/ui/textarea'
+} from '@baguspay/ui/components/ui/dialog'
+import { Input } from '@baguspay/ui/components/ui/input'
+import { Label } from '@baguspay/ui/components/ui/label'
+import { Switch } from '@baguspay/ui/components/ui/switch'
+import { Textarea } from '@baguspay/ui/components/ui/textarea'
+import { useForm } from '@inertiajs/react'
 import { useMutation } from '@tanstack/react-query'
 import { EditIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
@@ -64,10 +64,9 @@ export default function EditProductSubCategoryModal({ productSubCategoryId }: Pr
   })
 
   useEffect(() => {
-    if (open) {
-      productSubCategory.mutate()
-    }
-  }, [open, productSubCategory])
+    if (!open) return
+    productSubCategory.mutate()
+  }, [open, productSubCategoryId])
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()

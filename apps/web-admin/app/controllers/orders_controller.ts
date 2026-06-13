@@ -1,5 +1,5 @@
 import type { HttpContext } from '@adonisjs/core/http'
-import { and, asc, count, db, desc, eq } from '@repo/db'
+import { and, asc, count, desc, eq } from '@baguspay/db'
 import {
   BalanceMutationRefType,
   BalanceMutationType,
@@ -7,8 +7,9 @@ import {
   PaymentStatus,
   RefundStatus,
   tb,
-} from '@repo/db/types'
+} from '@baguspay/db/types'
 import vine from '@vinejs/vine'
+import { db } from '#database/db'
 import {
   getOrderQueryValidator,
   orderIdValidator,

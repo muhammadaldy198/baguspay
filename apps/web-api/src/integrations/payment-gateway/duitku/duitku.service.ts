@@ -1,13 +1,10 @@
 import crypto from 'node:crypto'
+import { PaymentMethodFeeType, PaymentStatus } from '@baguspay/db/types'
 import { HttpException, Injectable } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
-import { PaymentMethodFeeType, PaymentStatus } from '@repo/db/types'
 import { ApiServiceException } from 'src/common/exceptions/api-service.exception'
 import type { PaymentGateway } from '../payment.interface'
-import type {
-  CreatePaymentGatewayRequest,
-  CreatePaymentGatewayResponse,
-} from '../payment-gateway.type'
+import type { CreatePaymentRequest, CreatePaymentResult } from '../payment-gateway.type'
 import { DuitkuAPiService } from './duitku.api.service'
 
 @Injectable()
@@ -27,12 +24,10 @@ export class DuitkuService implements PaymentGateway {
     this.CALLBACK_URL = this.configService.get<string>('DUITKU_CALLBACK_URL')
   }
 
-  async createTransaction(
-    data: CreatePaymentGatewayRequest,
-  ): Promise<CreatePaymentGatewayResponse> {
+  async createTransaction(data: CreatePaymentRequest): Promise<CreatePaymentResult> {
     try {
-      const expiryPeriod = data.expired_in * 60
-      const expiredAt = new Date(Date.now() + data.expired_in * 1000)
+      const expiryPeriod = data.expires_in_seconds * 60
+      const expiredAt = new Date(Date.now() + data.expires_in_seconds * 1000)
 
       //   hitung fee
       const amount = data.amount
@@ -41,7 +36,7 @@ export class DuitkuService implements PaymentGateway {
 
       const fee = this.duitkuApiService.calculateFee(
         amount,
-        data.fee_in_percent / 100,
+        data.fee_percentage / 100,
         data.fee_static,
       )
 
@@ -52,7 +47,7 @@ export class DuitkuService implements PaymentGateway {
       }
 
       const signature = this.duitkuApiService.generateSignature(
-        this.MERCHANT_CODE + data.id + totalAmount + this.API_KEY,
+        this.MERCHANT_CODE + data.merchant_ref + totalAmount + this.API_KEY,
       )
 
       const response = await this.duitkuApiService.createTransaction({
@@ -64,38 +59,39 @@ export class DuitkuService implements PaymentGateway {
         phoneNumber: data.customer_phone,
         callbackUrl: data.callback_url ?? this.CALLBACK_URL ?? '',
         expiryPeriod: expiryPeriod,
-        merchantOrderId: data.id,
+        merchantOrderId: data.merchant_ref,
         signature: signature,
-        returnUrl: data.return_url ?? (this.RETURN_URL ? `${this.RETURN_URL}/${data.id}` : ''),
+        returnUrl:
+          data.return_url ?? (this.RETURN_URL ? `${this.RETURN_URL}/${data.merchant_ref}` : ''),
       })
 
       // Data Setelah Revisi Create Payment
-      let r_fee = 0
-      let r_amount_received = 0
-      const r_amount_total = response.amount
+      let feeAmount = 0
+      let settlementAmount = 0
+      const payAmount = response.amount
 
       if (data.fee_type === PaymentMethodFeeType.BUYER) {
-        r_fee = response.amount - data.amount
-        r_amount_received = response.amount - r_fee
+        feeAmount = response.amount - data.amount
+        settlementAmount = response.amount - feeAmount
       } else {
-        r_fee = fee
-        r_amount_received = response.amount - r_fee
+        feeAmount = fee
+        settlementAmount = response.amount - feeAmount
       }
 
       return {
-        amount: data.amount,
-        amount_received: r_amount_received,
+        base_amount: data.amount,
+        settlement_amount: settlementAmount,
         fee_type: data.fee_type,
-        amount_total: r_amount_total,
+        pay_amount: payAmount,
         customer_email: data.customer_email,
         customer_name: data.customer_name,
         expired_at: expiredAt,
-        id: data.id,
+        id: data.merchant_ref,
         order_items: data.order_items,
         provider_code: data.provider_code,
         provider_name: data.provider_name,
         ref_id: response.reference,
-        total_fee: r_fee,
+        fee_amount: feeAmount,
         customer_phone: data.customer_phone,
         pay_url: response.paymentUrl,
         pay_code: response.vaNumber,
@@ -119,8 +115,8 @@ export class DuitkuService implements PaymentGateway {
     throw new Error(`Method not implemented. ${data}`)
   }
 
-  calculateFee(amountReceived: number, feePercent: number, feeFixed: number): number {
-    throw new Error(`Method not implemented. ${amountReceived}, ${feePercent}, ${feeFixed}`)
+  calculateFee(amountReceived: number, feeRate: number, fixedFee: number): number {
+    throw new Error(`Method not implemented. ${amountReceived}, ${feeRate}, ${fixedFee}`)
   }
 
   public verifyCallbackSignature(data: {

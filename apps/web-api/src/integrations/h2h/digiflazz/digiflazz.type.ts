@@ -1,4 +1,4 @@
-import type { OrderStatus } from '@repo/db/types'
+import type { OrderStatus } from '@baguspay/db/types'
 
 export type DigiflazzTopupData = {
   provider_code: string

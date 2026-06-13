@@ -1,6 +1,5 @@
-import { useForm } from '@inertiajs/react'
-import { ProductBillingType, ProductFullfillmentType, ProductProvider } from '@repo/db/types'
-import { Button } from '@repo/ui/components/ui/button'
+import { ProductBillingType, ProductFullfillmentType, ProductProvider } from '@baguspay/db/types'
+import { Button } from '@baguspay/ui/components/ui/button'
 import {
   Dialog,
   DialogContent,
@@ -8,18 +7,21 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@repo/ui/components/ui/dialog'
-import { Input } from '@repo/ui/components/ui/input'
-import { Label } from '@repo/ui/components/ui/label'
+} from '@baguspay/ui/components/ui/dialog'
+import { Input } from '@baguspay/ui/components/ui/input'
+import { Label } from '@baguspay/ui/components/ui/label'
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@repo/ui/components/ui/select'
-import { Textarea } from '@repo/ui/components/ui/textarea'
+} from '@baguspay/ui/components/ui/select'
+import { Textarea } from '@baguspay/ui/components/ui/textarea'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@baguspay/ui/components/ui/tooltip'
+import { useForm } from '@inertiajs/react'
 import { useQueryClient } from '@tanstack/react-query'
+import { PlusIcon } from 'lucide-react'
 import { type FormEvent, useEffect, useMemo, useState } from 'react'
 import type { CreateProductValidator } from '#validators/product'
 import FileManager from '~/components/file-manager'
@@ -85,9 +87,16 @@ export default function AddProductModal({ productSubCategoryId }: Props) {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <Button size="sm">Add Product</Button>
-      </DialogTrigger>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <DialogTrigger asChild>
+            <Button size="icon" aria-label="Add Product">
+              <PlusIcon className="size-4" aria-hidden="true" />
+            </Button>
+          </DialogTrigger>
+        </TooltipTrigger>
+        <TooltipContent>Add Product</TooltipContent>
+      </Tooltip>
       <DialogContent className="w-full md:min-w-2/3">
         <DialogHeader>
           <DialogTitle className="text-start">Add Product</DialogTitle>
@@ -168,7 +177,7 @@ export default function AddProductModal({ productSubCategoryId }: Props) {
           </div>
           <div className="flex gap-4">
             <div className="w-full flex items-start gap-4 mt-6">
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 rounded-md bg-muted/50 px-3 py-2">
                 <Label htmlFor="is_available">Available</Label>
                 <input
                   id="is_available"
@@ -180,7 +189,7 @@ export default function AddProductModal({ productSubCategoryId }: Props) {
                   className="accent-primary h-5 w-10"
                 />
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 rounded-md bg-muted/50 px-3 py-2">
                 <Label htmlFor="is_featured">Featured</Label>
                 <input
                   id="is_featured"
@@ -331,7 +340,7 @@ export default function AddProductModal({ productSubCategoryId }: Props) {
                 type="number"
                 value={Number.isNaN(totalPrice) ? '' : totalPrice}
                 readOnly
-                className="bg-gray-100 cursor-not-allowed"
+                className="bg-muted cursor-not-allowed"
               />
             </div>
             <div className="w-full">

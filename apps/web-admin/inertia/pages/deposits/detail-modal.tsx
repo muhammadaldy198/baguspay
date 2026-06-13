@@ -1,5 +1,5 @@
-import { DepositStatus } from '@repo/db/types'
-import { Button } from '@repo/ui/components/ui/button'
+import { DepositStatus } from '@baguspay/db/types'
+import { Button } from '@baguspay/ui/components/ui/button'
 import {
   Dialog,
   DialogContent,
@@ -8,10 +8,10 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@repo/ui/components/ui/dialog'
-import { Label } from '@repo/ui/components/ui/label'
-import { Skeleton } from '@repo/ui/components/ui/skeleton'
-import { cn } from '@repo/ui/lib/utils'
+} from '@baguspay/ui/components/ui/dialog'
+import { Label } from '@baguspay/ui/components/ui/label'
+import { Skeleton } from '@baguspay/ui/components/ui/skeleton'
+import { cn } from '@baguspay/ui/lib/utils'
 import { useMutation } from '@tanstack/react-query'
 import { EyeIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
@@ -37,10 +37,9 @@ export default function DetailDepositModal(props: Props) {
   })
 
   useEffect(() => {
-    if (open) {
-      detailDeposit.mutate()
-    }
-  }, [open, detailDeposit])
+    if (!open) return
+    detailDeposit.mutate()
+  }, [open, props.depositId])
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -135,16 +134,15 @@ export default function DetailDepositModal(props: Props) {
                 <div>
                   <Label className="mb-1">Status</Label>
                   <div
-                    className={cn('capitalize font-semibold p-1 rounded', {
+                    className={cn('capitalize font-semibold p-1 rounded-md', {
                       'bg-red-200 text-red-500':
                         detailDeposit.data?.data.status === DepositStatus.FAILED,
                       'bg-yellow-200 text-yellow-500':
                         detailDeposit.data?.data.status === DepositStatus.PENDING,
                       'bg-green-200 text-green-500':
                         detailDeposit.data?.data.status === DepositStatus.COMPLETED,
-                      'bg-gray-200 text-gray-500':
-                        detailDeposit.data?.data.status === DepositStatus.EXPIRED,
-                      'bg-slate-200 text-slate-500':
+                      'bg-muted text-muted-foreground':
+                        detailDeposit.data?.data.status === DepositStatus.EXPIRED ||
                         detailDeposit.data?.data.status === DepositStatus.CANCELED,
                     })}
                   >
@@ -170,7 +168,7 @@ export default function DetailDepositModal(props: Props) {
                 </div>
                 <div>
                   <Label className="mb-1">Pay URL</Label>
-                  <div className="truncate text-blue-600 underline">
+                  <div className="truncate text-primary underline">
                     {detailDeposit.data?.data.pay_url ? (
                       <a
                         href={detailDeposit.data?.data.pay_url}

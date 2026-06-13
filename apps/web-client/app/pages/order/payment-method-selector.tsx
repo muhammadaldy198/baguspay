@@ -3,8 +3,8 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from '@repo/ui/components/ui/accordion'
-import { Badge } from '@repo/ui/components/ui/badge'
+} from '@baguspay/ui/components/ui/accordion'
+import { Badge } from '@baguspay/ui/components/ui/badge'
 import {
   BuildingIcon,
   CreditCardIcon,
@@ -160,17 +160,17 @@ export default function PaymentMethodSelector({
             <div
               onClick={handleBalanceSelect}
               className={`
-                relative p-3 rounded-xl border cursor-pointer transition-all duration-300
+                relative p-3 rounded-lg border cursor-pointer transition-all duration-300
                 ${
                   isBalanceSelected
                     ? 'border-primary bg-primary/5 shadow-lg shadow-primary/10 ring-1 ring-primary/20 dark:bg-primary/10 dark:border-primary/50'
-                    : 'border-border dark:border-border hover:border-primary/50 dark:hover:border-primary/40 dark:bg-card hover:shadow-md'
+                    : 'border-border dark:border-border hover:border-primary/30 dark:hover:border-primary/40 dark:bg-card hover:shadow-md'
                 }
                 ${!isBalanceSufficient ? 'opacity-70 cursor-not-allowed' : ''}
               `}
             >
               {!isBalanceSufficient && (
-                <div className="absolute inset-0 bg-background/50 backdrop-blur-[1px] flex items-center justify-center rounded-xl z-10">
+                <div className="absolute inset-0 bg-background/50 backdrop-blur-[1px] flex items-center justify-center rounded-lg z-10">
                   <span className="text-xs font-semibold bg-destructive/10 text-destructive border border-destructive/20 px-3 py-1 rounded-full">
                     Saldo Tidak Cukup
                   </span>
@@ -186,7 +186,7 @@ export default function PaymentMethodSelector({
                       className="w-10 h-auto object-contain"
                     />
                   </div>
-                  <div className="absolute -top-2 -right-2 w-5 h-5 bg-yellow-500 rounded-full flex items-center justify-center ring-2 ring-background">
+                  <div className="absolute -top-2 -right-2 w-5 h-5 bg-yellow-500 rounded-full flex items-center justify-center ring-1 ring-background">
                     <StarIcon className="w-3 h-3 text-white fill-current" />
                   </div>
                 </div>
@@ -213,8 +213,8 @@ export default function PaymentMethodSelector({
               </div>
             </div>
           ) : (
-            <div className="flex items-center gap-3 p-3 rounded-xl border border-dashed border-border bg-muted/30">
-              <div className="p-2 rounded-lg bg-muted text-muted-foreground shrink-0 border border-border">
+            <div className="flex items-center gap-3 p-3 rounded-lg border border-dashed border-border/70 bg-muted/30">
+              <div className="p-2 rounded-lg bg-muted text-muted-foreground shrink-0 border border-border/70">
                 <LogInIcon className="w-5 h-5" />
               </div>
               <div className="flex-1">
@@ -285,18 +285,18 @@ export default function PaymentMethodSelector({
                           key={item.id}
                           onClick={() => itemAvailable && onSelectPayment(item)}
                           className={`
-                          relative p-3 rounded-xl border cursor-pointer transition-all duration-300 group
+                          relative p-3 rounded-lg border cursor-pointer transition-all duration-300 group
                           ${
                             selectedPayment?.id === item.id
                               ? 'border-primary bg-primary/5 shadow-lg shadow-primary/10 ring-1 ring-primary/20 dark:bg-primary/10 dark:border-primary/50'
-                              : 'border-border dark:border-border hover:border-primary/50 dark:hover:border-primary/40 dark:bg-card hover:shadow-md'
+                              : 'border-border dark:border-border hover:border-primary/30 dark:hover:border-primary/40 dark:bg-card hover:shadow-md'
                           }
                           ${!itemAvailable ? 'opacity-60 cursor-not-allowed grayscale' : ''}
                         `}
                         >
                           {/* Unavailable Overlay */}
                           {!itemAvailable && (
-                            <div className="absolute inset-0 bg-background/50 backdrop-blur-[1px] flex items-center justify-center rounded-xl z-10">
+                            <div className="absolute inset-0 bg-background/50 backdrop-blur-[1px] flex items-center justify-center rounded-lg z-10">
                               <span className="text-xs font-semibold bg-muted text-muted-foreground px-3 py-1 rounded-full border border-border">
                                 Tidak Tersedia
                               </span>
@@ -317,7 +317,7 @@ export default function PaymentMethodSelector({
                                 />
                               </div>
                               {item.is_featured && (
-                                <div className="absolute -top-2 -right-2 w-5 h-5 bg-yellow-500 rounded-full flex items-center justify-center ring-2 ring-background">
+                                <div className="absolute -top-2 -right-2 w-5 h-5 bg-yellow-500 rounded-full flex items-center justify-center ring-1 ring-background">
                                   <StarIcon className="w-3 h-3 text-white fill-current" />
                                 </div>
                               )}
@@ -329,7 +329,7 @@ export default function PaymentMethodSelector({
                                 {item.label && (
                                   <Badge
                                     variant="outline"
-                                    className="text-xs shrink-0 dark:border-gray-500 dark:text-gray-300"
+                                    className="text-xs shrink-0 dark:border-border/70 dark:text-gray-300"
                                   >
                                     {item.label}
                                   </Badge>

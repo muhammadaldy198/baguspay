@@ -15,7 +15,7 @@ export default memo(function PaymentUnavailable({ paymentName, status }: Props) 
           title: 'Pembayaran Kedaluwarsa',
           message: `Waktu pembayaran melalui ${paymentName} telah habis`,
           bgColor: 'bg-gray-50 dark:bg-gray-900/20',
-          borderColor: 'border-gray-200 dark:border-gray-800/30',
+          borderColor: 'border-border/70 dark:border-border/70',
           textColor: 'text-gray-800 dark:text-gray-300',
         }
       case 'failed':
@@ -24,7 +24,7 @@ export default memo(function PaymentUnavailable({ paymentName, status }: Props) 
           title: 'Pembayaran Gagal',
           message: `Pembayaran melalui ${paymentName} mengalami kegagalan`,
           bgColor: 'bg-red-50 dark:bg-red-900/20',
-          borderColor: 'border-red-200 dark:border-red-800/30',
+          borderColor: 'border-destructive/40 dark:border-destructive/40',
           textColor: 'text-red-800 dark:text-red-300',
         }
       case 'cancelled':
@@ -33,7 +33,7 @@ export default memo(function PaymentUnavailable({ paymentName, status }: Props) 
           title: 'Pembayaran Dibatalkan',
           message: `Pembayaran melalui ${paymentName} telah dibatalkan`,
           bgColor: 'bg-orange-50 dark:bg-orange-900/20',
-          borderColor: 'border-orange-200 dark:border-orange-800/30',
+          borderColor: 'border-warning/40 dark:border-warning/40',
           textColor: 'text-orange-800 dark:text-orange-300',
         }
       default:
@@ -42,7 +42,7 @@ export default memo(function PaymentUnavailable({ paymentName, status }: Props) 
           title: 'Pembayaran Tidak Tersedia',
           message: `Pembayaran melalui ${paymentName} tidak dapat dilakukan`,
           bgColor: 'bg-gray-50 dark:bg-gray-900/20',
-          borderColor: 'border-gray-200 dark:border-gray-800/30',
+          borderColor: 'border-border/70 dark:border-border/70',
           textColor: 'text-gray-800 dark:text-gray-300',
         }
     }

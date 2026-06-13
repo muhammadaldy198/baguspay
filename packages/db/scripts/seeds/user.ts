@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt'
 import type { InferInsertModel } from 'drizzle-orm'
-import { db } from '@/database'
+import type { Database } from '@/database'
 import { UserRole } from '@/schema'
 import { tb } from '@/table'
 
@@ -23,6 +23,6 @@ const user: InferInsertModel<typeof tb.users>[] = [
   },
 ]
 
-export const userSeed = async () => {
+export const userSeed = async (db: Database) => {
   await db.insert(tb.users).values(user).onConflictDoNothing()
 }

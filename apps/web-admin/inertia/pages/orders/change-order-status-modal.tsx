@@ -1,23 +1,23 @@
-import { useForm } from '@inertiajs/react'
-import { OrderStatus } from '@repo/db/types'
-import { Button } from '@repo/ui/components/ui/button'
+import { OrderStatus } from '@baguspay/db/types'
+import { Button } from '@baguspay/ui/components/ui/button'
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@repo/ui/components/ui/dialog'
-import { Label } from '@repo/ui/components/ui/label'
+} from '@baguspay/ui/components/ui/dialog'
+import { Label } from '@baguspay/ui/components/ui/label'
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@repo/ui/components/ui/select'
+} from '@baguspay/ui/components/ui/select'
+import { useForm } from '@inertiajs/react'
 import { PencilIcon } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import toast from 'react-hot-toast'
 import type { UpdateOrderStatusValidator } from '#validators/order'
 
@@ -33,6 +33,7 @@ export default function ChangeOrderStatusModal({
   const form = useForm<UpdateOrderStatusValidator>({
     status: status,
   })
+  const { data, setData } = form
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -47,14 +48,15 @@ export default function ChangeOrderStatusModal({
     })
   }
 
-  useEffect(() => {
-    if (open) {
-      form.setData('status', status)
+  const handleOpenChange = (value: boolean) => {
+    setOpen(value)
+    if (value) {
+      setData('status', status)
     }
-  }, [open, form, status])
+  }
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>
         <button className="hover:opacity-70 cursor-pointer">
           <PencilIcon className="w-3.5 h-3.5" />
@@ -70,8 +72,8 @@ export default function ChangeOrderStatusModal({
               Status
             </Label>
             <Select
-              onValueChange={(value) => form.setData('status', value as OrderStatus)}
-              value={form.data.status}
+              onValueChange={(value) => setData('status', value as OrderStatus)}
+              value={data.status}
             >
               <SelectTrigger>
                 <SelectValue placeholder="Select status" />

@@ -1,5 +1,6 @@
-import { ProductBillingType, ProductFullfillmentType, ProductProvider } from '@repo/db/types'
-import { Button } from '@repo/ui/components/ui/button'
+import { ProductBillingType, ProductFullfillmentType, ProductProvider } from '@baguspay/db/types'
+import { Button } from '@baguspay/ui/components/ui/button'
+import { Checkbox } from '@baguspay/ui/components/ui/checkbox'
 import {
   Dialog,
   DialogContent,
@@ -8,18 +9,28 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@repo/ui/components/ui/dialog'
-import { Input } from '@repo/ui/components/ui/input'
-import { Label } from '@repo/ui/components/ui/label'
+} from '@baguspay/ui/components/ui/dialog'
+import { Input } from '@baguspay/ui/components/ui/input'
+import { Label } from '@baguspay/ui/components/ui/label'
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@repo/ui/components/ui/select'
-import { Switch } from '@repo/ui/components/ui/switch'
+} from '@baguspay/ui/components/ui/select'
+import { Switch } from '@baguspay/ui/components/ui/switch'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@baguspay/ui/components/ui/table'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@baguspay/ui/components/ui/tooltip'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { DownloadCloudIcon } from 'lucide-react'
 import { useDeferredValue, useMemo, useState } from 'react'
 import toast from 'react-hot-toast'
 import FileManager from '~/components/file-manager'
@@ -233,12 +244,22 @@ export default function AddProviderProductsModal({
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
-      <DialogTrigger asChild>
-        <Button size="sm" variant="outline" disabled={!isSubCategoryActive}>
-          Add from Provider
-        </Button>
-      </DialogTrigger>
-      <DialogContent className="w-full max-w-[90vw] md:max-w-5xl h-[90vh] max-h-[90vh] overflow-hidden flex flex-col">
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <DialogTrigger asChild>
+            <Button
+              size="icon"
+              variant="outline"
+              disabled={!isSubCategoryActive}
+              aria-label="Add from Provider"
+            >
+              <DownloadCloudIcon className="size-4" aria-hidden="true" />
+            </Button>
+          </DialogTrigger>
+        </TooltipTrigger>
+        <TooltipContent>Add from Provider</TooltipContent>
+      </Tooltip>
+      <DialogContent className="fixed inset-0 left-0 top-0 translate-x-0 translate-y-0 w-screen max-w-none h-dvh max-h-dvh overflow-y-auto rounded-none p-4 sm:left-[50%] sm:top-[50%] sm:right-auto sm:bottom-auto sm:w-full sm:max-w-[calc(100vw-1rem)] md:max-w-6xl sm:h-[90dvh] sm:max-h-[90dvh] sm:translate-x-[-50%] sm:translate-y-[-50%] sm:overflow-hidden sm:rounded-xl sm:p-6 flex flex-col">
         <DialogHeader>
           <DialogTitle>Add Products from Provider</DialogTitle>
           <DialogDescription>
@@ -249,288 +270,298 @@ export default function AddProviderProductsModal({
         {!isSubCategoryActive ? (
           <div className="text-sm text-muted-foreground">Sub category is not active.</div>
         ) : (
-          <div className="flex flex-col gap-4 overflow-hidden">
-            <div className="grid gap-4 md:grid-cols-2">
-              <div className="space-y-2">
-                <Label>Provider</Label>
-                <Select value={provider} onValueChange={(v) => setProvider(v as ProductProvider)}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select provider" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value={ProductProvider.DIGIFLAZZ}>Digiflazz</SelectItem>
-                  </SelectContent>
-                </Select>
+          <div className="grid gap-4 sm:min-h-0 sm:flex-1 lg:overflow-hidden lg:grid-cols-[320px_minmax(0,1fr)]">
+            <div className="min-w-0 rounded-xl border border-border/70 bg-card/50 p-3 space-y-4 lg:min-h-0 lg:overflow-y-auto">
+              <div className="grid gap-4">
+                <div className="space-y-2">
+                  <Label>Provider</Label>
+                  <Select value={provider} onValueChange={(v) => setProvider(v as ProductProvider)}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select provider" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value={ProductProvider.DIGIFLAZZ}>Digiflazz</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-2">
+                  <Label>Product Image</Label>
+                  <FileManager onFilesSelected={(file) => setImageId(file.id)} />
+                </div>
               </div>
-              <div className="space-y-2">
-                <Label>Product Image</Label>
-                <FileManager onFilesSelected={(file) => setImageId(file.id)} />
+
+              <div className="grid gap-4">
+                <div className="space-y-2">
+                  <Label>Profit Static (IDR)</Label>
+                  <Input
+                    type="number"
+                    value={profitStatic}
+                    onChange={(e) => setProfitStatic(Number(e.target.value))}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label>Profit Percentage (%)</Label>
+                  <Input
+                    type="number"
+                    value={profitPercentage}
+                    onChange={(e) => setProfitPercentage(Number(e.target.value))}
+                    min={0}
+                    max={100}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label>Provider Max Price</Label>
+                  <Select
+                    value={maxPriceMode}
+                    onValueChange={(v) => setMaxPriceMode(v as 'provider' | 'total')}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select max price" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="provider">Use Provider Price</SelectItem>
+                      <SelectItem value="total">Use Total Price</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-2">
+                  <Label>Search</Label>
+                  <Input
+                    value={search}
+                    onChange={(e) => {
+                      setSearch(e.target.value)
+                      resetPaging()
+                    }}
+                  />
+                </div>
+              </div>
+
+              <div className="grid gap-4">
+                <div className="space-y-2">
+                  <Label>Stock Source</Label>
+                  <Select
+                    value={stockMode}
+                    onValueChange={(v) => setStockMode(v as 'provider' | 'manual')}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select stock source" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="provider">Use Provider Stock</SelectItem>
+                      <SelectItem value="manual">Manual Stock</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-2">
+                  <Label>Manual Stock</Label>
+                  <Input
+                    type="number"
+                    value={stockOverride}
+                    onChange={(e) => setStockOverride(Number(e.target.value))}
+                    disabled={stockMode !== 'manual'}
+                  />
+                </div>
+                <div className="flex items-center gap-3">
+                  <Switch checked={skipExisting} onCheckedChange={setSkipExisting} />
+                  <span className="text-sm">Hide existing products</span>
+                </div>
+              </div>
+
+              <div className="grid gap-4">
+                <div className="space-y-2">
+                  <Label>Category</Label>
+                  <Select
+                    value={categoryFilter}
+                    onValueChange={(value) => {
+                      setCategoryFilter(value)
+                      setBrandFilter('all')
+                      setTypeFilter('all')
+                      resetPaging()
+                    }}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="All categories" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">All</SelectItem>
+                      {options.categories.map((item) => (
+                        <SelectItem key={item} value={item}>
+                          {item}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-2">
+                  <Label>Brand</Label>
+                  <Select
+                    value={brandFilter}
+                    onValueChange={(value) => {
+                      setBrandFilter(value)
+                      setTypeFilter('all')
+                      resetPaging()
+                    }}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="All brands" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">All</SelectItem>
+                      {options.brands.map((item) => (
+                        <SelectItem key={item} value={item}>
+                          {item}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-2">
+                  <Label>Type</Label>
+                  <Select
+                    value={typeFilter}
+                    onValueChange={(value) => {
+                      setTypeFilter(value)
+                      resetPaging()
+                    }}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="All types" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">All</SelectItem>
+                      {options.types.map((item) => (
+                        <SelectItem key={item} value={item}>
+                          {item}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
               </div>
             </div>
 
-            <div className="grid gap-4 md:grid-cols-4">
-              <div className="space-y-2">
-                <Label>Profit Static (IDR)</Label>
-                <Input
-                  type="number"
-                  value={profitStatic}
-                  onChange={(e) => setProfitStatic(Number(e.target.value))}
-                />
+            <div className="min-w-0 lg:min-h-0 flex flex-col gap-3">
+              <div className="min-w-0 lg:min-h-0 lg:flex-1 overflow-hidden">
+                <div className="max-h-[55dvh] lg:h-full lg:max-h-none overflow-auto rounded-md border border-border/70">
+                  <Table className="min-w-[720px]">
+                    <TableHeader className="sticky top-0 bg-muted/50 text-xs text-muted-foreground">
+                      <TableRow className="hover:bg-transparent">
+                        <TableHead className="px-3 py-2">Select</TableHead>
+                        <TableHead className="px-3 py-2">Product</TableHead>
+                        <TableHead className="px-3 py-2">Category</TableHead>
+                        <TableHead className="px-3 py-2">Brand</TableHead>
+                        <TableHead className="px-3 py-2">Type</TableHead>
+                        <TableHead className="px-3 py-2 text-right">Price</TableHead>
+                        <TableHead className="px-3 py-2 text-right">Status</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {providerProducts.isLoading && (
+                        <TableRow>
+                          <TableCell
+                            colSpan={7}
+                            className="px-3 py-6 text-center text-muted-foreground"
+                          >
+                            Loading products...
+                          </TableCell>
+                        </TableRow>
+                      )}
+                      {providerProducts.isError && (
+                        <TableRow>
+                          <TableCell colSpan={7} className="px-3 py-6 text-center text-red-500">
+                            Failed to load provider products. Please try again later.
+                          </TableCell>
+                        </TableRow>
+                      )}
+                      {!providerProducts.isLoading && pagedProducts.length === 0 && (
+                        <TableRow>
+                          <TableCell
+                            colSpan={7}
+                            className="px-3 py-6 text-center text-muted-foreground"
+                          >
+                            No products found
+                          </TableCell>
+                        </TableRow>
+                      )}
+                      {pagedProducts.map((item) => {
+                        const exists = existingCodes.has(item.buyer_sku_code)
+                        const selectable = !exists
+                        return (
+                          <TableRow key={item.buyer_sku_code}>
+                            <TableCell className="px-3 py-2">
+                              <Checkbox
+                                disabled={!selectable}
+                                checked={selectedSet.has(item.buyer_sku_code)}
+                                onCheckedChange={() => toggleSelection(item.buyer_sku_code)}
+                              />
+                            </TableCell>
+                            <TableCell className="px-3 py-2">
+                              <p className="font-medium">{item.product_name}</p>
+                              <p className="text-xs text-muted-foreground">{item.buyer_sku_code}</p>
+                            </TableCell>
+                            <TableCell className="px-3 py-2">{item.category}</TableCell>
+                            <TableCell className="px-3 py-2">{item.brand}</TableCell>
+                            <TableCell className="px-3 py-2">{item.type}</TableCell>
+                            <TableCell className="px-3 py-2 text-right">
+                              {Number(item.price).toLocaleString('id-ID')}
+                            </TableCell>
+                            <TableCell className="px-3 py-2 text-right">
+                              {exists
+                                ? 'Exists'
+                                : item.buyer_product_status && item.seller_product_status
+                                  ? 'Active'
+                                  : 'Inactive'}
+                            </TableCell>
+                          </TableRow>
+                        )
+                      })}
+                    </TableBody>
+                  </Table>
+                </div>
               </div>
-              <div className="space-y-2">
-                <Label>Profit Percentage (%)</Label>
-                <Input
-                  type="number"
-                  value={profitPercentage}
-                  onChange={(e) => setProfitPercentage(Number(e.target.value))}
-                  min={0}
-                  max={100}
-                />
-              </div>
-              <div className="space-y-2">
-                <Label>Provider Max Price</Label>
-                <Select
-                  value={maxPriceMode}
-                  onValueChange={(v) => setMaxPriceMode(v as 'provider' | 'total')}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select max price" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="provider">Use Provider Price</SelectItem>
-                    <SelectItem value="total">Use Total Price</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="space-y-2">
-                <Label>Search</Label>
-                <Input
-                  value={search}
-                  onChange={(e) => {
-                    setSearch(e.target.value)
-                    resetPaging()
-                  }}
-                />
-              </div>
-            </div>
-
-            <div className="grid gap-4 md:grid-cols-3">
-              <div className="space-y-2">
-                <Label>Stock Source</Label>
-                <Select
-                  value={stockMode}
-                  onValueChange={(v) => setStockMode(v as 'provider' | 'manual')}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select stock source" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="provider">Use Provider Stock</SelectItem>
-                    <SelectItem value="manual">Manual Stock</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="space-y-2">
-                <Label>Manual Stock</Label>
-                <Input
-                  type="number"
-                  value={stockOverride}
-                  onChange={(e) => setStockOverride(Number(e.target.value))}
-                  disabled={stockMode !== 'manual'}
-                />
-              </div>
-              <div className="flex items-center gap-3">
-                <Switch checked={skipExisting} onCheckedChange={setSkipExisting} />
-                <span className="text-sm">Hide existing products</span>
-              </div>
-            </div>
-
-            <div className="grid gap-4 md:grid-cols-3">
-              <div className="space-y-2">
-                <Label>Category</Label>
-                <Select
-                  value={categoryFilter}
-                  onValueChange={(value) => {
-                    setCategoryFilter(value)
-                    setBrandFilter('all')
-                    setTypeFilter('all')
-                    resetPaging()
-                  }}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="All categories" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">All</SelectItem>
-                    {options.categories.map((item) => (
-                      <SelectItem key={item} value={item}>
-                        {item}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="space-y-2">
-                <Label>Brand</Label>
-                <Select
-                  value={brandFilter}
-                  onValueChange={(value) => {
-                    setBrandFilter(value)
-                    setTypeFilter('all')
-                    resetPaging()
-                  }}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="All brands" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">All</SelectItem>
-                    {options.brands.map((item) => (
-                      <SelectItem key={item} value={item}>
-                        {item}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="space-y-2">
-                <Label>Type</Label>
-                <Select
-                  value={typeFilter}
-                  onValueChange={(value) => {
-                    setTypeFilter(value)
-                    resetPaging()
-                  }}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="All types" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">All</SelectItem>
-                    {options.types.map((item) => (
-                      <SelectItem key={item} value={item}>
-                        {item}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
-
-            <div className="flex-1 overflow-hidden">
-              <div className="h-full overflow-y-auto rounded-md border">
-                <table className="w-full text-sm">
-                  <thead className="bg-muted/50 text-xs text-muted-foreground sticky top-0">
-                    <tr>
-                      <th className="px-3 py-2 text-left">Select</th>
-                      <th className="px-3 py-2 text-left">Product</th>
-                      <th className="px-3 py-2 text-left">Category</th>
-                      <th className="px-3 py-2 text-left">Brand</th>
-                      <th className="px-3 py-2 text-left">Type</th>
-                      <th className="px-3 py-2 text-right">Price</th>
-                      <th className="px-3 py-2 text-right">Status</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {providerProducts.isLoading && (
-                      <tr>
-                        <td colSpan={7} className="px-3 py-6 text-center text-muted-foreground">
-                          Loading products...
-                        </td>
-                      </tr>
-                    )}
-                    {providerProducts.isError && (
-                      <tr>
-                        <td colSpan={7} className="px-3 py-6 text-center text-red-500">
-                          Failed to load provider products. Please try again later.
-                        </td>
-                      </tr>
-                    )}
-                    {!providerProducts.isLoading && pagedProducts.length === 0 && (
-                      <tr>
-                        <td colSpan={7} className="px-3 py-6 text-center text-muted-foreground">
-                          No products found
-                        </td>
-                      </tr>
-                    )}
-                    {pagedProducts.map((item) => {
-                      const exists = existingCodes.has(item.buyer_sku_code)
-                      const selectable = !exists
-                      return (
-                        <tr key={item.buyer_sku_code} className="border-t">
-                          <td className="px-3 py-2">
-                            <input
-                              type="checkbox"
-                              disabled={!selectable}
-                              checked={selectedSet.has(item.buyer_sku_code)}
-                              onChange={() => toggleSelection(item.buyer_sku_code)}
-                            />
-                          </td>
-                          <td className="px-3 py-2">
-                            <p className="font-medium">{item.product_name}</p>
-                            <p className="text-xs text-muted-foreground">{item.buyer_sku_code}</p>
-                          </td>
-                          <td className="px-3 py-2">{item.category}</td>
-                          <td className="px-3 py-2">{item.brand}</td>
-                          <td className="px-3 py-2">{item.type}</td>
-                          <td className="px-3 py-2 text-right">
-                            {Number(item.price).toLocaleString('id-ID')}
-                          </td>
-                          <td className="px-3 py-2 text-right">
-                            {exists
-                              ? 'Exists'
-                              : item.buyer_product_status && item.seller_product_status
-                                ? 'Active'
-                                : 'Inactive'}
-                          </td>
-                        </tr>
-                      )
-                    })}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-            <div className="flex items-center justify-between text-xs text-muted-foreground">
-              <span>
-                Showing {(pageSafe - 1) * pageSize + 1}-
-                {Math.min(pageSafe * pageSize, sortedProducts.length)} of {sortedProducts.length}
-              </span>
-              <div className="flex items-center gap-2">
-                <select
-                  className="h-7 rounded border px-2 text-xs"
-                  value={pageSize}
-                  onChange={(e) => {
-                    setPageSize(Number(e.target.value))
-                    setPage(1)
-                  }}
-                >
-                  <option value={20}>20</option>
-                  <option value={50}>50</option>
-                  <option value={100}>100</option>
-                </select>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  disabled={pageSafe <= 1}
-                  onClick={() => setPage(pageSafe - 1)}
-                >
-                  Prev
-                </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  disabled={pageSafe >= totalPages}
-                  onClick={() => setPage(pageSafe + 1)}
-                >
-                  Next
-                </Button>
+              <div className="shrink-0 flex flex-col gap-2 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
+                <span className="whitespace-nowrap">
+                  Showing {(pageSafe - 1) * pageSize + 1}-
+                  {Math.min(pageSafe * pageSize, sortedProducts.length)} of {sortedProducts.length}
+                </span>
+                <div className="flex flex-wrap items-center gap-2 rounded-md bg-muted/50 px-3 py-2">
+                  <select
+                    className="h-7 rounded-md border border-input bg-background px-2 text-xs focus-visible:border-primary/30 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary/15"
+                    value={pageSize}
+                    onChange={(e) => {
+                      setPageSize(Number(e.target.value))
+                      setPage(1)
+                    }}
+                  >
+                    <option value={20}>20</option>
+                    <option value={50}>50</option>
+                    <option value={100}>100</option>
+                  </select>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    disabled={pageSafe <= 1}
+                    onClick={() => setPage(pageSafe - 1)}
+                  >
+                    Prev
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    disabled={pageSafe >= totalPages}
+                    onClick={() => setPage(pageSafe + 1)}
+                  >
+                    Next
+                  </Button>
+                </div>
               </div>
             </div>
           </div>
         )}
-        <DialogFooter className="gap-2">
+        <DialogFooter className="gap-2 sm:justify-end">
           <Button
             type="button"
+            className="w-full sm:w-auto"
             disabled={selectedCodes.length === 0 || addProducts.isPending}
             onClick={() => addProducts.mutate()}
           >

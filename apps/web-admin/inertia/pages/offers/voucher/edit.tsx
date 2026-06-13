@@ -1,10 +1,10 @@
 import type { InferPageProps } from '@adonisjs/inertia/types'
+import { Button } from '@baguspay/ui/components/ui/button'
+import { Input } from '@baguspay/ui/components/ui/input'
+import { Label } from '@baguspay/ui/components/ui/label'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@baguspay/ui/components/ui/tabs'
+import { Textarea } from '@baguspay/ui/components/ui/textarea'
 import { useForm } from '@inertiajs/react'
-import { Button } from '@repo/ui/components/ui/button'
-import { Input } from '@repo/ui/components/ui/input'
-import { Label } from '@repo/ui/components/ui/label'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@repo/ui/components/ui/tabs'
-import { Textarea } from '@repo/ui/components/ui/textarea'
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 import type { FormEvent } from 'react'
@@ -333,21 +333,25 @@ export default function EditOfferVoucher({ offer }: Props) {
           </TabsList>
           <TabsContent value="users">
             {data.is_all_users ? (
-              <p className="text-sm text-gray-500">This offer is available for all users.</p>
+              <p className="text-sm text-muted-foreground">
+                This offer is available for all users.
+              </p>
             ) : (
               <OfferUserSection offerId={offer.id} />
             )}
           </TabsContent>
           <TabsContent value="products">
             {data.is_all_products ? (
-              <p className="text-sm text-gray-500">This offer is available for all products.</p>
+              <p className="text-sm text-muted-foreground">
+                This offer is available for all products.
+              </p>
             ) : (
               <OfferProductSection offerId={offer.id} />
             )}
           </TabsContent>
           <TabsContent value="payments">
             {data.is_all_payment_methods ? (
-              <p className="text-sm text-gray-500">
+              <p className="text-sm text-muted-foreground">
                 This offer is available for all payment methods.
               </p>
             ) : (

@@ -61,6 +61,7 @@ export default defineConfig({
     () => import('@adonisjs/auth/auth_provider'),
     () => import('@adonisjs/drive/drive_provider'),
     () => import('@adonisjs/cache/cache_provider'),
+    () => import('./providers/database_provider.js'),
   ],
 
   /*

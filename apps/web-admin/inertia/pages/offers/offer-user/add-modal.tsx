@@ -1,4 +1,4 @@
-import { Button } from '@repo/ui/components/ui/button'
+import { Button } from '@baguspay/ui/components/ui/button'
 import {
   Dialog,
   DialogContent,
@@ -6,8 +6,8 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@repo/ui/components/ui/dialog'
-import { Input } from '@repo/ui/components/ui/input'
+} from '@baguspay/ui/components/ui/dialog'
+import { Input } from '@baguspay/ui/components/ui/input'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useDeferredValue, useMemo, useState } from 'react'
 import type { AddOfferUserValidator } from '#validators/offer'
@@ -139,7 +139,7 @@ export default function AddOfferUserModal({ offerId }: { offerId: string }) {
             </span>
             <div className="flex items-center gap-2">
               <select
-                className="h-7 rounded border px-2 text-xs"
+                className="h-7 rounded-md border px-2 text-xs"
                 value={limit}
                 onChange={(e) => {
                   setLimit(Number(e.target.value))

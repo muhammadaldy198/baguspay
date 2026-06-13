@@ -133,7 +133,7 @@ export const FileUploader = forwardRef<
           moveNext()
         } else if (e.key === prevKey) {
           movePrev()
-        } else if (e.key === 'Enter' || e.key === 'Space') {
+        } else if (e.key === 'Enter' || e.key === ' ' || e.key === 'Space') {
           if (activeIndex === -1) {
             dropzoneState.inputRef.current?.click()
           }
@@ -323,13 +323,13 @@ export const FileInput = forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDiv
       >
         <div
           className={cn(
-            `w-full rounded-lg duration-300 ease-in-out
+            `w-full rounded-lg transition-colors duration-300 ease-in-out
          ${
            dropzoneState.isDragAccept
-             ? 'border-green-500'
+             ? 'border-success/40'
              : dropzoneState.isDragReject || isFileTooBig
-               ? 'border-red-500'
-               : 'border-gray-300'
+               ? 'border-destructive/50'
+               : 'border-border/70'
          }`,
             className,
           )}

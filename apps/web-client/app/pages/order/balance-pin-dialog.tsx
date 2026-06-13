@@ -1,12 +1,12 @@
-import { Button } from '@repo/ui/components/ui/button'
+import { Button } from '@baguspay/ui/components/ui/button'
 import {
   Dialog,
   DialogContent,
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from '@repo/ui/components/ui/dialog'
-import { Label } from '@repo/ui/components/ui/label'
+} from '@baguspay/ui/components/ui/dialog'
+import { Label } from '@baguspay/ui/components/ui/label'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import toast from 'react-hot-toast'
 
@@ -109,7 +109,7 @@ export default function BalancePinDialog({
                 type="password"
                 inputMode="numeric"
                 maxLength={1}
-                className="w-10 h-12 text-center text-lg font-semibold bg-transparent border-b-2 border-slate-300 focus:border-primary outline-none"
+                className="w-10 h-12 text-center text-lg font-semibold bg-transparent border-b border-border/70 focus:border-primary/50 outline-none"
                 value={pinDigits[index]}
                 onChange={(e) => handleChange(index, e.target.value)}
                 onKeyDown={(e) => handleKeyDown(index, e)}

@@ -21,12 +21,12 @@ export function DataTable<TData, TValue>({
   })
 
   return (
-    <div className="rounded-xl border border-border bg-card shadow-sm overflow-x-auto">
+    <div className="rounded-xl border border-border/70 bg-card shadow-sm overflow-x-auto">
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow
-              className="border-border hover:bg-transparent bg-muted/50 border-b"
+              className="border-border/50 hover:bg-transparent bg-muted/50 border-b"
               key={headerGroup.id}
             >
               {headerGroup.headers.map((header) => {
@@ -48,10 +48,22 @@ export function DataTable<TData, TValue>({
           {table.getRowModel().rows?.length ? (
             table.getRowModel().rows.map((row) => (
               <TableRow
-                className={`border-b border-border/50 transition-colors ${onRowClick ? 'cursor-pointer hover:bg-muted/50' : 'hover:bg-muted/30'}`}
+                className={`border-b border-border/50 transition-colors ${onRowClick ? 'cursor-pointer hover:bg-muted/50 focus-visible:bg-muted/50 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary/15 focus-visible:ring-inset' : 'hover:bg-muted/30'}`}
                 key={row.id}
                 data-state={row.getIsSelected() && 'selected'}
+                role={onRowClick ? 'button' : undefined}
+                tabIndex={onRowClick ? 0 : undefined}
                 onClick={() => onRowClick?.(row.original)}
+                onKeyDown={(event) => {
+                  if (!onRowClick) {
+                    return
+                  }
+
+                  if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault()
+                    onRowClick(row.original)
+                  }
+                }}
               >
                 {row.getVisibleCells().map((cell) => (
                   <TableCell className="py-3 align-middle" key={cell.id}>

@@ -39,6 +39,10 @@ export default {
     loginWithPasskey: 'Login with Passkey',
     loginSuccess: 'Login successful!',
     loginError: 'Login failed. Please check your credentials.',
+    passkeyLogin: 'Login with Passkey',
+    passkeyLoggingIn: 'Authenticating...',
+    passkeyHint: 'Use your fingerprint, face, or security key',
+    or: 'or',
   },
   register: {
     title: 'Register',

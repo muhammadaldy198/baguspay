@@ -1,4 +1,4 @@
-import { Button } from '@repo/ui/components/ui/button'
+import { Button } from '@baguspay/ui/components/ui/button'
 import { useMutation } from '@tanstack/react-query'
 import { isAxiosError } from 'axios'
 import { ClockIcon, Loader2Icon, SearchIcon, TicketCheckIcon } from 'lucide-react'

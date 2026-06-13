@@ -21,6 +21,8 @@ export default {
       termsOfService: 'Terma Perkhidmatan',
       privacyPolicy: 'Dasar Privasi',
       news: 'Berita',
+      blog: 'Blog',
+      offers: 'Tawaran',
     },
   },
   login: {
@@ -39,6 +41,10 @@ export default {
     orLoginWith: 'Atau log masuk dengan',
     loginSuccess: 'Log masuk berjaya!',
     loginError: 'Log masuk gagal. Sila semak maklumat anda.',
+    passkeyLogin: 'Log Masuk dengan Passkey',
+    passkeyLoggingIn: 'Mengesahkan...',
+    passkeyHint: 'Gunakan cap jari, wajah, atau security key anda',
+    or: 'atau',
   },
   register: {
     title: 'Daftar',

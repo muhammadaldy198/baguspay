@@ -1,15 +1,15 @@
 import type { InferPageProps } from '@adonisjs/inertia/types'
-import { Link, router, usePage } from '@inertiajs/react'
-import { DataTable } from '@repo/ui/components/data-table'
-import { Button } from '@repo/ui/components/ui/button'
-import { Input } from '@repo/ui/components/ui/input'
+import { DataTable } from '@baguspay/ui/components/data-table'
+import { Button } from '@baguspay/ui/components/ui/button'
+import { Input } from '@baguspay/ui/components/ui/input'
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@repo/ui/components/ui/select'
+} from '@baguspay/ui/components/ui/select'
+import { Link, router, usePage } from '@inertiajs/react'
 import type { ColumnDef } from '@tanstack/react-table'
 import { useState } from 'react'
 import type OfferController from '#controllers/offer_controller'

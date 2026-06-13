@@ -1,7 +1,7 @@
 'use client'
 
+import { cn } from '@baguspay/ui/lib/utils'
 import * as TabsPrimitive from '@radix-ui/react-tabs'
-import { cn } from '@repo/ui/lib/utils'
 import type * as React from 'react'
 
 function Tabs({ className, ...props }: React.ComponentProps<typeof TabsPrimitive.Root>) {
@@ -32,7 +32,7 @@ function TabsTrigger({ className, ...props }: React.ComponentProps<typeof TabsPr
     <TabsPrimitive.Trigger
       data-slot="tabs-trigger"
       className={cn(
-        'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md px-3 py-1 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0',
+        'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md px-3 py-1 text-sm font-medium transition-[color,background-color,box-shadow] focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary/15 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0',
         'data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm',
         className,
       )}

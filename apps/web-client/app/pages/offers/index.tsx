@@ -3,16 +3,6 @@ import { useState } from 'react'
 import { Link } from 'react-router'
 import { apiClient } from '~/utils/axios'
 
-type Offer = {
-  slug: string
-  title: string
-  description: string
-  image: string
-  startDate: string // ISO
-  endDate: string // ISO
-  label: string
-}
-
 function formatIDDate(d: string) {
   try {
     return new Date(d).toLocaleDateString('id-ID', {
@@ -111,17 +101,17 @@ export default function OffersIndexPage() {
       {/* Grid */}
       <section className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
         {isLoading
-          ? Array.from({ length: 6 }).map((_, i) => (
+          ? Array.from({ length: 6 }, (_, i) => `offer-skeleton-${i}`).map((skeletonKey) => (
               <div
-                key={i}
+                key={skeletonKey}
                 className="animate-pulse rounded-xl border border-border bg-card h-full flex flex-col"
               >
                 <div className="aspect-video bg-muted" />
                 <div className="p-4 space-y-3">
-                  <div className="h-3 w-24 bg-muted rounded" />
-                  <div className="h-4 w-3/4 bg-muted rounded" />
-                  <div className="h-3 w-full bg-muted rounded" />
-                  <div className="h-3 w-2/3 bg-muted rounded" />
+                  <div className="h-3 w-24 bg-muted rounded-sm" />
+                  <div className="h-4 w-3/4 bg-muted rounded-sm" />
+                  <div className="h-3 w-full bg-muted rounded-sm" />
+                  <div className="h-3 w-2/3 bg-muted rounded-sm" />
                 </div>
               </div>
             ))
@@ -156,7 +146,7 @@ export default function OffersIndexPage() {
                 status === 'active'
                   ? 'text-emerald-700 bg-emerald-100 border-emerald-200 dark:text-emerald-300 dark:bg-emerald-900/20 dark:border-emerald-800'
                   : status === 'upcoming'
-                    ? 'text-amber-700 bg-amber-100 border-amber-200 dark:text-amber-300 dark:bg-amber-900/20 dark:border-amber-800'
+                    ? 'text-amber-700 bg-amber-100 border-warning/40 dark:text-amber-300 dark:bg-amber-900/20 dark:border-warning/40'
                     : 'text-rose-700 bg-rose-100 border-rose-200 dark:text-rose-300 dark:bg-rose-900/20 dark:border-rose-800'
 
               return (

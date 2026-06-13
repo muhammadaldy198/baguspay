@@ -1,13 +1,11 @@
 import crypto from 'node:crypto'
+import { PaymentMethodFeeType, PaymentStatus } from '@baguspay/db/types'
 import { HttpException, Injectable, InternalServerErrorException } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
-import { PaymentMethodFeeType, PaymentStatus } from '@repo/db/types'
 import { ApiServiceException } from 'src/common/exceptions/api-service.exception'
 import type { PaymentGateway } from '../payment.interface'
-import type {
-  CreatePaymentGatewayRequest,
-  CreatePaymentGatewayResponse,
-} from '../payment-gateway.type'
+import { calculatePaymentFee } from '../payment-fee'
+import type { CreatePaymentRequest, CreatePaymentResult } from '../payment-gateway.type'
 import { TripayApiService } from './tripay.api.service'
 import type { TripayPaymentMethodCode } from './tripay.type'
 
@@ -24,10 +22,8 @@ export class TripayService implements PaymentGateway {
     this.PRIVATE_KEY = configService.get<string>('TRIPAY_PRIVATE_KEY')
   }
 
-  async createTransaction(
-    data: CreatePaymentGatewayRequest,
-  ): Promise<CreatePaymentGatewayResponse> {
-    const expiredTime = Math.floor(Date.now() / 1000) + data.expired_in
+  async createTransaction(data: CreatePaymentRequest): Promise<CreatePaymentResult> {
+    const expiredTime = Math.floor(Date.now() / 1000) + data.expires_in_seconds
 
     const amount = data.amount
     let fee = 0
@@ -36,40 +32,44 @@ export class TripayService implements PaymentGateway {
     if (data.fee_type === PaymentMethodFeeType.BUYER) {
       totalAmount = data.amount
     } else {
-      fee = this.calculateFee(amount, data.fee_in_percent / 100, data.fee_static)
+      fee = calculatePaymentFee(amount, data.fee_percentage / 100, data.fee_static)
       totalAmount = data.amount + fee
     }
 
     try {
-      const signature = this.tripayApiService.generateClosedPaymentSignature(data.id, totalAmount)
+      const signature = this.tripayApiService.generateClosedPaymentSignature(
+        data.merchant_ref,
+        totalAmount,
+      )
 
       const response = await this.tripayApiService.createClosedPayment({
         amount: totalAmount,
-        merchant_ref: data.id,
+        merchant_ref: data.merchant_ref,
         customer_name: data.customer_name,
         customer_email: data.customer_email,
         method: data.provider_code as TripayPaymentMethodCode,
         order_items: data.order_items,
         callback_url: data.callback_url ?? this.CALLBACK_URL ?? '',
-        return_url: data.return_url ?? (this.RETURN_URL ? `${this.RETURN_URL}/${data.id}` : ''),
+        return_url:
+          data.return_url ?? (this.RETURN_URL ? `${this.RETURN_URL}/${data.merchant_ref}` : ''),
         expired_time: expiredTime,
         customer_phone: data.customer_phone,
         signature,
       })
 
       return {
-        amount: response.data.amount,
+        base_amount: response.data.amount,
         customer_email: response.data.customer_email,
         customer_name: response.data.customer_name,
         customer_phone: response.data.customer_phone,
-        amount_received: response.data.amount_received,
-        amount_total: totalAmount,
+        settlement_amount: response.data.amount_received,
+        pay_amount: totalAmount,
         fee_type: data.fee_type,
         order_items: response.data.order_items,
         provider_code: data.provider_code,
         provider_name: data.provider_name,
         ref_id: response.data.reference,
-        total_fee: response.data.total_fee,
+        fee_amount: response.data.total_fee,
         callback_url: response.data.callback_url,
         checkout_url: response.data.checkout_url,
         return_url: response.data.return_url,
@@ -77,7 +77,7 @@ export class TripayService implements PaymentGateway {
         qr_code: response.data.qr_string,
         pay_code: response.data.pay_code,
         pay_url: response.data.pay_url,
-        id: data.id,
+        id: data.merchant_ref,
         expired_at: new Date(expiredTime * 1000),
         status: PaymentStatus.PENDING,
       }
@@ -100,10 +100,8 @@ export class TripayService implements PaymentGateway {
     throw new Error(`Method not implemented. ${data}`)
   }
 
-  calculateFee(amountReceived: number, feePercent: number, feeFixed: number): number {
-    const total = amountReceived / (1 - feePercent) + feeFixed / (1 - feePercent)
-    const fee = total - amountReceived
-    return Math.ceil(fee)
+  calculateFee(amountReceived: number, feeRate: number, fixedFee: number): number {
+    return calculatePaymentFee(amountReceived, feeRate, fixedFee)
   }
 
   public generateCallbackSignature(data: object): string {

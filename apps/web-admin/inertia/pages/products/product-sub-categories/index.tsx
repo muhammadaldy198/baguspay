@@ -1,6 +1,6 @@
 import type { InferPageProps } from '@adonisjs/inertia/types'
-import { router } from '@inertiajs/react'
-import { Button } from '@repo/ui/components/ui/button'
+import { Button } from '@baguspay/ui/components/ui/button'
+import { Card, CardContent } from '@baguspay/ui/components/ui/card'
 import {
   Dialog,
   DialogContent,
@@ -9,8 +9,9 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@repo/ui/components/ui/dialog'
-import { cn } from '@repo/ui/lib/utils'
+} from '@baguspay/ui/components/ui/dialog'
+import { cn } from '@baguspay/ui/lib/utils'
+import { router } from '@inertiajs/react'
 import { Trash2 } from 'lucide-react'
 import type ProductsCategoriesController from '#controllers/product_categories_controller'
 import Image from '~/components/image'
@@ -43,24 +44,24 @@ export default function SectionProductSubCategory({
           <p className="text-sm text-muted-foreground">No sub-categories found.</p>
         )}
         {productCategory.product_sub_categories?.map((sub) => (
-          <div
+          <Card
             key={sub.id}
             className={cn(
-              'group relative bg-card border rounded-lg p-2 cursor-pointer transition-all duration-300 hover:shadow-soft',
+              'group relative cursor-pointer py-0 shadow-none transition-[border-color,box-shadow] hover:border-primary/30',
               {
-                'border-primary shadow-soft': sub.id === selectedSubId,
+                'border-primary/40 ring-1 ring-primary/15 shadow-sm': sub.id === selectedSubId,
               },
             )}
             onClick={() => setSelectedSubId(sub.id)}
           >
-            <div className="flex items-start justify-between gap-3 min-w-[200px]">
+            <CardContent className="flex items-start justify-between gap-3 min-w-[200px] p-3">
               <div className="flex-1">
                 <div className="flex items-start gap-2 mb-2">
                   {sub.image_url && (
                     <Image
                       src={`${sub.image_url}`}
                       alt={sub.name}
-                      className="w-8 h-8 rounded object-cover"
+                      className="w-8 h-8 rounded-md object-cover"
                     />
                   )}
                   <h3 className="font-medium text-foreground">{sub.name}</h3>
@@ -96,8 +97,8 @@ export default function SectionProductSubCategory({
                   </DialogContent>
                 </Dialog>
               </div>
-            </div>
-          </div>
+            </CardContent>
+          </Card>
         ))}
       </div>
     </section>

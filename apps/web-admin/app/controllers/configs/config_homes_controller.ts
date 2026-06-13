@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 
 import type { HttpContext } from '@adonisjs/core/http'
-import { and, db, eq, inArray } from '@repo/db'
-import { AppPlatform, ProductGroupingMenuType, ProductGroupingType, tb } from '@repo/db/types'
+import { and, eq, inArray } from '@baguspay/db'
+import { AppPlatform, ProductGroupingMenuType, ProductGroupingType, tb } from '@baguspay/db/types'
 import vine from '@vinejs/vine'
+import { db } from '#database/db'
 import {
   bulkConnectProductToSectionValidator,
   configHomeIdValidator,

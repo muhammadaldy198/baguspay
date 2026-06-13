@@ -1,15 +1,14 @@
 import type { InferPageProps } from '@adonisjs/inertia/types'
-import { router, useForm } from '@inertiajs/react'
-import { Button } from '@repo/ui/components/ui/button'
+import { Button } from '@baguspay/ui/components/ui/button'
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from '@repo/ui/components/ui/dialog'
-import { Input } from '@repo/ui/components/ui/input'
-import { Label } from '@repo/ui/components/ui/label'
+} from '@baguspay/ui/components/ui/dialog'
+import { Input } from '@baguspay/ui/components/ui/input'
+import { Label } from '@baguspay/ui/components/ui/label'
 import {
   Table,
   TableBody,
@@ -17,8 +16,9 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@repo/ui/components/ui/table'
-import { Textarea } from '@repo/ui/components/ui/textarea'
+} from '@baguspay/ui/components/ui/table'
+import { Textarea } from '@baguspay/ui/components/ui/textarea'
+import { router, useForm } from '@inertiajs/react'
 import { Edit, Plus, Trash2 } from 'lucide-react'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
@@ -138,7 +138,7 @@ export default function ArticleCategoriesIndex(props: Props) {
         </Button>
       </div>
 
-      <div className="mt-6 rounded-lg border bg-white">
+      <div className="mt-6 rounded-lg border bg-card">
         <Table>
           <TableHeader>
             <TableRow>
@@ -160,7 +160,7 @@ export default function ArticleCategoriesIndex(props: Props) {
                 <TableRow key={category.id}>
                   <TableCell className="font-medium">{category.name}</TableCell>
                   <TableCell>
-                    <code className="text-sm bg-muted px-2 py-1 rounded">{category.slug}</code>
+                    <code className="text-sm bg-muted px-2 py-1 rounded-md">{category.slug}</code>
                   </TableCell>
                   <TableCell className="max-w-xs truncate">{category.description || '-'}</TableCell>
                   <TableCell className="text-right">

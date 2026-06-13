@@ -1,4 +1,4 @@
-import { Button } from '@repo/ui/components/ui/button'
+import { Button } from '@baguspay/ui/components/ui/button'
 import { Home, Search, TriangleAlert } from 'lucide-react'
 import { Link } from 'react-router'
 

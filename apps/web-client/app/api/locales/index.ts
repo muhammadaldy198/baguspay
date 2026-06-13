@@ -12,24 +12,29 @@ const resources = {
   ms: ms,
 }
 
+type ResourceKey = keyof typeof resources
+
+function isResourceKey(value: string): value is ResourceKey {
+  return value in resources
+}
+
 export async function loader({ params }: Route.LoaderArgs) {
-  const lng = z
-    .string()
-    .refine((lng): lng is keyof typeof resources => Object.keys(resources).includes(lng))
-    .safeParse(params.locale)
+  const lng = z.string().safeParse(params.locale)
 
   if (lng.error) return data({ error: lng.error }, { status: 400 })
+  if (!isResourceKey(lng.data)) return data({ error: 'Invalid locale' }, { status: 400 })
 
   const namespaces = resources[lng.data]
+  type NamespaceKey = Extract<keyof typeof namespaces, string>
 
-  const ns = z
-    .string()
-    .refine((ns): ns is keyof typeof namespaces => {
-      return Object.keys(resources[lng.data]).includes(ns)
-    })
-    .safeParse(params.ns)
+  function isNamespaceKey(value: string): value is NamespaceKey {
+    return value in namespaces
+  }
+
+  const ns = z.string().safeParse(params.ns)
 
   if (ns.error) return data({ error: ns.error }, { status: 400 })
+  if (!isNamespaceKey(ns.data)) return data({ error: 'Invalid namespace' }, { status: 400 })
 
   const headers = new Headers()
 

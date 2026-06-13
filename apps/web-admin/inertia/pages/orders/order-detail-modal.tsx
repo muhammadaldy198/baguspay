@@ -1,6 +1,6 @@
-import type { InferSelectModel } from '@repo/db'
-import { OrderStatus, PaymentStatus, RefundStatus, type tb } from '@repo/db/types'
-import { Button } from '@repo/ui/components/ui/button'
+import type { InferSelectModel } from '@baguspay/db'
+import { OrderStatus, PaymentStatus, RefundStatus, type tb } from '@baguspay/db/types'
+import { Button } from '@baguspay/ui/components/ui/button'
 import {
   Dialog,
   DialogContent,
@@ -9,10 +9,10 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@repo/ui/components/ui/dialog'
-import { Label } from '@repo/ui/components/ui/label'
-import { Skeleton } from '@repo/ui/components/ui/skeleton'
-import { cn } from '@repo/ui/lib/utils'
+} from '@baguspay/ui/components/ui/dialog'
+import { Label } from '@baguspay/ui/components/ui/label'
+import { Skeleton } from '@baguspay/ui/components/ui/skeleton'
+import { cn } from '@baguspay/ui/lib/utils'
 import { useMutation } from '@tanstack/react-query'
 import { EyeIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
@@ -49,10 +49,9 @@ export default function OrderDetailModal({ orderId }: Props) {
   })
 
   useEffect(() => {
-    if (open) {
-      detailOrder.mutate()
-    }
-  }, [open, detailOrder])
+    if (!open) return
+    detailOrder.mutate()
+  }, [open, orderId])
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -101,7 +100,7 @@ export default function OrderDetailModal({ orderId }: Props) {
                       </div>
                     </>
                   ) : (
-                    <div className="text-gray-500">Guest Order</div>
+                    <div className="text-muted-foreground">Guest Order</div>
                   )}
                 </div>
               </div>
@@ -116,16 +115,15 @@ export default function OrderDetailModal({ orderId }: Props) {
                   <div>
                     <Label className="mb-1">Status</Label>
                     <div
-                      className={cn('capitalize font-semibold p-1 rounded', {
+                      className={cn('capitalize font-semibold p-1 rounded-md', {
                         'bg-red-200 text-red-500':
                           detailOrder.data?.order.order_status === OrderStatus.FAILED,
                         'bg-yellow-200 text-yellow-500':
                           detailOrder.data?.order.order_status === OrderStatus.PENDING,
                         'bg-green-200 text-green-500':
                           detailOrder.data?.order.order_status === OrderStatus.COMPLETED,
-                        'bg-gray-200 text-gray-500':
-                          detailOrder.data?.order.order_status === OrderStatus.NONE,
-                        'bg-slate-200 text-slate-500':
+                        'bg-muted text-muted-foreground':
+                          detailOrder.data?.order.order_status === OrderStatus.NONE ||
                           detailOrder.data?.order.order_status === OrderStatus.CANCELLED,
                       })}
                     >
@@ -135,16 +133,15 @@ export default function OrderDetailModal({ orderId }: Props) {
                   <div>
                     <Label className="mb-1">Payment Status</Label>
                     <div
-                      className={cn('capitalize font-semibold p-1 rounded', {
+                      className={cn('capitalize font-semibold p-1 rounded-md', {
                         'bg-red-200 text-red-500':
                           detailOrder.data?.order.payment_status === PaymentStatus.FAILED,
                         'bg-yellow-200 text-yellow-500':
                           detailOrder.data?.order.payment_status === PaymentStatus.PENDING,
                         'bg-green-200 text-green-500':
                           detailOrder.data?.order.payment_status === PaymentStatus.SUCCESS,
-                        'bg-gray-200 text-gray-500':
-                          detailOrder.data?.order.payment_status === PaymentStatus.EXPIRED,
-                        'bg-slate-200 text-slate-500':
+                        'bg-muted text-muted-foreground':
+                          detailOrder.data?.order.payment_status === PaymentStatus.EXPIRED ||
                           detailOrder.data?.order.payment_status === PaymentStatus.CANCELLED,
                       })}
                     >
@@ -154,14 +151,14 @@ export default function OrderDetailModal({ orderId }: Props) {
                   <div>
                     <Label className="mb-1">Refund Status</Label>
                     <div
-                      className={cn('capitalize font-semibold p-1 rounded', {
+                      className={cn('capitalize font-semibold p-1 rounded-md', {
                         'bg-red-200 text-red-500':
                           detailOrder.data?.order.refund_status === RefundStatus.FAILED,
                         'bg-yellow-200 text-yellow-500':
                           detailOrder.data?.order.refund_status === RefundStatus.PROCESSING,
                         'bg-green-200 text-green-500':
                           detailOrder.data?.order.refund_status === RefundStatus.COMPLETED,
-                        'bg-gray-200 text-gray-500':
+                        'bg-muted text-muted-foreground':
                           detailOrder.data?.order.refund_status === RefundStatus.NONE,
                       })}
                     >

@@ -18,6 +18,26 @@ export type MaxPriceConfig = {
   }
 }
 
+export type SellerPriorityRule = {
+  seller?: string[]
+  blacklist?: string[]
+}
+
+export type SellerPriorityPriceGapRule = {
+  enabled?: boolean
+  allowCheapestNonListFallback?: boolean
+  maxPriceGap: number
+  minRating: number
+  minBuyerCount: number
+}
+
+export type SellerPriorityConfig = {
+  global?: SellerPriorityRule
+  perBrand?: Record<string, SellerPriorityRule>
+  perSubBrand?: Record<string, SellerPriorityRule>
+  listPriceGapRule?: SellerPriorityPriceGapRule
+}
+
 export type SyncConfig = {
   cookiesPath: string
   categories: string[]
@@ -50,4 +70,5 @@ export type SyncConfig = {
     requireActive: boolean
     enforceMaxPrice: boolean
   }
+  sellerPriority?: SellerPriorityConfig
 }

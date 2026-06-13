@@ -1,6 +1,5 @@
-import { useForm } from '@inertiajs/react'
-import { InputFieldType } from '@repo/db/types'
-import { Button } from '@repo/ui/components/ui/button'
+import { InputFieldType } from '@baguspay/db/types'
+import { Button } from '@baguspay/ui/components/ui/button'
 import {
   Dialog,
   DialogContent,
@@ -8,17 +7,18 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@repo/ui/components/ui/dialog'
-import { Input } from '@repo/ui/components/ui/input'
-import { Label } from '@repo/ui/components/ui/label'
+} from '@baguspay/ui/components/ui/dialog'
+import { Input } from '@baguspay/ui/components/ui/input'
+import { Label } from '@baguspay/ui/components/ui/label'
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@repo/ui/components/ui/select'
-import { Switch } from '@repo/ui/components/ui/switch'
+} from '@baguspay/ui/components/ui/select'
+import { Switch } from '@baguspay/ui/components/ui/switch'
+import { useForm } from '@inertiajs/react'
 import { useEffect, useId, useState } from 'react'
 import type { CreateInputFieldValidator } from '#validators/input_field'
 

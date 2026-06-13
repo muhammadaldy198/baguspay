@@ -22,7 +22,7 @@ export default function HomeProductSections() {
   if (productSections.isLoading) {
     return (
       <section className="mt-10 space-y-6">
-        <div className="h-6 w-32 rounded bg-muted animate-pulse" />
+        <div className="h-6 w-32 rounded-sm bg-muted animate-pulse" />
         <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 lg:gap-8">
           {Array.from({ length: 6 }).map((_) => (
             <div
@@ -30,8 +30,8 @@ export default function HomeProductSections() {
               className="rounded-xl border border-border/60 bg-card/60 shadow-sm p-3 space-y-3 animate-pulse"
             >
               <div className="aspect-square w-full rounded-lg bg-muted" />
-              <div className="h-4 w-24 rounded bg-muted" />
-              <div className="h-3 w-16 rounded bg-muted" />
+              <div className="h-4 w-24 rounded-sm bg-muted" />
+              <div className="h-3 w-16 rounded-sm bg-muted" />
             </div>
           ))}
         </div>

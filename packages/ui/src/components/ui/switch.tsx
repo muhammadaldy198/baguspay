@@ -1,7 +1,7 @@
 'use client'
 
+import { cn } from '@baguspay/ui/lib/utils'
 import * as SwitchPrimitive from '@radix-ui/react-switch'
-import { cn } from '@repo/ui/lib/utils'
 import type * as React from 'react'
 
 function Switch({ className, ...props }: React.ComponentProps<typeof SwitchPrimitive.Root>) {
@@ -9,7 +9,7 @@ function Switch({ className, ...props }: React.ComponentProps<typeof SwitchPrimi
     <SwitchPrimitive.Root
       data-slot="switch"
       className={cn(
-        'peer data-[state=checked]:bg-primary data-[state=unchecked]:bg-input focus-visible:border-ring focus-visible:ring-ring/50 dark:data-[state=unchecked]:bg-input/80 inline-flex h-[1.15rem] w-8 shrink-0 items-center rounded-full border border-transparent shadow-xs transition-all outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50',
+        'peer data-[state=checked]:bg-primary data-[state=unchecked]:bg-input focus-visible:border-primary/30 focus-visible:ring-1 focus-visible:ring-primary/15 dark:data-[state=unchecked]:bg-input/80 inline-flex h-[1.15rem] w-8 shrink-0 items-center rounded-full border border-transparent shadow-xs transition-[background-color,border-color,box-shadow] outline-none disabled:cursor-not-allowed disabled:opacity-50',
         className,
       )}
       {...props}

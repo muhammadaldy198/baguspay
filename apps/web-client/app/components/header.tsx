@@ -1,8 +1,9 @@
-import { UserRole } from '@repo/db/types'
-import { Button } from '@repo/ui/components/ui/button'
-import { cn } from '@repo/ui/lib/utils'
+import { UserRole } from '@baguspay/db/types'
+import { Button } from '@baguspay/ui/components/ui/button'
+import { cn } from '@baguspay/ui/lib/utils'
 import { useAtom, useAtomValue, useSetAtom } from 'jotai'
 import {
+  Fingerprint,
   GiftIcon,
   HistoryIcon,
   HomeIcon,
@@ -101,6 +102,11 @@ export const navData = {
         label: 'Settings',
         href: '/user/settings',
         icon: <SettingsIcon className="h-4 w-4" />,
+      },
+      {
+        label: 'Passkey',
+        href: '/user/passkey',
+        icon: <Fingerprint className="h-4 w-4" />,
       },
       {
         label: 'Riwayat Sesi',

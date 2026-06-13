@@ -1,6 +1,6 @@
-import { DataTable } from '@repo/ui/components/data-table'
-import { Button } from '@repo/ui/components/ui/button'
-import { Input } from '@repo/ui/components/ui/input'
+import { DataTable } from '@baguspay/ui/components/data-table'
+import { Button } from '@baguspay/ui/components/ui/button'
+import { Input } from '@baguspay/ui/components/ui/input'
 import { useQuery } from '@tanstack/react-query'
 import type { ColumnDef } from '@tanstack/react-table'
 import { useState } from 'react'
@@ -66,14 +66,14 @@ export default function OfferProductSection({ offerId }: { offerId: string }) {
             </span>
             <div className="flex gap-2">
               <button
-                className="px-3 py-1 rounded border disabled:opacity-50"
+                className="px-3 py-1 rounded-md border disabled:opacity-50"
                 disabled={productOffers.data.meta.page <= 1}
                 onClick={() => setQuery((q) => ({ ...q, page: (q.page ?? 1) - 1 }))}
               >
                 Previous
               </button>
               <button
-                className="px-3 py-1 rounded border disabled:opacity-50"
+                className="px-3 py-1 rounded-md border disabled:opacity-50"
                 disabled={productOffers.data.meta.page >= productOffers.data.meta.totalPages}
                 onClick={() => setQuery((q) => ({ ...q, page: (q.page ?? 1) + 1 }))}
               >

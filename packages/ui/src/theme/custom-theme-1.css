@@ -1,4 +1,4 @@
-@import "@repo/tailwind-config";
+@import "@baguspay/tailwind-config";
 @import "tw-animate-css";
 @source "../../../../packages/ui/src/**/*.{js,ts,jsx,tsx}";
 
@@ -19,6 +19,12 @@
   --accent-foreground: oklch(0.986 0.0034 145.5499);
   --destructive: oklch(0.6364 0.2107 25.5194);
   --destructive-foreground: oklch(0.986 0.0034 145.5499);
+  --success: oklch(0.58 0.16 155);
+  --success-foreground: oklch(0.986 0.0034 145.5499);
+  --warning: oklch(0.72 0.16 75);
+  --warning-foreground: oklch(0.2294 0.0283 138.5814);
+  --info: oklch(0.58 0.14 230);
+  --info-foreground: oklch(0.986 0.0034 145.5499);
   --border: oklch(0.7581 0.0729 138.1206);
   --input: oklch(0.6882 0.0939 138.6865);
   --ring: oklch(0.6882 0.0939 138.6865);
@@ -78,6 +84,12 @@
   --accent-foreground: oklch(0.1172 0.0086 145.0029);
   --destructive: oklch(0.3901 0.1298 25.5873);
   --destructive-foreground: oklch(0.2294 0.0283 138.5814);
+  --success: oklch(0.68 0.16 155);
+  --success-foreground: oklch(0.1172 0.0086 145.0029);
+  --warning: oklch(0.76 0.16 75);
+  --warning-foreground: oklch(0.1172 0.0086 145.0029);
+  --info: oklch(0.72 0.14 230);
+  --info-foreground: oklch(0.1172 0.0086 145.0029);
   --border: oklch(0.3385 0.024 145.0219);
   --input: oklch(0.8555 0.0348 145.2633);
   --ring: oklch(0.8555 0.0348 145.2633);
@@ -135,6 +147,12 @@
   --color-accent-foreground: var(--accent-foreground);
   --color-destructive: var(--destructive);
   --color-destructive-foreground: var(--destructive-foreground);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-info: var(--info);
+  --color-info-foreground: var(--info-foreground);
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);

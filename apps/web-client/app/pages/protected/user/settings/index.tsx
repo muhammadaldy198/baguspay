@@ -1,4 +1,4 @@
-import { Badge } from '@repo/ui/components/ui/badge'
+import { Badge } from '@baguspay/ui/components/ui/badge'
 import { useAtomValue } from 'jotai'
 import { ChevronRightIcon, KeyRoundIcon, LockIcon, MailIcon, PhoneIcon } from 'lucide-react'
 import { useState } from 'react'

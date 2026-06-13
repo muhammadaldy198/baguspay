@@ -1,19 +1,19 @@
 import type { InferPageProps } from '@adonisjs/inertia/types'
-import { Link, useForm } from '@inertiajs/react'
-import { Button } from '@repo/ui/components/ui/button'
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@repo/ui/components/ui/dialog'
-import { Input } from '@repo/ui/components/ui/input'
-import { Label } from '@repo/ui/components/ui/label'
+import { Button } from '@baguspay/ui/components/ui/button'
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@baguspay/ui/components/ui/dialog'
+import { Input } from '@baguspay/ui/components/ui/input'
+import { Label } from '@baguspay/ui/components/ui/label'
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@repo/ui/components/ui/select'
-import { Separator } from '@repo/ui/components/ui/separator'
-import { Switch } from '@repo/ui/components/ui/switch'
-import { Textarea } from '@repo/ui/components/ui/textarea'
+} from '@baguspay/ui/components/ui/select'
+import { Separator } from '@baguspay/ui/components/ui/separator'
+import { Switch } from '@baguspay/ui/components/ui/switch'
+import { Textarea } from '@baguspay/ui/components/ui/textarea'
+import { Link, useForm } from '@inertiajs/react'
 import { ArrowLeft, ImageIcon, X } from 'lucide-react'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
@@ -154,7 +154,7 @@ export default function ArticleForm(props: Props) {
       <form onSubmit={handleSubmit} className="mt-6 space-y-6">
         <div className="grid gap-6 lg:grid-cols-3">
           <div className="lg:col-span-2 space-y-6">
-            <div className="rounded-lg border bg-white p-6 space-y-4">
+            <div className="rounded-lg border bg-card p-6 space-y-4">
               <h2 className="text-sm font-semibold">Informasi Artikel</h2>
               <Separator />
 
@@ -196,7 +196,7 @@ export default function ArticleForm(props: Props) {
               </div>
             </div>
 
-            <div className="rounded-lg border bg-white p-6 space-y-4">
+            <div className="rounded-lg border bg-card p-6 space-y-4">
               <h2 className="text-sm font-semibold">Konten Artikel</h2>
               <Separator />
 
@@ -209,7 +209,7 @@ export default function ArticleForm(props: Props) {
               </div>
             </div>
 
-            <div className="rounded-lg border bg-white p-6 space-y-4">
+            <div className="rounded-lg border bg-card p-6 space-y-4">
               <h2 className="text-sm font-semibold">SEO</h2>
               <Separator />
 
@@ -243,7 +243,7 @@ export default function ArticleForm(props: Props) {
           </div>
 
           <div className="space-y-6">
-            <div className="rounded-lg border bg-white p-6 space-y-4">
+            <div className="rounded-lg border bg-card p-6 space-y-4">
               <h2 className="text-sm font-semibold">Publikasi</h2>
               <Separator />
 
@@ -282,7 +282,7 @@ export default function ArticleForm(props: Props) {
               </div>
             </div>
 
-            <div className="rounded-lg border bg-white p-6 space-y-4">
+            <div className="rounded-lg border bg-card p-6 space-y-4">
               <h2 className="text-sm font-semibold">Kategori & Tags</h2>
               <Separator />
 
@@ -317,7 +317,7 @@ export default function ArticleForm(props: Props) {
               </div>
             </div>
 
-            <div className="rounded-lg border bg-white p-6 space-y-4">
+            <div className="rounded-lg border bg-card p-6 space-y-4">
               <h2 className="text-sm font-semibold">Gambar Utama</h2>
               <Separator />
 

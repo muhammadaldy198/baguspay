@@ -1,11 +1,11 @@
 import type { InferPageProps } from '@adonisjs/inertia/types'
+import { Button } from '@baguspay/ui/components/ui/button'
+import { Input } from '@baguspay/ui/components/ui/input'
+import { Label } from '@baguspay/ui/components/ui/label'
+import { Separator } from '@baguspay/ui/components/ui/separator'
+import { Switch } from '@baguspay/ui/components/ui/switch'
+import { Textarea } from '@baguspay/ui/components/ui/textarea'
 import { useForm } from '@inertiajs/react'
-import { Button } from '@repo/ui/components/ui/button'
-import { Input } from '@repo/ui/components/ui/input'
-import { Label } from '@repo/ui/components/ui/label'
-import { Separator } from '@repo/ui/components/ui/separator'
-import { Switch } from '@repo/ui/components/ui/switch'
-import { Textarea } from '@repo/ui/components/ui/textarea'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
 import type SettingsController from '#controllers/configs/settings_controller'
@@ -79,7 +79,7 @@ export default function GeneralSettings(props: Props) {
       </div>
 
       <form onSubmit={handleSubmit} className="mt-6 space-y-6">
-        <div className="rounded-lg border bg-white p-6 space-y-4">
+        <div className="rounded-lg border bg-card p-6 space-y-4">
           <h2 className="text-sm font-semibold">Maintenance</h2>
           <Separator />
           <div className="flex items-center justify-between">
@@ -107,7 +107,7 @@ export default function GeneralSettings(props: Props) {
           </div>
         </div>
 
-        <div className="rounded-lg border bg-white p-6 space-y-4">
+        <div className="rounded-lg border bg-card p-6 space-y-4">
           <h2 className="text-sm font-semibold">App Information</h2>
           <Separator />
           <div className="grid gap-4 md:grid-cols-2">
@@ -157,7 +157,7 @@ export default function GeneralSettings(props: Props) {
           </div>
         </div>
 
-        <div className="rounded-lg border bg-white p-6 space-y-4">
+        <div className="rounded-lg border bg-card p-6 space-y-4">
           <h2 className="text-sm font-semibold">App Download Links</h2>
           <Separator />
           <div className="grid gap-4 md:grid-cols-2">
@@ -180,7 +180,7 @@ export default function GeneralSettings(props: Props) {
           </div>
         </div>
 
-        <div className="rounded-lg border bg-white p-6 space-y-4">
+        <div className="rounded-lg border bg-card p-6 space-y-4">
           <h2 className="text-sm font-semibold">Contact Info</h2>
           <Separator />
           <div className="grid gap-4 md:grid-cols-2">
@@ -215,7 +215,7 @@ export default function GeneralSettings(props: Props) {
           </div>
         </div>
 
-        <div className="rounded-lg border bg-white p-6 space-y-4">
+        <div className="rounded-lg border bg-card p-6 space-y-4">
           <h2 className="text-sm font-semibold">Social Media</h2>
           <Separator />
           <div className="grid gap-4 md:grid-cols-2">
@@ -324,7 +324,7 @@ export default function GeneralSettings(props: Props) {
           </div>
         </div>
 
-        <div className="rounded-lg border bg-white p-6 space-y-4">
+        <div className="rounded-lg border bg-card p-6 space-y-4">
           <h2 className="text-sm font-semibold">Feature Flags</h2>
           <Separator />
           <div className="grid gap-3 md:grid-cols-2">

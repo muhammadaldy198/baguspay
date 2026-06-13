@@ -1,14 +1,11 @@
+import { eq, sql } from '@baguspay/db'
+import { BalanceMutationRefType, BalanceMutationType, PaymentStatus, tb } from '@baguspay/db/types'
 import { Injectable, UnprocessableEntityException } from '@nestjs/common'
-import { eq, sql } from '@repo/db'
-import { BalanceMutationRefType, BalanceMutationType, PaymentStatus, tb } from '@repo/db/types'
 import type { DBInstance } from 'src/common/types/db-instance'
 import { SendResponse } from 'src/common/utils/response'
-import { DatabaseService } from 'src/database/database.service'
+import { DatabaseService } from 'src/core/database/database.service'
 import type { PaymentGateway } from '../payment.interface'
-import type {
-  CreatePaymentGatewayRequest,
-  CreatePaymentGatewayResponse,
-} from '../payment-gateway.type'
+import type { CreatePaymentRequest, CreatePaymentResult } from '../payment-gateway.type'
 
 @Injectable()
 export class BalanceService implements PaymentGateway {
@@ -19,36 +16,36 @@ export class BalanceService implements PaymentGateway {
   }
 
   async createTransaction(
-    data: CreatePaymentGatewayRequest,
-    dbInstance?: DBInstance,
-  ): Promise<CreatePaymentGatewayResponse> {
+    data: CreatePaymentRequest,
+    tx?: DBInstance,
+  ): Promise<CreatePaymentResult> {
     await this.deductBalance(
       {
         amount: data.amount,
-        name: `Order #${data.id}`,
+        name: `Order #${data.merchant_ref}`,
         ref_type: BalanceMutationRefType.ORDER,
-        ref_id: data.id,
+        ref_id: data.merchant_ref,
         type: BalanceMutationType.DEBIT,
         userId: data.user_id,
-        notes: `Payment for order ${data.id}`,
+        notes: `Payment for order ${data.merchant_ref}`,
       },
-      dbInstance,
+      tx,
     )
 
     return {
-      amount: data.amount,
-      amount_received: data.amount,
+      base_amount: data.amount,
+      settlement_amount: data.amount,
       fee_type: data.fee_type,
-      amount_total: data.amount,
+      pay_amount: data.amount,
       customer_email: data.customer_email,
       customer_name: data.customer_name,
       expired_at: new Date(Date.now() + 60 * 60 * 1000),
-      id: data.id,
+      id: data.merchant_ref,
       order_items: data.order_items,
       provider_code: data.provider_code,
       provider_name: data.provider_name,
-      ref_id: data.id,
-      total_fee: 0,
+      ref_id: data.merchant_ref,
+      fee_amount: 0,
       customer_phone: data.customer_phone,
       pay_url: null,
       pay_code: null,
@@ -58,8 +55,8 @@ export class BalanceService implements PaymentGateway {
     }
   }
 
-  calculateFee(amountReceived: number, feePercent: number, feeFixed: number): number {
-    throw new Error(`Method not implemented. ${amountReceived}, ${feePercent}, ${feeFixed}`)
+  calculateFee(amountReceived: number, feeRate: number, fixedFee: number): number {
+    throw new Error(`Method not implemented. ${amountReceived}, ${feeRate}, ${fixedFee}`)
   }
 
   cancelTransaction(data: any): Promise<any> {

@@ -1,12 +1,12 @@
-import { router } from '@inertiajs/react'
-import { Button } from '@repo/ui/components/ui/button'
+import { Button } from '@baguspay/ui/components/ui/button'
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@repo/ui/components/ui/dialog'
+} from '@baguspay/ui/components/ui/dialog'
+import { router } from '@inertiajs/react'
 import { useQuery } from '@tanstack/react-query'
 import { LoaderCircleIcon, PlusIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
@@ -32,10 +32,9 @@ export default function AddInputFields({ productCategoryId }: { productCategoryI
   })
 
   useEffect(() => {
-    if (open) {
-      getInputFields.refetch()
-    }
-  }, [open, getInputFields])
+    if (!open) return
+    getInputFields.refetch()
+  }, [open])
 
   const handleAdd = (inputId: string) => {
     router.post(

@@ -1,9 +1,8 @@
 import type { InferPageProps } from '@adonisjs/inertia/types'
-import { Link, router, useForm } from '@inertiajs/react'
-import { AppPlatform, ProductGroupingMenuType, ProductGroupingType } from '@repo/db/types'
-import { DataTable } from '@repo/ui/components/data-table'
-import { Badge } from '@repo/ui/components/ui/badge'
-import { Button } from '@repo/ui/components/ui/button'
+import { AppPlatform, ProductGroupingMenuType, ProductGroupingType } from '@baguspay/db/types'
+import { DataTable } from '@baguspay/ui/components/data-table'
+import { Badge } from '@baguspay/ui/components/ui/badge'
+import { Button } from '@baguspay/ui/components/ui/button'
 import {
   Dialog,
   DialogClose,
@@ -13,18 +12,19 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@repo/ui/components/ui/dialog'
-import { Input } from '@repo/ui/components/ui/input'
-import { Label } from '@repo/ui/components/ui/label'
+} from '@baguspay/ui/components/ui/dialog'
+import { Input } from '@baguspay/ui/components/ui/input'
+import { Label } from '@baguspay/ui/components/ui/label'
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@repo/ui/components/ui/select'
-import { Switch } from '@repo/ui/components/ui/switch'
-import { Textarea } from '@repo/ui/components/ui/textarea'
+} from '@baguspay/ui/components/ui/select'
+import { Switch } from '@baguspay/ui/components/ui/switch'
+import { Textarea } from '@baguspay/ui/components/ui/textarea'
+import { Link, router, useForm } from '@inertiajs/react'
 import type { ColumnDef } from '@tanstack/react-table'
 import { EyeIcon, TrashIcon } from 'lucide-react'
 import { useState } from 'react'
@@ -42,7 +42,7 @@ const columns: ColumnDef<Props['productSections'][number]>[] = [
     accessorKey: 'image_url',
     header: 'Image',
     cell: ({ row }) => (
-      <div className="w-12 h-12 rounded border overflow-hidden flex items-center justify-center bg-muted">
+      <div className="w-12 h-12 rounded-md border overflow-hidden flex items-center justify-center bg-muted">
         {row.original.image_url ? (
           <img
             className="object-contain w-full h-full"
@@ -95,7 +95,9 @@ const columns: ColumnDef<Props['productSections'][number]>[] = [
     header: 'Featured',
     cell: ({ row }) => (
       <Badge
-        className={String(row.original.is_featured) === 'true' ? 'bg-blue-600' : 'bg-gray-500'}
+        className={
+          String(row.original.is_featured) === 'true' ? 'bg-primary' : 'bg-muted-foreground'
+        }
       >
         {String(row.original.is_featured) === 'true' ? 'Yes' : 'No'}
       </Badge>

@@ -1,6 +1,6 @@
-import { UserRole } from '@repo/db/types'
-import { Button } from '@repo/ui/components/ui/button'
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@repo/ui/components/ui/dialog'
+import { UserRole } from '@baguspay/db/types'
+import { Button } from '@baguspay/ui/components/ui/button'
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@baguspay/ui/components/ui/dialog'
 import { useMutation } from '@tanstack/react-query'
 import { useAtomValue } from 'jotai'
 import {
@@ -146,7 +146,7 @@ export default function VoucherInput({ form, productId, productPrice = 0 }: Vouc
 
   return (
     <>
-      <div className="w-full h-fit rounded-xl shadow-xs border border-gray-200 p-4 dark:border-none dark:bg-secondary text-secondary-foreground">
+      <div className="w-full h-fit rounded-xl shadow-xs border border-border/70 p-4 dark:bg-secondary text-secondary-foreground">
         <div className="inline-flex gap-3 items-center mb-2">
           <div className="rounded-xl p-2.5 bg-linear-to-br from-primary to-primary/80 shadow-lg shadow-primary/20 text-primary-foreground">
             <TicketIcon className="w-5 h-5 text-background -rotate-45" />
@@ -157,7 +157,7 @@ export default function VoucherInput({ form, productId, productPrice = 0 }: Vouc
         </div>
 
         {appliedVoucher ? (
-          <div className="mt-4 p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg">
+          <div className="mt-4 p-3 bg-green-50 dark:bg-green-900/20 border border-success/30 dark:border-success/40 rounded-lg">
             <div className="flex items-start justify-between gap-2">
               <div className="flex items-center gap-2">
                 <CheckCircleIcon className="w-5 h-5 text-green-600 shrink-0" />
@@ -187,7 +187,7 @@ export default function VoucherInput({ form, productId, productPrice = 0 }: Vouc
             </div>
           </div>
         ) : isGuest ? (
-          <div className="mt-4 p-3 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg">
+          <div className="mt-4 p-3 bg-amber-50 dark:bg-amber-900/20 border border-warning/40 dark:border-warning/40 rounded-lg">
             <div className="flex items-center gap-3">
               <LogInIcon className="w-5 h-5 text-amber-600 dark:text-amber-400 shrink-0" />
               <div className="flex-1">
@@ -210,7 +210,7 @@ export default function VoucherInput({ form, productId, productPrice = 0 }: Vouc
             type="button"
             variant="outline"
             onClick={handleOpenModal}
-            className="w-full mt-4 justify-between p-3 h-auto border-dashed border-2 hover:border-primary/50 transition-all duration-200"
+            className="w-full mt-4 justify-between p-3 h-auto border-dashed border-border/70 hover:border-primary/30 transition-[color,background-color,border-color] duration-200"
           >
             <div className="flex items-center gap-2 text-muted-foreground">
               <TagIcon className="w-4 h-4" />
@@ -269,7 +269,7 @@ export default function VoucherInput({ form, productId, productPrice = 0 }: Vouc
             </div>
 
             {checkVoucher.isError && (
-              <div className="p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
+              <div className="p-3 bg-red-50 dark:bg-red-900/20 border border-destructive/40 dark:border-destructive/40 rounded-lg">
                 <p className="text-sm text-red-600 dark:text-red-400 flex items-center gap-2">
                   <XCircleIcon className="w-4 h-4 shrink-0" />
                   {(checkVoucher.error as any)?.response?.data?.message ||
@@ -279,7 +279,7 @@ export default function VoucherInput({ form, productId, productPrice = 0 }: Vouc
             )}
 
             {checkedVoucher && (
-              <div className="p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg space-y-3">
+              <div className="p-4 bg-green-50 dark:bg-green-900/20 border border-success/30 dark:border-success/40 rounded-lg space-y-3">
                 <div className="flex items-start gap-3">
                   <div className="p-2 bg-green-100 dark:bg-green-800/30 rounded-lg">
                     <PercentIcon className="w-5 h-5 text-green-600 dark:text-green-400" />
@@ -294,7 +294,7 @@ export default function VoucherInput({ form, productId, productPrice = 0 }: Vouc
                   </div>
                 </div>
 
-                <div className="space-y-2 pt-2 border-t border-green-200 dark:border-green-700">
+                <div className="space-y-2 pt-2 border-t border-success/30 dark:border-success/40">
                   <div className="flex justify-between text-sm">
                     <span className="text-green-700 dark:text-green-400">Diskon</span>
                     <span className="font-medium text-green-800 dark:text-green-300">
@@ -310,7 +310,7 @@ export default function VoucherInput({ form, productId, productPrice = 0 }: Vouc
                     </div>
                   )}
                   {productPrice > 0 && (
-                    <div className="flex justify-between text-sm pt-2 border-t border-green-200 dark:border-green-700">
+                    <div className="flex justify-between text-sm pt-2 border-t border-success/30 dark:border-success/40">
                       <span className="text-green-700 dark:text-green-400">Estimasi Hemat</span>
                       <span className="font-bold text-green-800 dark:text-green-300">
                         {formatPrice(calculateDiscount(checkedVoucher))}

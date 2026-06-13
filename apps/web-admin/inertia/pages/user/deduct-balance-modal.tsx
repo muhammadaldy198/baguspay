@@ -1,5 +1,4 @@
-import { useForm } from '@inertiajs/react'
-import { Button } from '@repo/ui/components/ui/button'
+import { Button } from '@baguspay/ui/components/ui/button'
 import {
   Dialog,
   DialogClose,
@@ -9,10 +8,11 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@repo/ui/components/ui/dialog'
-import { Input } from '@repo/ui/components/ui/input'
-import { Label } from '@repo/ui/components/ui/label'
-import { Textarea } from '@repo/ui/components/ui/textarea'
+} from '@baguspay/ui/components/ui/dialog'
+import { Input } from '@baguspay/ui/components/ui/input'
+import { Label } from '@baguspay/ui/components/ui/label'
+import { Textarea } from '@baguspay/ui/components/ui/textarea'
+import { useForm } from '@inertiajs/react'
 import { ArrowDownLeftIcon } from 'lucide-react'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
@@ -55,7 +55,7 @@ export default function DeductAddBalanceModal({
   return (
     <Dialog onOpenChange={setOpen} open={open}>
       <DialogTrigger asChild>
-        <button className="flex justify-start items-center text-sm p-2 hover:bg-primary/10 w-full rounded text-red-500">
+        <button className="flex justify-start items-center text-sm p-2 hover:bg-primary/10 w-full rounded-md text-red-500">
           <ArrowDownLeftIcon className="h-4 w-4 mr-2" />
           Deduct Balance
         </button>

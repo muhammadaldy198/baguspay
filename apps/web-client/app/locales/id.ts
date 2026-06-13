@@ -41,6 +41,10 @@ export default {
     orLoginWith: 'Atau masuk dengan',
     loginSuccess: 'Masuk berhasil!',
     loginError: 'Masuk gagal. Silakan periksa kredensial Anda.',
+    passkeyLogin: 'Masuk dengan Passkey',
+    passkeyLoggingIn: 'Memverifikasi ...',
+    passkeyHint: 'Gunakan sidik jari, wajah, atau security key Anda',
+    or: 'atau',
   },
   register: {
     title: 'Daftar',

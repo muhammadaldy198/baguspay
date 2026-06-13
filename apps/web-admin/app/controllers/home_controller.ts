@@ -1,6 +1,7 @@
 import type { HttpContext } from '@adonisjs/core/http'
-import { and, asc, count, db, desc, eq, gte, sql, sum } from '@repo/db'
-import { DepositStatus, OrderStatus, PaymentStatus, tb } from '@repo/db/types'
+import { and, asc, count, desc, eq, gte, sql, sum } from '@baguspay/db'
+import { DepositStatus, OrderStatus, PaymentStatus, tb } from '@baguspay/db/types'
+import { db } from '#database/db'
 
 export default class HomeController {
   public async index(ctx: HttpContext) {

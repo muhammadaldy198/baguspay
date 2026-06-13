@@ -1,7 +1,6 @@
 import type { InferPageProps } from '@adonisjs/inertia/types'
-import { Link, router } from '@inertiajs/react'
-import { DataTable } from '@repo/ui/components/data-table'
-import { Button } from '@repo/ui/components/ui/button'
+import { DataTable } from '@baguspay/ui/components/data-table'
+import { Button } from '@baguspay/ui/components/ui/button'
 import {
   Dialog,
   DialogContent,
@@ -10,15 +9,16 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@repo/ui/components/ui/dialog'
-import { Input } from '@repo/ui/components/ui/input'
+} from '@baguspay/ui/components/ui/dialog'
+import { Input } from '@baguspay/ui/components/ui/input'
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@repo/ui/components/ui/select'
+} from '@baguspay/ui/components/ui/select'
+import { Link, router } from '@inertiajs/react'
 import type { ColumnDef } from '@tanstack/react-table'
 import { useState } from 'react'
 import type ProductsCategoriesPostpaidController from '#controllers/product_categories_postpaid_controller'
@@ -45,15 +45,18 @@ export default function ProductCategory(props: Props) {
 
   return (
     <AdminLayout>
-      <div className="flex justify-between mt-5 mb-2">
-        <h1 className="text-2xl font-bold">List PDAM</h1>
+      <div className="mb-4 mt-4 flex flex-wrap items-center justify-between gap-3">
+        <h1 className="text-2xl font-semibold text-foreground">List PDAM</h1>
         <Button asChild>
           <Link href="/admin/product-categories/postpaid/pdam/create">Add New</Link>
         </Button>
       </div>
-      <form className="flex gap-2" onSubmit={handleSearch}>
+      <form
+        className="mb-4 flex flex-wrap items-center gap-2 rounded-xl border border-border bg-card/90 p-3"
+        onSubmit={handleSearch}
+      >
         <Select onValueChange={(v) => setSearchBy(v as 'id' | 'name')} value={searchBy}>
-          <SelectTrigger size="sm">
+          <SelectTrigger size="sm" className="min-w-[120px] rounded-md">
             <SelectValue placeholder="Pilih Tipe" />
           </SelectTrigger>
           <SelectContent>
@@ -65,14 +68,16 @@ export default function ProductCategory(props: Props) {
           placeholder="Search..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="w-48 h-8 text-sm"
+          className="h-8 w-56 rounded-md text-sm"
         />
         <Button type="submit" size="sm">
           Search
         </Button>
       </form>
-      <DataTable columns={columns} data={productCategories} />
-      <div className="flex justify-between items-center mt-4">
+      <div className="overflow-hidden rounded-xl border border-border bg-card/95 shadow-sm">
+        <DataTable columns={columns} data={productCategories} />
+      </div>
+      <div className="mt-4 flex items-center justify-between rounded-lg border border-border bg-card/80 px-3 py-2">
         <span>
           Page {pagination.page} of {pagination.totalPages}
         </span>
@@ -142,11 +147,11 @@ const columns: ColumnDef<Props['productCategories'][number]>[] = [
     id: 'actions',
     header: 'Actions',
     cell: ({ row }) => (
-      <div className="flex space-x-2" key={row.original.id}>
+      <div className="flex flex-wrap gap-2" key={row.original.id}>
         <Button variant="outline" size="sm" asChild>
           <Link href={`/admin/product-categories/postpaid/pdam/${row.original.id}`}>Detail</Link>
         </Button>
-        <Button variant="secondary" size="sm" asChild>
+        <Button variant="outline" size="sm" asChild>
           <Link href={`/admin/product-categories/postpaid/pdam/${row.original.id}/edit`}>Edit</Link>
         </Button>
         <Dialog>

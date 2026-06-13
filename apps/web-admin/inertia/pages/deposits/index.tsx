@@ -1,8 +1,7 @@
 import type { InferPageProps } from '@adonisjs/inertia/types'
-import { router } from '@inertiajs/react'
-import { DepositStatus } from '@repo/db/types'
-import { DataTable } from '@repo/ui/components/data-table'
-import { Button } from '@repo/ui/components/ui/button'
+import { DepositStatus } from '@baguspay/db/types'
+import { DataTable } from '@baguspay/ui/components/data-table'
+import { Button } from '@baguspay/ui/components/ui/button'
 import {
   Dialog,
   DialogContent,
@@ -11,16 +10,17 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@repo/ui/components/ui/dialog'
-import { Input } from '@repo/ui/components/ui/input'
-import { Label } from '@repo/ui/components/ui/label'
+} from '@baguspay/ui/components/ui/dialog'
+import { Input } from '@baguspay/ui/components/ui/input'
+import { Label } from '@baguspay/ui/components/ui/label'
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@repo/ui/components/ui/select'
+} from '@baguspay/ui/components/ui/select'
+import { router } from '@inertiajs/react'
 import type { ColumnDef } from '@tanstack/react-table'
 import { useState } from 'react'
 import type DepositsController from '#controllers/deposits_controller'
@@ -76,17 +76,17 @@ const columns: ColumnDef<Props['deposits'][number]>[] = [
           badgeColor = 'text-red-500 bg-red-100'
           break
         case DepositStatus.CANCELED:
-          badgeColor = 'text-gray-500 bg-gray-100'
+          badgeColor = 'text-muted-foreground bg-muted'
           break
         case DepositStatus.EXPIRED:
-          badgeColor = 'text-gray-500 bg-gray-100'
+          badgeColor = 'text-muted-foreground bg-muted'
           break
       }
 
       return (
         <div className="flex gap-2">
           <span
-            className={`inline-flex items-center px-2 py-1 rounded text-xs font-medium ${badgeColor}`}
+            className={`inline-flex items-center px-2 py-1 rounded-md text-xs font-medium ${badgeColor}`}
           >
             {row.getValue('status')}
           </span>

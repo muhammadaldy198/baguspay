@@ -1,8 +1,7 @@
 import type { InferPageProps } from '@adonisjs/inertia/types'
-import { router } from '@inertiajs/react'
-import { OrderStatus, PaymentStatus, ProductBillingType, RefundStatus } from '@repo/db/types'
-import { DataTable } from '@repo/ui/components/data-table'
-import { Button } from '@repo/ui/components/ui/button'
+import { OrderStatus, PaymentStatus, ProductBillingType, RefundStatus } from '@baguspay/db/types'
+import { DataTable } from '@baguspay/ui/components/data-table'
+import { Button } from '@baguspay/ui/components/ui/button'
 import {
   Dialog,
   DialogContent,
@@ -11,17 +10,18 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@repo/ui/components/ui/dialog'
-import { Input } from '@repo/ui/components/ui/input'
-import { Label } from '@repo/ui/components/ui/label'
+} from '@baguspay/ui/components/ui/dialog'
+import { Input } from '@baguspay/ui/components/ui/input'
+import { Label } from '@baguspay/ui/components/ui/label'
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@repo/ui/components/ui/select'
-import { cn } from '@repo/ui/lib/utils'
+} from '@baguspay/ui/components/ui/select'
+import { cn } from '@baguspay/ui/lib/utils'
+import { router } from '@inertiajs/react'
 import type { ColumnDef } from '@tanstack/react-table'
 import { useState } from 'react'
 import type OrdersController from '#controllers/orders_controller'
@@ -56,9 +56,9 @@ const columns: ColumnDef<Props['orders'][number]>[] = [
       return (
         <span
           className={cn(
-            'inline-flex items-center px-2 py-1 rounded text-xs font-medium',
+            'inline-flex items-center px-2 py-1 rounded-md text-xs font-medium',
             billingType === ProductBillingType.PREPAID
-              ? 'text-blue-500 bg-blue-100'
+              ? 'text-primary bg-primary/10'
               : 'text-purple-500 bg-purple-100',
           )}
         >
@@ -152,17 +152,17 @@ const columns: ColumnDef<Props['orders'][number]>[] = [
           badgeColor = 'text-red-500 bg-red-100'
           break
         case PaymentStatus.CANCELLED:
-          badgeColor = 'text-gray-500 bg-gray-100'
+          badgeColor = 'text-muted-foreground bg-muted'
           break
         case PaymentStatus.EXPIRED:
-          badgeColor = 'text-gray-500 bg-gray-100'
+          badgeColor = 'text-muted-foreground bg-muted'
           break
       }
 
       return (
         <div className="flex gap-2">
           <span
-            className={`inline-flex items-center px-2 py-1 rounded text-xs font-medium ${badgeColor}`}
+            className={`inline-flex items-center px-2 py-1 rounded-md text-xs font-medium ${badgeColor}`}
           >
             {row.getValue('payment_status')}
           </span>
@@ -191,17 +191,17 @@ const columns: ColumnDef<Props['orders'][number]>[] = [
           badgeColor = 'text-red-500 bg-red-100'
           break
         case OrderStatus.CANCELLED:
-          badgeColor = 'text-gray-500 bg-gray-100'
+          badgeColor = 'text-muted-foreground bg-muted'
           break
         case OrderStatus.NONE:
-          badgeColor = 'text-gray-500 bg-gray-100'
+          badgeColor = 'text-muted-foreground bg-muted'
           break
       }
 
       return (
         <div className="flex gap-2">
           <span
-            className={`inline-flex items-center px-2 py-1 rounded text-xs font-medium ${badgeColor}`}
+            className={`inline-flex items-center px-2 py-1 rounded-md text-xs font-medium ${badgeColor}`}
           >
             {row.getValue('order_status')}
           </span>
@@ -230,14 +230,14 @@ const columns: ColumnDef<Props['orders'][number]>[] = [
           badgeColor = 'text-red-500 bg-red-100'
           break
         case RefundStatus.NONE:
-          badgeColor = 'text-gray-500 bg-gray-100'
+          badgeColor = 'text-muted-foreground bg-muted'
           break
       }
 
       return (
         <div className="flex gap-2">
           <span
-            className={`inline-flex items-center px-2 py-1 rounded text-xs font-medium ${badgeColor}`}
+            className={`inline-flex items-center px-2 py-1 rounded-md text-xs font-medium ${badgeColor}`}
           >
             {row.getValue('refund_status')}
           </span>

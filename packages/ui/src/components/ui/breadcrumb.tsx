@@ -1,5 +1,5 @@
+import { cn } from '@baguspay/ui/lib/utils'
 import { Slot } from '@radix-ui/react-slot'
-import { cn } from '@repo/ui/lib/utils'
 import { ChevronRight, MoreHorizontal } from 'lucide-react'
 import type * as React from 'react'
 
@@ -52,8 +52,6 @@ function BreadcrumbPage({ className, ...props }: React.ComponentProps<'span'>) {
   return (
     <span
       data-slot="breadcrumb-page"
-      role="link"
-      aria-disabled="true"
       aria-current="page"
       className={cn('text-foreground font-normal', className)}
       {...props}

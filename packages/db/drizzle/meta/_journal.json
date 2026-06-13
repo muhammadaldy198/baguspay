@@ -120,6 +120,27 @@
       "when": 1774337355734,
       "tag": "0016_sticky_madame_masque",
       "breakpoints": true
+    },
+    {
+      "idx": 17,
+      "version": "7",
+      "when": 1774508079295,
+      "tag": "0017_slow_human_robot",
+      "breakpoints": true
+    },
+    {
+      "idx": 18,
+      "version": "7",
+      "when": 1774600000000,
+      "tag": "0018_tiny_lockjaw",
+      "breakpoints": true
+    },
+    {
+      "idx": 19,
+      "version": "7",
+      "when": 1774598216283,
+      "tag": "0019_clean_dreadnoughts",
+      "breakpoints": true
     }
   ]
 }

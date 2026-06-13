@@ -1,15 +1,15 @@
 import type { InferPageProps } from '@adonisjs/inertia/types'
-import { Link, router } from '@inertiajs/react'
-import { Badge } from '@repo/ui/components/ui/badge'
-import { Button } from '@repo/ui/components/ui/button'
-import { Card, CardContent, CardFooter } from '@repo/ui/components/ui/card'
+import { Badge } from '@baguspay/ui/components/ui/badge'
+import { Button } from '@baguspay/ui/components/ui/button'
+import { Card, CardContent, CardFooter } from '@baguspay/ui/components/ui/card'
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@repo/ui/components/ui/select'
+} from '@baguspay/ui/components/ui/select'
+import { Link, router } from '@inertiajs/react'
 import { format } from 'date-fns'
 import { id } from 'date-fns/locale'
 import { Edit, Eye, EyeOff, Plus, Star, StarOff, Trash2 } from 'lucide-react'
@@ -126,7 +126,7 @@ export default function ArticlesIndex(props: Props) {
       </div>
 
       {filteredArticles.length === 0 ? (
-        <div className="mt-6 rounded-lg border bg-white p-12 text-center">
+        <div className="mt-6 rounded-lg border bg-card p-12 text-center">
           <p className="text-muted-foreground">
             Belum ada artikel. Klik tombol "Tambah Artikel" untuk membuat artikel baru.
           </p>

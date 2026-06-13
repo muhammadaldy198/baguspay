@@ -1,7 +1,6 @@
 import type { InferPageProps } from '@adonisjs/inertia/types'
-import { Link, router } from '@inertiajs/react'
-import { Badge } from '@repo/ui/components/ui/badge'
-import { Button } from '@repo/ui/components/ui/button'
+import { Badge } from '@baguspay/ui/components/ui/badge'
+import { Button } from '@baguspay/ui/components/ui/button'
 import {
   Table,
   TableBody,
@@ -9,7 +8,8 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@repo/ui/components/ui/table'
+} from '@baguspay/ui/components/ui/table'
+import { Link, router } from '@inertiajs/react'
 import { Edit, Plus, Trash2 } from 'lucide-react'
 import toast from 'react-hot-toast'
 import type PagesController from '#controllers/configs/pages_controller'
@@ -61,7 +61,7 @@ export default function PagesIndex(props: Props) {
         </Link>
       </div>
 
-      <div className="mt-6 rounded-lg border bg-white">
+      <div className="mt-6 rounded-lg border bg-card">
         <Table>
           <TableHeader>
             <TableRow>
@@ -84,7 +84,7 @@ export default function PagesIndex(props: Props) {
                 <TableRow key={page.id}>
                   <TableCell className="font-medium">{page.title}</TableCell>
                   <TableCell>
-                    <code className="text-sm bg-muted px-2 py-1 rounded">{page.slug}</code>
+                    <code className="text-sm bg-muted px-2 py-1 rounded-md">{page.slug}</code>
                   </TableCell>
                   <TableCell>
                     {page.is_published ? (

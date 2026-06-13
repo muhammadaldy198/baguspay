@@ -1,9 +1,8 @@
 import type { InferPageProps } from '@adonisjs/inertia/types'
-import { router, useForm } from '@inertiajs/react'
-import { BannerLocation } from '@repo/db/types'
-import { DataTable } from '@repo/ui/components/data-table'
-import { Badge } from '@repo/ui/components/ui/badge'
-import { Button } from '@repo/ui/components/ui/button'
+import { BannerLocation } from '@baguspay/db/types'
+import { DataTable } from '@baguspay/ui/components/data-table'
+import { Badge } from '@baguspay/ui/components/ui/badge'
+import { Button } from '@baguspay/ui/components/ui/button'
 import {
   Dialog,
   DialogContent,
@@ -12,18 +11,19 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@repo/ui/components/ui/dialog'
-import { Input } from '@repo/ui/components/ui/input'
-import { Label } from '@repo/ui/components/ui/label'
+} from '@baguspay/ui/components/ui/dialog'
+import { Input } from '@baguspay/ui/components/ui/input'
+import { Label } from '@baguspay/ui/components/ui/label'
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@repo/ui/components/ui/select'
-import { Switch } from '@repo/ui/components/ui/switch'
-import { Textarea } from '@repo/ui/components/ui/textarea'
+} from '@baguspay/ui/components/ui/select'
+import { Switch } from '@baguspay/ui/components/ui/switch'
+import { Textarea } from '@baguspay/ui/components/ui/textarea'
+import { router, useForm } from '@inertiajs/react'
 import { useMutation } from '@tanstack/react-query'
 import type { ColumnDef } from '@tanstack/react-table'
 import { useEffect, useMemo, useState } from 'react'
@@ -297,7 +297,7 @@ export default function BannersIndex({ banners }: Props) {
         accessorKey: 'image_url',
         header: 'Image',
         cell: ({ row }) => (
-          <div className="w-16 h-10 border rounded overflow-hidden bg-muted flex items-center justify-center">
+          <div className="w-16 h-10 border rounded-md overflow-hidden bg-muted flex items-center justify-center">
             {row.original.image_url ? (
               <Image
                 src={row.original.image_url}
@@ -324,7 +324,7 @@ export default function BannersIndex({ banners }: Props) {
         accessorKey: 'is_available',
         header: 'Status',
         cell: ({ row }) => (
-          <Badge className={row.original.is_available ? 'bg-green-600' : 'bg-gray-500'}>
+          <Badge className={row.original.is_available ? 'bg-green-600' : 'bg-muted-foreground'}>
             {row.original.is_available ? 'Active' : 'Hidden'}
           </Badge>
         ),

@@ -1,7 +1,8 @@
 import type { HttpContext } from '@adonisjs/core/http'
-import { and, count, db, desc, eq, ilike } from '@repo/db'
-import { ProductProvider, tb } from '@repo/db/types'
+import { and, count, desc, eq, ilike } from '@baguspay/db'
+import { ProductProvider, tb } from '@baguspay/db/types'
 import vine from '@vinejs/vine'
+import { db } from '#database/db'
 import {
   createProductValidator,
   getAllProductsQueryValidator,

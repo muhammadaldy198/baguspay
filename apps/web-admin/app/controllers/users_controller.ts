@@ -1,8 +1,9 @@
 import type { HttpContext } from '@adonisjs/core/http'
-import { and, count, db, desc, eq, ilike, or } from '@repo/db'
-import { BalanceMutationRefType, BalanceMutationType, tb } from '@repo/db/types'
+import { and, count, desc, eq, ilike, or } from '@baguspay/db'
+import { BalanceMutationRefType, BalanceMutationType, tb } from '@baguspay/db/types'
 import vine from '@vinejs/vine'
 import { hash } from 'bcrypt-ts'
+import { db } from '#database/db'
 import {
   addBalanceValidator,
   createUserValidator,

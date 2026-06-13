@@ -1,6 +1,6 @@
-import { Button } from '@repo/ui/components/ui/button'
-import { Input } from '@repo/ui/components/ui/input'
-import { Label } from '@repo/ui/components/ui/label'
+import { Button } from '@baguspay/ui/components/ui/button'
+import { Input } from '@baguspay/ui/components/ui/input'
+import { Label } from '@baguspay/ui/components/ui/label'
 import {
   Facebook,
   HelpCircle,
@@ -109,7 +109,7 @@ export default function Contact() {
       </section>
 
       {/* Other channels */}
-      <section className="mt-6 md:mt-10 rounded-2xl border border-border bg-background p-5 md:p-6">
+      <section className="mt-6 md:mt-10 rounded-xl border border-border bg-background p-5 md:p-6">
         <h2 className="text-base md:text-lg font-semibold text-foreground">Opsi Kontak Lain</h2>
         <p className="text-sm text-muted-foreground mt-1">
           Pilih kanal yang paling nyaman untuk Anda.
@@ -154,7 +154,7 @@ export default function Contact() {
       </section>
 
       {/* Contact form */}
-      <section className="mt-12 rounded-2xl border border-border bg-card/50 p-6 md:p-8">
+      <section className="mt-12 rounded-xl border border-border bg-card/50 p-6 md:p-8">
         <h2 className="text-lg md:text-xl font-semibold text-foreground">Form Kontak</h2>
         <p className="text-sm text-muted-foreground mt-1">
           Kami biasanya merespons dalam beberapa jam pada hari kerja.
@@ -199,7 +199,7 @@ export default function Contact() {
             <Label htmlFor="message">Pesan</Label>
             <textarea
               id="message"
-              className="min-h-32 w-full resize-y rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+              className="min-h-32 w-full resize-y rounded-md border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:border-primary/30 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary/15"
               placeholder="Jelaskan kebutuhan atau kendala Anda..."
               value={message}
               onChange={(e) => setMessage(e.target.value)}
@@ -224,7 +224,7 @@ export default function Contact() {
 
 function QuickCard({ icon, title, desc }: { icon: React.ReactNode; title: string; desc: string }) {
   return (
-    <div className="rounded-2xl border border-border bg-card p-5">
+    <div className="rounded-xl border border-border bg-card p-5">
       <div className="flex items-start gap-3">
         <div className="shrink-0 rounded-lg border border-border bg-background p-2 text-foreground/90">
           {icon}

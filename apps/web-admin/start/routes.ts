@@ -32,7 +32,7 @@ const ArticleCategoriesController = () => import('#controllers/blog/article_cate
 const ArticlesController = () => import('#controllers/blog/articles_controller')
 
 import router from '@adonisjs/core/services/router'
-import { UserRole } from '@repo/db/types'
+import { UserRole } from '@baguspay/db/types'
 import { middleware } from './kernel.js'
 
 router.get('/', async ({ response }) => {

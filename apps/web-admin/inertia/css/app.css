@@ -1,2 +1,2 @@
-@import "@repo/ui/globals.css";
+@import "@baguspay/ui/theme.css";
 @plugin "@tailwindcss/typography";

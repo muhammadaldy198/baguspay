@@ -1,5 +1,5 @@
 {
-  "extends": "@repo/typescript-config/base.json",
+  "extends": "@baguspay/typescript-config/base.json",
   "compilerOptions": {
     "lib": ["DOM", "DOM.Iterable", "ES2022"],
     "types": ["node", "vite/client"],

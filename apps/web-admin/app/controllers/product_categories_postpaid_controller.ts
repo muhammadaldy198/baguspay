@@ -1,7 +1,8 @@
 import type { HttpContext } from '@adonisjs/core/http'
-import { and, asc, count, db, desc, eq, ilike, inArray } from '@repo/db'
-import { ProductBillingType, ProductCategoryType, tb } from '@repo/db/types'
+import { and, asc, count, desc, eq, ilike, inArray } from '@baguspay/db'
+import { ProductBillingType, ProductCategoryType, tb } from '@baguspay/db/types'
 import vine from '@vinejs/vine'
+import { db } from '#database/db'
 import { productCategoriesQueryValidator, productCategoryIdValidator } from '#validators/product'
 
 export default class ProductsCategoriesPostpaidController {

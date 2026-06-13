@@ -1,5 +1,5 @@
+import { Switch } from '@baguspay/ui/components/ui/switch'
 import { router } from '@inertiajs/react'
-import { Switch } from '@repo/ui/components/ui/switch'
 import { useState } from 'react'
 import { LoaderIcon } from 'react-hot-toast'
 import type { UpdateProductCategoryValidator } from '#validators/product'
@@ -30,7 +30,7 @@ export default function IsAvailable({
   }
 
   if (isLoading) {
-    return <LoaderIcon className="animate-spin h-8 w-8 text-gray-500" />
+    return <LoaderIcon className="animate-spin h-8 w-8 text-muted-foreground" />
   }
 
   return (

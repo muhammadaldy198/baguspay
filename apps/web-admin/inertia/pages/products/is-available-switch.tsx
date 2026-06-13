@@ -1,5 +1,5 @@
+import { Switch } from '@baguspay/ui/components/ui/switch'
 import { router } from '@inertiajs/react'
-import { Switch } from '@repo/ui/components/ui/switch'
 import { useQueryClient } from '@tanstack/react-query'
 import { LoaderCircleIcon } from 'lucide-react'
 import { useState } from 'react'

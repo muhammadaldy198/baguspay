@@ -1,5 +1,5 @@
 {
-  "name": "@repo/ui",
+  "name": "@baguspay/ui",
   "version": "0.0.0",
   "private": true,
   "scripts": {
@@ -43,6 +43,7 @@
   "exports": {
     "./postcss.config": "./postcss.config.mjs",
     "./tailwind.config": "./tailwind.config.ts",
+    "./theme.css": "./src/theme.css",
     "./globals.css": "./src/globals.css",
     "./soft-pop.css": "./src/soft-pop.css",
     "./custom-theme-1.css": "./src/theme/custom-theme-1.css",
@@ -57,8 +58,8 @@
     "./theme/*": "./src/theme/*.css"
   },
   "devDependencies": {
-    "@repo/tailwind-config": "workspace:*",
-    "@repo/typescript-config": "workspace:*",
+    "@baguspay/tailwind-config": "workspace:*",
+    "@baguspay/typescript-config": "workspace:*",
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",
     "tsup": "^8.5.1"

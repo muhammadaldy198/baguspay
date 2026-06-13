@@ -2,7 +2,7 @@
 import { ExceptionHandler, type HttpContext } from '@adonisjs/core/http'
 import app from '@adonisjs/core/services/app'
 import type { StatusPageRange, StatusPageRenderer } from '@adonisjs/core/types/http'
-import { DrizzleError } from '@repo/db'
+import { DrizzleError } from '@baguspay/db'
 
 export default class HttpExceptionHandler extends ExceptionHandler {
   /**
