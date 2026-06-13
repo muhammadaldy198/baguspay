@@ -27,7 +27,7 @@ export default memo(function BankTransferPayment({ payCode, paymentType, onCopy 
     <div className="space-y-3">
       <div>
         <p className="text-sm text-muted-foreground mb-2">{title}</p>
-        <div className="flex items-center gap-2 p-3 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800/30 rounded-lg">
+        <div className="flex items-center gap-2 p-3 bg-blue-50 dark:bg-blue-900/20 border border-info/30 dark:border-info/40 rounded-lg">
           <code className="flex-1 text-center text-lg font-mono font-bold text-blue-800 dark:text-blue-300">
             {payCode}
           </code>
@@ -37,7 +37,7 @@ export default memo(function BankTransferPayment({ payCode, paymentType, onCopy 
         </div>
       </div>
       <div className="text-xs text-muted-foreground text-center">{instruction}</div>
-      <div className="p-3 bg-blue-50/50 dark:bg-blue-900/10 rounded-lg border-l-4 border-blue-300">
+      <div className="p-3 bg-blue-50/50 dark:bg-blue-900/10 rounded-lg border-l-4 border-info/40">
         <p className="text-xs text-blue-700 dark:text-blue-300">
           💡 <strong>Tips:</strong> Pastikan nominal transfer persis sama dengan total pembayaran
         </p>

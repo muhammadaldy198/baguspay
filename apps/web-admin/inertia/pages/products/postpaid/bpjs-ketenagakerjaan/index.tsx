@@ -46,13 +46,13 @@ export default function ProductCategory(props: Props) {
   return (
     <AdminLayout>
       <div className="mb-4 mt-4 flex flex-wrap items-center justify-between gap-3">
-        <h1 className="text-2xl font-semibold text-slate-900">List BPJS Ketenagakerjaan</h1>
+        <h1 className="text-2xl font-semibold text-foreground">List BPJS Ketenagakerjaan</h1>
         <Button asChild>
           <Link href="/admin/product-categories/postpaid/bpjs-ketenagakerjaan/create">Add New</Link>
         </Button>
       </div>
       <form
-        className="mb-4 flex flex-wrap items-center gap-2 rounded-xl border border-slate-200 bg-white/90 p-3"
+        className="mb-4 flex flex-wrap items-center gap-2 rounded-xl border border-border bg-card/90 p-3"
         onSubmit={handleSearch}
       >
         <Select onValueChange={(v) => setSearchBy(v as 'id' | 'name')} value={searchBy}>
@@ -74,10 +74,10 @@ export default function ProductCategory(props: Props) {
           Search
         </Button>
       </form>
-      <div className="overflow-hidden rounded-xl border border-slate-200 bg-white/95 shadow-sm">
+      <div className="overflow-hidden rounded-xl border border-border bg-card/95 shadow-sm">
         <DataTable columns={columns} data={productCategories} />
       </div>
-      <div className="mt-4 flex items-center justify-between rounded-lg border border-slate-200 bg-white/80 px-3 py-2">
+      <div className="mt-4 flex items-center justify-between rounded-lg border border-border bg-card/80 px-3 py-2">
         <span>
           Page {pagination.page} of {pagination.totalPages}
         </span>

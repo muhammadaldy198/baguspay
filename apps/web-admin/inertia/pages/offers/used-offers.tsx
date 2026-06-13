@@ -101,7 +101,7 @@ const columns: ColumnDef<Props['usedOffer'][number]>[] = [
       if (!order) {
         return (
           <div className="flex gap-2">
-            <span className="inline-flex items-center px-2 py-1 rounded text-xs font-medium text-gray-500 bg-gray-100">
+            <span className="inline-flex items-center px-2 py-1 rounded text-xs font-medium text-muted-foreground bg-muted">
               N/A
             </span>
           </div>
@@ -119,10 +119,10 @@ const columns: ColumnDef<Props['usedOffer'][number]>[] = [
           badgeColor = 'text-red-500 bg-red-100'
           break
         case PaymentStatus.CANCELLED:
-          badgeColor = 'text-gray-500 bg-gray-100'
+          badgeColor = 'text-muted-foreground bg-muted'
           break
         case PaymentStatus.EXPIRED:
-          badgeColor = 'text-gray-500 bg-gray-100'
+          badgeColor = 'text-muted-foreground bg-muted'
           break
       }
 
@@ -147,7 +147,7 @@ const columns: ColumnDef<Props['usedOffer'][number]>[] = [
       if (!order) {
         return (
           <div className="flex gap-2">
-            <span className="inline-flex items-center px-2 py-1 rounded text-xs font-medium text-gray-500 bg-gray-100">
+            <span className="inline-flex items-center px-2 py-1 rounded text-xs font-medium text-muted-foreground bg-muted">
               N/A
             </span>
           </div>
@@ -165,10 +165,10 @@ const columns: ColumnDef<Props['usedOffer'][number]>[] = [
           badgeColor = 'text-red-500 bg-red-100'
           break
         case OrderStatus.CANCELLED:
-          badgeColor = 'text-gray-500 bg-gray-100'
+          badgeColor = 'text-muted-foreground bg-muted'
           break
         case OrderStatus.NONE:
-          badgeColor = 'text-gray-500 bg-gray-100'
+          badgeColor = 'text-muted-foreground bg-muted'
           break
       }
 

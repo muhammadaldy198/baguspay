@@ -59,7 +59,7 @@ export default function OrderSlugPlnPostpaidPage({ data }: Props) {
     <form onSubmit={form.handleSubmit(onSubmit)}>
       <div className="w-full md:max-w-7xl mx-auto space-y-4">
         {/* Header Info */}
-        <div className="flex flex-col md:flex-row items-center md:items-start text-center md:text-start gap-4 rounded-xl shadow-xs border border-gray-200 p-4 dark:border-none dark:bg-secondary text-secondary-foreground">
+        <div className="flex flex-col md:flex-row items-center md:items-start text-center md:text-start gap-4 rounded-xl shadow-xs border border-border/70 p-4 dark:bg-secondary text-secondary-foreground">
           <div className="w-32 rounded-lg overflow-hidden">
             <Image src={data.image_url} alt="" className="w-full h-full object-cover" />
           </div>
@@ -86,9 +86,9 @@ export default function OrderSlugPlnPostpaidPage({ data }: Props) {
         </div>
 
         {/* Info Banner */}
-        <div className="bg-blue-50 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-800 rounded-lg p-3 flex gap-2">
-          <InfoIcon className="w-4 h-4 text-blue-600 dark:text-blue-400 shrink-0 mt-0.5" />
-          <p className="text-xs text-blue-800 dark:text-blue-300">
+        <div className="bg-info/10 border border-info/30 rounded-lg p-3 flex gap-2">
+          <InfoIcon className="w-4 h-4 text-info shrink-0 mt-0.5" />
+          <p className="text-xs text-info">
             Masukkan nomor meter/ID pelanggan PLN Anda (11-12 digit) untuk mengecek tagihan
           </p>
         </div>
@@ -96,7 +96,7 @@ export default function OrderSlugPlnPostpaidPage({ data }: Props) {
         {/* Two Column Layout */}
         <div className="grid md:grid-cols-2 gap-4">
           {/* Customer ID Input Section */}
-          <div className="w-full h-fit rounded-xl shadow-xs border border-gray-200 p-4 dark:border-none dark:bg-secondary text-secondary-foreground">
+          <div className="w-full h-fit rounded-xl shadow-xs border border-border/70 p-4 dark:bg-secondary text-secondary-foreground">
             <div className="inline-flex gap-2 items-center mb-4">
               <div className="rounded-full p-2 bg-primary">
                 <BoltIcon className="w-4 h-4 text-primary-foreground" />
@@ -127,7 +127,7 @@ export default function OrderSlugPlnPostpaidPage({ data }: Props) {
           </div>
 
           {/* Contact Information Section */}
-          <div className="w-full h-fit rounded-xl shadow-xs border border-gray-200 p-4 dark:border-none dark:bg-secondary text-secondary-foreground">
+          <div className="w-full h-fit rounded-xl shadow-xs border border-border/70 p-4 dark:bg-secondary text-secondary-foreground">
             <h3 className="text-base font-semibold mb-4">Informasi Kontak</h3>
 
             <div className="space-y-4">

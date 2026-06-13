@@ -153,7 +153,7 @@ export default function PaymentSection({ products, form }: Props) {
   }, [paymentMethods.data])
 
   return (
-    <div className="rounded-xl shadow-xs border border-gray-200 p-4 dark:border-gray-700 dark:bg-gray-800/50 text-secondary-foreground">
+    <div className="rounded-xl shadow-xs border border-border/70 p-4 dark:border-border/70 dark:bg-gray-800/50 text-secondary-foreground">
       <div className="inline-flex gap-3 items-center mb-6">
         <div className="rounded-xl p-2.5 bg-linear-to-br from-primary to-primary/80 shadow-lg shadow-primary/20 text-primary-foreground">
           <WalletMinimalIcon className="w-5 h-5 text-background" />
@@ -177,7 +177,7 @@ export default function PaymentSection({ products, form }: Props) {
             }
           }}
           variant="outline"
-          className="w-full justify-between p-4 h-auto border-dashed border-2 hover:border-primary/50 transition-all duration-200"
+          className="w-full justify-between p-4 h-auto border-dashed border-border/70 hover:border-primary/30 transition-[color,background-color,border-color] duration-200"
         >
           {selectedPayment ? (
             <div className="flex items-center gap-3">

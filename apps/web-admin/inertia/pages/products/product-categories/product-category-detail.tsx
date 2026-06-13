@@ -32,7 +32,9 @@ export default function ProductCategoryDetail({ productCategory }: Props) {
         <div className="space-y-2 text-center md:text-start">
           <h2 className="text-lg font-semibold">{productCategory.name}</h2>
           <h2 className="text-sm italic">{productCategory.sub_name}</h2>
-          <p className="text-sm text-slate-500 line-clamp-2">{productCategory.description}</p>
+          <p className="text-sm text-muted-foreground line-clamp-2">
+            {productCategory.description}
+          </p>
           <div className="flex flex-wrap gap-2">
             <p className="text-xs bg-pink-200 text-pink-500 font-medium w-fit px-2 py-0.5 rounded">
               Label: {productCategory.label}
@@ -43,7 +45,7 @@ export default function ProductCategoryDetail({ productCategory }: Props) {
             <p className="text-xs bg-green-200 text-green-500 font-medium w-fit px-2 py-0.5 rounded">
               Available: {productCategory.is_available ? 'Yes' : 'No'}
             </p>
-            <p className="text-xs bg-blue-200 text-blue-500 font-medium w-fit px-2 py-0.5 rounded">
+            <p className="text-xs bg-primary/15 text-primary font-medium w-fit px-2 py-0.5 rounded">
               Delivery: {productCategory.delivery_type}
             </p>
           </div>

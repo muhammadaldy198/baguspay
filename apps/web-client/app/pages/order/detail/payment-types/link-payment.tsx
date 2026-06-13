@@ -21,7 +21,7 @@ export default memo(function LinkPayment({ payUrl, paymentName }: Props) {
           </a>
         </Button>
       </div>
-      <div className="p-3 bg-green-50/50 dark:bg-green-900/10 rounded-lg border-l-4 border-green-300">
+      <div className="p-3 bg-green-50/50 dark:bg-green-900/10 rounded-lg border-l-4 border-success/40">
         <p className="text-xs text-green-700 dark:text-green-300">
           🔒 <strong>Aman:</strong> Link akan membawa Anda ke halaman pembayaran resmi
         </p>

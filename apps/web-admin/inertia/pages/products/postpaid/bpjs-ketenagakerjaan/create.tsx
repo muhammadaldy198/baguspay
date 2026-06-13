@@ -66,10 +66,10 @@ export default function CreateProductCategory() {
 
   return (
     <AdminLayout>
-      <h2 className="mt-4 text-2xl font-semibold text-slate-900">
+      <h2 className="mt-4 text-2xl font-semibold text-foreground">
         Create BPJS Ketenagakerjaan Product Category
       </h2>
-      <p className="mt-1 text-sm text-slate-500">
+      <p className="mt-1 text-sm text-muted-foreground">
         Lengkapi data produk dengan rapi untuk memudahkan publikasi dan maintenance.
       </p>
 
@@ -77,9 +77,9 @@ export default function CreateProductCategory() {
         className="mt-6 grid w-full max-w-6xl grid-cols-1 gap-5 md:grid-cols-2"
         onSubmit={handleSubmit}
       >
-        <div className="md:col-span-2 border-b border-slate-200 pb-2">
-          <p className="text-sm font-semibold text-slate-900">Section: Media</p>
-          <p className="text-xs text-slate-500">Upload image, icon, dan banner produk.</p>
+        <div className="md:col-span-2 border-b border-border pb-2">
+          <p className="text-sm font-semibold text-foreground">Section: Media</p>
+          <p className="text-xs text-muted-foreground">Upload image, icon, dan banner produk.</p>
         </div>
         {/* File Image */}
         <div>
@@ -119,9 +119,9 @@ export default function CreateProductCategory() {
           )}
         </div>
 
-        <div className="md:col-span-2 border-b border-slate-200 pb-2 pt-1">
-          <p className="text-sm font-semibold text-slate-900">Section: Product Info</p>
-          <p className="text-xs text-slate-500">Informasi utama produk untuk pengguna.</p>
+        <div className="md:col-span-2 border-b border-border pb-2 pt-1">
+          <p className="text-sm font-semibold text-foreground">Section: Product Info</p>
+          <p className="text-xs text-muted-foreground">Informasi utama produk untuk pengguna.</p>
         </div>
         {/* Name */}
         <div>
@@ -172,9 +172,11 @@ export default function CreateProductCategory() {
           {errors.publisher && <p className="mt-1 text-xs text-rose-600">{errors.publisher}</p>}
         </div>
 
-        <div className="md:col-span-2 border-b border-slate-200 pb-2 pt-1">
-          <p className="text-sm font-semibold text-slate-900">Section: Visibility</p>
-          <p className="text-xs text-slate-500">Kontrol status tampil dan penandaan produk.</p>
+        <div className="md:col-span-2 border-b border-border pb-2 pt-1">
+          <p className="text-sm font-semibold text-foreground">Section: Visibility</p>
+          <p className="text-xs text-muted-foreground">
+            Kontrol status tampil dan penandaan produk.
+          </p>
         </div>
         {/* Is Active */}
         <div className="flex items-center gap-2">
@@ -263,9 +265,9 @@ export default function CreateProductCategory() {
           </div>
         </div>
 
-        <div className="md:col-span-2 border-b border-slate-200 pb-2 pt-1">
-          <p className="text-sm font-semibold text-slate-900">Section: SEO</p>
-          <p className="text-xs text-slate-500">
+        <div className="md:col-span-2 border-b border-border pb-2 pt-1">
+          <p className="text-sm font-semibold text-foreground">Section: SEO</p>
+          <p className="text-xs text-muted-foreground">
             Opsional: optimasi mesin pencari untuk halaman produk.
           </p>
         </div>

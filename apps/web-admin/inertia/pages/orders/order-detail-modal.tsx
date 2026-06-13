@@ -100,7 +100,7 @@ export default function OrderDetailModal({ orderId }: Props) {
                       </div>
                     </>
                   ) : (
-                    <div className="text-gray-500">Guest Order</div>
+                    <div className="text-muted-foreground">Guest Order</div>
                   )}
                 </div>
               </div>
@@ -122,9 +122,8 @@ export default function OrderDetailModal({ orderId }: Props) {
                           detailOrder.data?.order.order_status === OrderStatus.PENDING,
                         'bg-green-200 text-green-500':
                           detailOrder.data?.order.order_status === OrderStatus.COMPLETED,
-                        'bg-gray-200 text-gray-500':
-                          detailOrder.data?.order.order_status === OrderStatus.NONE,
-                        'bg-slate-200 text-slate-500':
+                        'bg-muted text-muted-foreground':
+                          detailOrder.data?.order.order_status === OrderStatus.NONE ||
                           detailOrder.data?.order.order_status === OrderStatus.CANCELLED,
                       })}
                     >
@@ -141,9 +140,8 @@ export default function OrderDetailModal({ orderId }: Props) {
                           detailOrder.data?.order.payment_status === PaymentStatus.PENDING,
                         'bg-green-200 text-green-500':
                           detailOrder.data?.order.payment_status === PaymentStatus.SUCCESS,
-                        'bg-gray-200 text-gray-500':
-                          detailOrder.data?.order.payment_status === PaymentStatus.EXPIRED,
-                        'bg-slate-200 text-slate-500':
+                        'bg-muted text-muted-foreground':
+                          detailOrder.data?.order.payment_status === PaymentStatus.EXPIRED ||
                           detailOrder.data?.order.payment_status === PaymentStatus.CANCELLED,
                       })}
                     >
@@ -160,7 +158,7 @@ export default function OrderDetailModal({ orderId }: Props) {
                           detailOrder.data?.order.refund_status === RefundStatus.PROCESSING,
                         'bg-green-200 text-green-500':
                           detailOrder.data?.order.refund_status === RefundStatus.COMPLETED,
-                        'bg-gray-200 text-gray-500':
+                        'bg-muted text-muted-foreground':
                           detailOrder.data?.order.refund_status === RefundStatus.NONE,
                       })}
                     >

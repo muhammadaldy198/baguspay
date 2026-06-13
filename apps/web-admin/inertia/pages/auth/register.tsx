@@ -34,7 +34,7 @@ export default function Register() {
     <main className="flex flex-col flex-1 items-center justify-center p-4">
       <div className="w-full max-w-md text-center">
         <h1 className="font-semibold text-2xl">Login</h1>
-        <p className="text-sm text-slate-500 mt-2">
+        <p className="text-sm text-muted-foreground mt-2">
           Lorem ipsum dolor sit amet consectetur, adipisicing elit. Culpa, fuga laborum? Quod,
           libero. Itaque quos magnam necessitatibus odio asperiores repudiandae quis commodi quas
           aperiam deleniti.

@@ -126,7 +126,7 @@ export default function ArticlesIndex(props: Props) {
       </div>
 
       {filteredArticles.length === 0 ? (
-        <div className="mt-6 rounded-lg border bg-white p-12 text-center">
+        <div className="mt-6 rounded-lg border bg-card p-12 text-center">
           <p className="text-muted-foreground">
             Belum ada artikel. Klik tombol "Tambah Artikel" untuk membuat artikel baru.
           </p>

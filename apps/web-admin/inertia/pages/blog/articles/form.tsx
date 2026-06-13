@@ -154,7 +154,7 @@ export default function ArticleForm(props: Props) {
       <form onSubmit={handleSubmit} className="mt-6 space-y-6">
         <div className="grid gap-6 lg:grid-cols-3">
           <div className="lg:col-span-2 space-y-6">
-            <div className="rounded-lg border bg-white p-6 space-y-4">
+            <div className="rounded-lg border bg-card p-6 space-y-4">
               <h2 className="text-sm font-semibold">Informasi Artikel</h2>
               <Separator />
 
@@ -196,7 +196,7 @@ export default function ArticleForm(props: Props) {
               </div>
             </div>
 
-            <div className="rounded-lg border bg-white p-6 space-y-4">
+            <div className="rounded-lg border bg-card p-6 space-y-4">
               <h2 className="text-sm font-semibold">Konten Artikel</h2>
               <Separator />
 
@@ -209,7 +209,7 @@ export default function ArticleForm(props: Props) {
               </div>
             </div>
 
-            <div className="rounded-lg border bg-white p-6 space-y-4">
+            <div className="rounded-lg border bg-card p-6 space-y-4">
               <h2 className="text-sm font-semibold">SEO</h2>
               <Separator />
 
@@ -243,7 +243,7 @@ export default function ArticleForm(props: Props) {
           </div>
 
           <div className="space-y-6">
-            <div className="rounded-lg border bg-white p-6 space-y-4">
+            <div className="rounded-lg border bg-card p-6 space-y-4">
               <h2 className="text-sm font-semibold">Publikasi</h2>
               <Separator />
 
@@ -282,7 +282,7 @@ export default function ArticleForm(props: Props) {
               </div>
             </div>
 
-            <div className="rounded-lg border bg-white p-6 space-y-4">
+            <div className="rounded-lg border bg-card p-6 space-y-4">
               <h2 className="text-sm font-semibold">Kategori & Tags</h2>
               <Separator />
 
@@ -317,7 +317,7 @@ export default function ArticleForm(props: Props) {
               </div>
             </div>
 
-            <div className="rounded-lg border bg-white p-6 space-y-4">
+            <div className="rounded-lg border bg-card p-6 space-y-4">
               <h2 className="text-sm font-semibold">Gambar Utama</h2>
               <Separator />
 

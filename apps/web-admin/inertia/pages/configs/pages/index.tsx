@@ -61,7 +61,7 @@ export default function PagesIndex(props: Props) {
         </Link>
       </div>
 
-      <div className="mt-6 rounded-lg border bg-white">
+      <div className="mt-6 rounded-lg border bg-card">
         <Table>
           <TableHeader>
             <TableRow>

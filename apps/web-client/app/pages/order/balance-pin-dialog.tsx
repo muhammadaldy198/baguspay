@@ -109,7 +109,7 @@ export default function BalancePinDialog({
                 type="password"
                 inputMode="numeric"
                 maxLength={1}
-                className="w-10 h-12 text-center text-lg font-semibold bg-transparent border-b-2 border-slate-300 focus:border-primary outline-none"
+                className="w-10 h-12 text-center text-lg font-semibold bg-transparent border-b border-border/70 focus:border-primary/50 outline-none"
                 value={pinDigits[index]}
                 onChange={(e) => handleChange(index, e.target.value)}
                 onKeyDown={(e) => handleKeyDown(index, e)}

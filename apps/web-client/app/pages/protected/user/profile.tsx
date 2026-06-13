@@ -186,7 +186,7 @@ export default function UserProfile({ loaderData }: Route.ComponentProps) {
             </CardHeader>
             <CardContent className="space-y-4">
               {/* Balance */}
-              <div className="p-4 bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 rounded-lg border border-green-200 dark:border-green-800">
+              <div className="p-4 bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 rounded-lg border border-success/30 dark:border-success/40">
                 <div className="flex items-center gap-3">
                   <div className="p-2 bg-green-100 dark:bg-green-900/30 rounded-lg">
                     <CreditCardIcon className="w-5 h-5 text-green-600 dark:text-green-400" />

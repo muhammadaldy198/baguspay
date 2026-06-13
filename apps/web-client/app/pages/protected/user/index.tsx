@@ -430,7 +430,7 @@ export default function UserDashboard() {
             </div>
 
             {/* Monthly Spending */}
-            <div className="p-3 bg-linear-to-r from-blue-50 to-cyan-50 dark:from-blue-900/20 dark:to-cyan-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
+            <div className="p-3 bg-linear-to-r from-blue-50 to-cyan-50 dark:from-blue-900/20 dark:to-cyan-900/20 rounded-lg border border-info/30 dark:border-info/40">
               <div className="flex items-center gap-2 mb-2">
                 <TrendingUpIcon className="w-4 h-4 text-blue-600 dark:text-blue-400" />
                 <span className="text-sm font-medium text-blue-900 dark:text-blue-100">
@@ -448,7 +448,7 @@ export default function UserDashboard() {
             </div>
 
             {/* Monthly Income */}
-            <div className="p-3 bg-linear-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 rounded-lg border border-green-200 dark:border-green-800">
+            <div className="p-3 bg-linear-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 rounded-lg border border-success/30 dark:border-success/40">
               <div className="flex items-center gap-2 mb-2">
                 <WalletIcon className="w-4 h-4 text-green-600 dark:text-green-400" />
                 <span className="text-sm font-medium text-green-900 dark:text-green-100">
@@ -462,7 +462,7 @@ export default function UserDashboard() {
             </div>
 
             {/* Total Discount Saved */}
-            <div className="p-3 bg-linear-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 rounded-lg border border-purple-200 dark:border-purple-800">
+            <div className="p-3 bg-linear-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 rounded-lg border border-primary/30 dark:border-primary/40">
               <div className="flex items-center gap-2 mb-2">
                 <CreditCardIcon className="w-4 h-4 text-purple-600 dark:text-purple-400" />
                 <span className="text-sm font-medium text-purple-900 dark:text-purple-100">

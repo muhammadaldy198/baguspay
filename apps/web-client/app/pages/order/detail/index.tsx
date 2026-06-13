@@ -101,7 +101,7 @@ export default function OrderDetailPage({ params }: Route.ComponentProps) {
   if (orderDetail.isError) {
     return (
       <div className="w-full md:max-w-7xl mx-auto">
-        <div className="rounded-xl shadow-xs border border-red-200 p-8 dark:border-red-800/30 dark:bg-red-800/10 text-center">
+        <div className="rounded-xl shadow-xs border border-destructive/40 p-8 dark:border-destructive/40 dark:bg-red-800/10 text-center">
           <XCircleIcon className="w-16 h-16 text-destructive mx-auto mb-4" />
           <h2 className="text-xl font-semibold mb-2">Gagal Memuat Detail Pesanan</h2>
           <p className="text-muted-foreground mb-4">
@@ -173,7 +173,7 @@ export default function OrderDetailPage({ params }: Route.ComponentProps) {
       <div className="grid md:grid-cols-5 gap-6">
         <div className="md:col-span-3 space-y-4">
           {/* Order Information Card */}
-          <div className="rounded-xl shadow-xs border border-gray-200 p-4 dark:border-none dark:bg-secondary text-secondary-foreground">
+          <div className="rounded-xl shadow-xs border border-border/70 p-4 dark:bg-secondary text-secondary-foreground">
             <div className="inline-flex gap-2 items-center mb-4">
               <div className="rounded-full p-2 bg-primary">
                 <ReceiptIcon className="w-4 h-4 text-primary-foreground" />
@@ -216,7 +216,7 @@ export default function OrderDetailPage({ params }: Route.ComponentProps) {
           </div>
 
           {/* Product Information Card */}
-          <div className="rounded-xl shadow-xs border border-gray-200 p-4 dark:border-none dark:bg-secondary text-secondary-foreground">
+          <div className="rounded-xl shadow-xs border border-border/70 p-4 dark:bg-secondary text-secondary-foreground">
             <div className="inline-flex gap-2 items-center mb-4">
               <div className="rounded-full p-2 bg-primary">
                 <GamepadIcon className="w-4 h-4 text-primary-foreground" />
@@ -275,7 +275,7 @@ export default function OrderDetailPage({ params }: Route.ComponentProps) {
           </div>
 
           {/* Payment Information Card */}
-          <div className="rounded-xl shadow-xs border border-gray-200 p-4 dark:border-none dark:bg-secondary text-secondary-foreground">
+          <div className="rounded-xl shadow-xs border border-border/70 p-4 dark:bg-secondary text-secondary-foreground">
             <div className="inline-flex gap-2 items-center mb-4">
               <div className="rounded-full p-2 bg-primary">
                 <CreditCardIcon className="w-4 h-4 text-primary-foreground" />
@@ -325,7 +325,7 @@ export default function OrderDetailPage({ params }: Route.ComponentProps) {
         <div className="md:col-span-2">
           <div className="space-y-4 md:sticky md:top-24">
             {/* Price Summary Card */}
-            <div className="rounded-xl shadow-xs border border-gray-200 p-4 dark:border-none dark:bg-secondary text-secondary-foreground">
+            <div className="rounded-xl shadow-xs border border-border/70 p-4 dark:bg-secondary text-secondary-foreground">
               <div className="inline-flex gap-2 items-center mb-4">
                 <div className="rounded-full p-2 bg-primary">
                   <TagIcon className="w-4 h-4 text-primary-foreground" />
@@ -374,7 +374,7 @@ export default function OrderDetailPage({ params }: Route.ComponentProps) {
 
             {/* Additional Information */}
             {data.voucher_code && (
-              <div className="rounded-xl shadow-xs border border-gray-200 p-4 dark:border-none dark:bg-secondary text-secondary-foreground">
+              <div className="rounded-xl shadow-xs border border-border/70 p-4 dark:bg-secondary text-secondary-foreground">
                 <div className="inline-flex gap-2 items-center mb-4">
                   <div className="rounded-full p-2 bg-primary">
                     <AlertCircleIcon className="w-4 h-4 text-primary-foreground" />
@@ -408,7 +408,7 @@ export default function OrderDetailPage({ params }: Route.ComponentProps) {
                 size="sm"
                 onClick={handleChatCS}
                 variant="outline"
-                className="flex-1 gap-2 bg-green-50 hover:bg-green-100 text-green-700 border-green-200 dark:bg-green-900/20 dark:hover:bg-green-900/30 dark:text-green-400 dark:border-green-800/30"
+                className="flex-1 gap-2 bg-green-50 hover:bg-green-100 text-green-700 border-success/30 dark:bg-green-900/20 dark:hover:bg-green-900/30 dark:text-green-400 dark:border-success/40"
               >
                 <MessageCircleIcon className="w-4 h-4" />
                 Butuh Bantuan?
@@ -441,7 +441,7 @@ export default function OrderDetailPage({ params }: Route.ComponentProps) {
 
       {/* Print Struk Confirmation Modal */}
       <Dialog open={showPrintModal} onOpenChange={setShowPrintModal}>
-        <DialogContent className="max-w-4xl border-gray-200 dark:border-zinc-800 bg-background sm:p-6 overflow-y-auto max-h-[90vh]">
+        <DialogContent className="max-w-4xl border-border/70 dark:border-border/70 bg-background sm:p-6 overflow-y-auto max-h-[90vh]">
           <DialogHeader className="mb-4">
             <DialogTitle className="text-xl font-bold">Cetak Struk Transaksi</DialogTitle>
           </DialogHeader>

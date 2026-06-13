@@ -226,7 +226,7 @@ export default function SectionProducts({ productSubCategoryId, selectedSubCateg
       <div className="flex justify-between gap-4 items-end flex-wrap">
         <h2 className="text-lg font-semibold">Products</h2>
         {productSubCategoryId && (
-          <div className="flex items-center gap-2 rounded-md bg-slate-50 px-3 py-2">
+          <div className="flex items-center gap-2 rounded-md bg-muted/50 px-3 py-2">
             <Button
               size="sm"
               variant="destructive"
@@ -265,7 +265,7 @@ export default function SectionProducts({ productSubCategoryId, selectedSubCateg
               <span className="text-xs text-muted-foreground">
                 Page {products.data.meta.page} of {products.data.meta.totalPages}
               </span>
-              <div className="flex items-center gap-2 rounded-md bg-slate-50 px-3 py-2">
+              <div className="flex items-center gap-2 rounded-md bg-muted/50 px-3 py-2">
                 <select
                   className="h-8 rounded border px-2 text-sm"
                   value={products.data.meta.limit}

@@ -85,14 +85,14 @@ export default function PaymentCountdown({ expiredAt, paymentStatus }: Props) {
 
   return (
     <div
-      className={`p-4 rounded-xl border-2 ${
+      className={`p-4 rounded-xl border ${
         displayExpired
           ? isFailed
-            ? 'bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-800/30'
-            : 'bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-800/30'
+            ? 'bg-red-50 dark:bg-red-900/20 border-destructive/40 dark:border-destructive/40'
+            : 'bg-red-50 dark:bg-red-900/20 border-destructive/40 dark:border-destructive/40'
           : isUrgent
-            ? 'bg-orange-50 dark:bg-orange-900/20 border-orange-200 dark:border-orange-800/30'
-            : 'bg-yellow-50 dark:bg-yellow-900/20 border-yellow-200 dark:border-yellow-800/30'
+            ? 'bg-orange-50 dark:bg-orange-900/20 border-warning/40 dark:border-warning/40'
+            : 'bg-yellow-50 dark:bg-yellow-900/20 border-warning/40 dark:border-warning/40'
       }`}
     >
       <div className="flex items-center justify-between">

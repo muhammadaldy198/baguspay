@@ -283,7 +283,7 @@ const data = {
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar
-      className="top-(--header-height) h-[calc(100svh-var(--header-height))]! border-r border-border/70 bg-[linear-gradient(180deg,oklch(0.995_0.004_252),oklch(0.982_0.01_252))]"
+      className="top-(--header-height) h-[calc(100svh-var(--header-height))]! border-r border-border/70 bg-sidebar"
       {...props}
     >
       <SidebarHeader className="border-b border-border/70 px-3 py-3">
@@ -292,17 +292,17 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             <SidebarMenuButton
               size="lg"
               asChild
-              className="rounded-md border border-border/70 bg-white/85 shadow-[0_1px_2px_rgb(15_23_42/0.06)] transition-colors hover:bg-white"
+              className="rounded-md border border-border/70 bg-card/85 shadow-sm transition-colors hover:bg-card"
             >
               <Link href="/admin">
                 <div className="flex aspect-square size-9 items-center justify-center rounded-md bg-primary text-primary-foreground shadow-sm">
                   <Building2 className="size-4" />
                 </div>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate text-[13px] font-semibold tracking-[0.08em] text-slate-900 uppercase">
+                  <span className="truncate text-[13px] font-semibold tracking-[0.08em] text-foreground uppercase">
                     Baguspay
                   </span>
-                  <span className="truncate text-xs text-slate-500">Control Center</span>
+                  <span className="truncate text-xs text-muted-foreground">Control Center</span>
                 </div>
               </Link>
             </SidebarMenuButton>
@@ -313,7 +313,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavMain items={data.navMain} />
         <NavMain items={data.config} title="Config" />
       </SidebarContent>
-      <SidebarFooter className="border-t border-border/70 bg-white/70 p-2.5">
+      <SidebarFooter className="border-t border-border/70 bg-card/70 p-2.5">
         <NavUser user={data.user} />
       </SidebarFooter>
     </Sidebar>

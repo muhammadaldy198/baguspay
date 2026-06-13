@@ -48,12 +48,12 @@ function FileUploadDropzone({ onFilesSelected }: { onFilesSelected?: (files: Fil
   return (
     <div
       {...getRootProps()}
-      className={`border-2 border-dashed rounded-md p-6 text-center transition-colors cursor-pointer ${
-        isDragActive ? 'border-blue-500 bg-blue-50' : 'border-gray-300'
+      className={`border border-dashed rounded-md p-6 text-center transition-colors cursor-pointer ${
+        isDragActive ? 'border-primary/40 bg-primary/10' : 'border-border/70'
       }`}
     >
       <input {...getInputProps()} />
-      <p className="text-gray-500">
+      <p className="text-muted-foreground">
         {isDragActive
           ? 'Drop the files here ...'
           : files.length === 0
@@ -61,7 +61,7 @@ function FileUploadDropzone({ onFilesSelected }: { onFilesSelected?: (files: Fil
             : `${files.length} file(s) selected`}
       </p>
       {files.length > 0 && (
-        <ul className="mt-2 text-sm text-gray-700">
+        <ul className="mt-2 text-sm text-foreground">
           {files.map((file) => (
             <li key={file.name}>{file.name}</li>
           ))}
@@ -295,7 +295,7 @@ export default function FileManager({
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         {selectedFile?.url ? (
-          <div className="rounded-md border flex items-center justify-center overflow-hidden">
+          <div className="rounded-md border border-border/70 flex items-center justify-center overflow-hidden">
             <img
               src={`${import.meta.env.VITE_S3_URL}${selectedFile.url}`}
               alt={selectedFile.name || ''}
@@ -303,12 +303,12 @@ export default function FileManager({
             />
           </div>
         ) : (
-          <div className="rounded-md border border-dashed flex flex-col items-center justify-center gap-1 p-2 text-gray-600">
+          <div className="rounded-md border border-dashed border-border/70 flex flex-col items-center justify-center gap-1 p-2 text-muted-foreground">
             <span className="text-xs">Select or upload your file</span>
-            <span className="text-xs text-gray-400">
+            <span className="text-xs text-muted-foreground/80">
               Accept: <span className="font-mono">jpg, png, avif, webp</span>
             </span>
-            <span className="text-xs text-gray-400">Max size: 5MB</span>
+            <span className="text-xs text-muted-foreground/80">Max size: 5MB</span>
           </div>
         )}
       </DialogTrigger>
@@ -339,21 +339,21 @@ export default function FileManager({
                         src={`${import.meta.env.VITE_S3_URL}${file.url}`}
                         alt={file.name || ''}
                         onClick={() => setSelectedFile(file)}
-                        className={`shadow rounded border-2 transition-all w-full object-contain ${selectedFile?.id === file.id ? 'border-blue-500' : 'border-transparent'}`}
+                        className={`shadow rounded border transition-colors w-full object-contain ${selectedFile?.id === file.id ? 'border-primary/40 ring-1 ring-primary/15' : 'border-transparent'}`}
                       />
                     </label>
                   ))}
                 </div>
                 {filesData.length === 0 && !isFetching && (
-                  <p className="text-sm text-gray-500 text-center">No files found.</p>
+                  <p className="text-sm text-muted-foreground text-center">No files found.</p>
                 )}
                 {isFetchingNextPage && (
-                  <p className="text-xs text-gray-500 text-center">Loading more...</p>
+                  <p className="text-xs text-muted-foreground text-center">Loading more...</p>
                 )}
                 <div ref={loaderRef} className="h-4" />
               </div>
               {(selectedFile || selectedFileIds.length > 0) && (
-                <div className="sticky z-10 bottom-0 left-0 right-0 bg-white dark:bg-slate-950 pt-4 pb-4 flex flex-wrap justify-end gap-2 border-t border-slate-200 dark:border-slate-800">
+                <div className="sticky z-10 bottom-0 left-0 right-0 bg-background pt-4 pb-4 flex flex-wrap justify-end gap-2 border-t border-border/70">
                   {selectedFileIds.length > 0 ? (
                     <Button
                       size="sm"

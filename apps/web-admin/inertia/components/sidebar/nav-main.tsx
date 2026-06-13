@@ -42,7 +42,7 @@ export function NavMain({
 
   return (
     <SidebarGroup>
-      <SidebarGroupLabel className="px-2 text-[11px] font-semibold tracking-[0.12em] text-slate-500/90 uppercase">
+      <SidebarGroupLabel className="px-2 text-[11px] font-semibold tracking-[0.12em] text-muted-foreground uppercase">
         {title}
       </SidebarGroupLabel>
       <SidebarMenu>
@@ -64,9 +64,9 @@ export function NavMain({
                       <SidebarMenuButton
                         tooltip={item.title}
                         data-active={itemActive}
-                        className="h-11 rounded-md px-2.5 pr-10 text-slate-700 transition-all hover:bg-primary/[0.08] hover:text-slate-950 data-[active=true]:bg-primary/12 data-[active=true]:text-primary data-[active=true]:ring-1 data-[active=true]:ring-primary/20"
+                        className="h-11 rounded-md px-2.5 pr-10 text-foreground transition-[color,background-color,box-shadow] hover:bg-primary/[0.08] hover:text-foreground data-[active=true]:bg-primary/12 data-[active=true]:text-primary data-[active=true]:ring-1 data-[active=true]:ring-primary/20"
                       >
-                        <span className="flex size-7 shrink-0 items-center justify-center rounded-md border border-primary/15 bg-primary/[0.07] text-primary">
+                        <span className="flex size-7 shrink-0 items-center justify-center rounded-md border border-primary/20 bg-primary/[0.07] text-primary">
                           <item.icon className="size-3.5" />
                         </span>
                         <span className="truncate text-[13px] font-medium tracking-[0.01em]">
@@ -79,10 +79,10 @@ export function NavMain({
                       asChild
                       tooltip={item.title}
                       data-active={itemActive}
-                      className="h-11 rounded-md px-2.5 pr-10 text-slate-700 transition-all hover:bg-primary/[0.08] hover:text-slate-950 data-[active=true]:bg-primary/12 data-[active=true]:text-primary data-[active=true]:ring-1 data-[active=true]:ring-primary/20"
+                      className="h-11 rounded-md px-2.5 pr-10 text-foreground transition-[color,background-color,box-shadow] hover:bg-primary/[0.08] hover:text-foreground data-[active=true]:bg-primary/12 data-[active=true]:text-primary data-[active=true]:ring-1 data-[active=true]:ring-primary/20"
                     >
                       <Link href={item.url}>
-                        <span className="flex size-7 shrink-0 items-center justify-center rounded-md border border-primary/15 bg-primary/[0.07] text-primary">
+                        <span className="flex size-7 shrink-0 items-center justify-center rounded-md border border-primary/20 bg-primary/[0.07] text-primary">
                           <item.icon className="size-3.5" />
                         </span>
                         <span className="truncate text-[13px] font-medium tracking-[0.01em]">
@@ -95,7 +95,7 @@ export function NavMain({
                     <CollapsibleTrigger asChild>
                       <button
                         type="button"
-                        className="absolute top-1/2 right-1 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-md text-slate-500 transition-all hover:bg-primary/10 hover:text-primary data-[state=open]:rotate-90"
+                        className="absolute top-1/2 right-1 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-md text-muted-foreground transition-[color,background-color,transform] hover:bg-primary/10 hover:text-primary data-[state=open]:rotate-90"
                       >
                         <ChevronRight className="size-4" />
                         <span className="sr-only">Toggle</span>
@@ -105,13 +105,13 @@ export function NavMain({
                 </div>
                 {hasChildren ? (
                   <CollapsibleContent>
-                    <SidebarMenuSub className="border-primary/20">
+                    <SidebarMenuSub className="border-border/70">
                       {item.items?.map((subItem) => (
                         <SidebarMenuSubItem key={subItem.title}>
                           <SidebarMenuSubButton
                             asChild
                             data-active={activeSubItemUrl === subItem.url}
-                            className="rounded-md text-slate-600 hover:bg-primary/[0.08] hover:text-slate-900 data-[active=true]:bg-primary/10 data-[active=true]:font-medium data-[active=true]:text-primary"
+                            className="rounded-md text-muted-foreground hover:bg-primary/[0.08] hover:text-foreground data-[active=true]:bg-primary/10 data-[active=true]:font-medium data-[active=true]:text-primary"
                           >
                             <Link href={subItem.url}>
                               <span>{subItem.title}</span>

@@ -75,10 +75,10 @@ const columns: ColumnDef<Props['recentOrders'][number]>[] = [
           badgeColor = 'text-red-500 bg-red-100'
           break
         case PaymentStatus.CANCELLED:
-          badgeColor = 'text-gray-500 bg-gray-100'
+          badgeColor = 'text-muted-foreground bg-muted'
           break
         case PaymentStatus.EXPIRED:
-          badgeColor = 'text-gray-500 bg-gray-100'
+          badgeColor = 'text-muted-foreground bg-muted'
           break
       }
 
@@ -108,10 +108,10 @@ const columns: ColumnDef<Props['recentOrders'][number]>[] = [
           badgeColor = 'text-red-500 bg-red-100'
           break
         case OrderStatus.CANCELLED:
-          badgeColor = 'text-gray-500 bg-gray-100'
+          badgeColor = 'text-muted-foreground bg-muted'
           break
         case OrderStatus.NONE:
-          badgeColor = 'text-gray-500 bg-gray-100'
+          badgeColor = 'text-muted-foreground bg-muted'
           break
       }
 
@@ -209,15 +209,15 @@ export default function Home(props: Props) {
       </div>
 
       <div className="grid gap-4 mt-6 grid-cols-1 sm:grid-cols-2 xl:grid-cols-3">
-        <div className="rounded-lg border bg-white p-4">
+        <div className="rounded-lg border bg-card p-4">
           <p className="text-sm text-muted-foreground">Total Orders</p>
           <p className="text-2xl font-semibold mt-1">{Number(summary.totalOrders)}</p>
         </div>
-        <div className="rounded-lg border bg-white p-4">
+        <div className="rounded-lg border bg-card p-4">
           <p className="text-sm text-muted-foreground">Total Revenue</p>
           <p className="text-2xl font-semibold mt-1">{formatPrice(Number(summary.totalRevenue))}</p>
         </div>
-        <div className="rounded-lg border bg-white p-4">
+        <div className="rounded-lg border bg-card p-4">
           <p className="text-sm text-muted-foreground">Total Profit</p>
           <p
             className={cn('text-2xl font-semibold mt-1', {
@@ -228,24 +228,24 @@ export default function Home(props: Props) {
             {formatPrice(Number(summary.totalProfit))}
           </p>
         </div>
-        <div className="rounded-lg border bg-white p-4">
+        <div className="rounded-lg border bg-card p-4">
           <p className="text-sm text-muted-foreground">Total Discount</p>
           <p className="text-2xl font-semibold mt-1">
             {formatPrice(Number(summary.totalDiscount))}
           </p>
         </div>
-        <div className="rounded-lg border bg-white p-4">
+        <div className="rounded-lg border bg-card p-4">
           <p className="text-sm text-muted-foreground">Total Deposits</p>
           <p className="text-2xl font-semibold mt-1">{formatPrice(Number(summary.totalDeposit))}</p>
         </div>
-        <div className="rounded-lg border bg-white p-4">
+        <div className="rounded-lg border bg-card p-4">
           <p className="text-sm text-muted-foreground">Total Users</p>
           <p className="text-2xl font-semibold mt-1">{Number(summary.totalUsers)}</p>
         </div>
       </div>
 
       <div className="grid gap-4 mt-6 grid-cols-1 lg:grid-cols-3">
-        <div className="rounded-lg border bg-white p-4">
+        <div className="rounded-lg border bg-card p-4">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-semibold">Top Products</p>
@@ -337,7 +337,7 @@ export default function Home(props: Props) {
             </table>
           </div>
         </div>
-        <div className="rounded-lg border bg-white p-4">
+        <div className="rounded-lg border bg-card p-4">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-semibold">Top Categories</p>
@@ -422,7 +422,7 @@ export default function Home(props: Props) {
             </table>
           </div>
         </div>
-        <div className="rounded-lg border bg-white p-4">
+        <div className="rounded-lg border bg-card p-4">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm font-semibold">Top Users</p>
@@ -513,7 +513,7 @@ export default function Home(props: Props) {
       </div>
 
       <div className="grid gap-4 mt-6 grid-cols-1 lg:grid-cols-2">
-        <div className="rounded-lg border bg-white p-4">
+        <div className="rounded-lg border bg-card p-4">
           <h2 className="text-sm font-semibold">Payment Status</h2>
           <div className="mt-3 space-y-2">
             {paymentStatusOrder.map((status) => (
@@ -524,7 +524,7 @@ export default function Home(props: Props) {
             ))}
           </div>
         </div>
-        <div className="rounded-lg border bg-white p-4">
+        <div className="rounded-lg border bg-card p-4">
           <h2 className="text-sm font-semibold">Order Status</h2>
           <div className="mt-3 space-y-2">
             {orderStatusOrder.map((status) => (
@@ -537,7 +537,7 @@ export default function Home(props: Props) {
         </div>
       </div>
 
-      <div className="mt-6 rounded-lg border bg-white p-4">
+      <div className="mt-6 rounded-lg border bg-card p-4">
         <div className="flex items-center justify-between">
           <div>
             <h2 className="text-sm font-semibold">Revenue Trend</h2>
@@ -657,7 +657,7 @@ export default function Home(props: Props) {
         )}
       </div>
 
-      <div className="mt-6 rounded-lg border bg-white p-4">
+      <div className="mt-6 rounded-lg border bg-card p-4">
         <div className="flex items-center justify-between">
           <div>
             <h2 className="text-sm font-semibold">Completed Sales & Profit</h2>
@@ -715,7 +715,7 @@ export default function Home(props: Props) {
         )}
       </div>
 
-      <div className="mt-6 rounded-lg border bg-white p-4">
+      <div className="mt-6 rounded-lg border bg-card p-4">
         <div className="flex items-center justify-between mb-3">
           <h2 className="text-sm font-semibold">Recent Orders</h2>
           <Button variant="outline" size="sm" onClick={() => router.get('/admin/orders')}>

@@ -116,7 +116,7 @@ export default function OrderSlugPostpaidPage({ data }: Props) {
         />
 
         {/* Header Info */}
-        <div className="flex flex-col md:flex-row items-center md:items-start text-center md:text-start gap-4 rounded-xl shadow-xs border border-gray-200 p-4 dark:border-none dark:bg-secondary text-secondary-foreground">
+        <div className="flex flex-col md:flex-row items-center md:items-start text-center md:text-start gap-4 rounded-xl shadow-xs border border-border/70 p-4 dark:bg-secondary text-secondary-foreground">
           <div className="w-32 rounded-lg overflow-hidden">
             <Image src={data.image_url} alt="" className="w-full h-full object-cover" />
           </div>
@@ -147,9 +147,9 @@ export default function OrderSlugPostpaidPage({ data }: Props) {
         </div>
 
         {/* Info Banner */}
-        <div className="bg-blue-50 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-800 rounded-lg p-3 flex gap-2">
-          <InfoIcon className="w-4 h-4 text-blue-600 dark:text-blue-400 shrink-0 mt-0.5" />
-          <p className="text-xs text-blue-800 dark:text-blue-300">
+        <div className="bg-info/10 border border-info/30 rounded-lg p-3 flex gap-2">
+          <InfoIcon className="w-4 h-4 text-info shrink-0 mt-0.5" />
+          <p className="text-xs text-info">
             Pilih kategori dan produk terlebih dahulu, kemudian masukkan data pelanggan untuk
             mengecek tagihan
           </p>
@@ -161,7 +161,7 @@ export default function OrderSlugPostpaidPage({ data }: Props) {
           <div className="space-y-4">
             {/* Dynamic Input Fields Section */}
             {data.input_fields && data.input_fields.length > 0 && (
-              <div className="w-full h-fit rounded-xl shadow-xs border border-gray-200 p-6 dark:border-none dark:bg-secondary/40 text-secondary-foreground relative overflow-hidden">
+              <div className="w-full h-fit rounded-xl shadow-xs border border-border/70 p-6 dark:bg-secondary/40 text-secondary-foreground relative overflow-hidden">
                 <div className="inline-flex gap-3 items-center mb-6">
                   <div className="rounded-xl p-2.5 bg-linear-to-br from-primary to-primary/80 shadow-lg shadow-primary/20 text-primary-foreground">
                     <KeyRoundIcon className="w-5 h-5 text-background" />
@@ -217,7 +217,7 @@ export default function OrderSlugPostpaidPage({ data }: Props) {
               </div>
             )}
 
-            <div className="w-full h-fit rounded-xl shadow-xs border border-gray-200 p-4 dark:border-none dark:bg-secondary text-secondary-foreground">
+            <div className="w-full h-fit rounded-xl shadow-xs border border-border/70 p-4 dark:bg-secondary text-secondary-foreground">
               <h2 className="text-base font-semibold mb-4">Pilih Produk</h2>
 
               <div className="space-y-4">
@@ -283,7 +283,7 @@ export default function OrderSlugPostpaidPage({ data }: Props) {
               productPrice={selectedProduct?.total_price}
             />
 
-            <div className="w-full h-fit rounded-xl shadow-xs border border-gray-200 p-4 dark:border-none dark:bg-secondary text-secondary-foreground">
+            <div className="w-full h-fit rounded-xl shadow-xs border border-border/70 p-4 dark:bg-secondary text-secondary-foreground">
               <h3 className="text-base font-semibold mb-4">Informasi Kontak</h3>
 
               <div className="space-y-4">

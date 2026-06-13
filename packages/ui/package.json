@@ -43,6 +43,7 @@
   "exports": {
     "./postcss.config": "./postcss.config.mjs",
     "./tailwind.config": "./tailwind.config.ts",
+    "./theme.css": "./src/theme.css",
     "./globals.css": "./src/globals.css",
     "./soft-pop.css": "./src/soft-pop.css",
     "./custom-theme-1.css": "./src/theme/custom-theme-1.css",

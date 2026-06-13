@@ -90,7 +90,9 @@ const columns: ColumnDef<Props['productSections'][number]>[] = [
     header: 'Featured',
     cell: ({ row }) => (
       <Badge
-        className={String(row.original.is_featured) === 'true' ? 'bg-blue-600' : 'bg-gray-500'}
+        className={
+          String(row.original.is_featured) === 'true' ? 'bg-primary' : 'bg-muted-foreground'
+        }
       >
         {String(row.original.is_featured) === 'true' ? 'Yes' : 'No'}
       </Badge>

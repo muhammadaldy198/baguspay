@@ -164,7 +164,7 @@ export default function PaymentMethodSelector({
                 ${
                   isBalanceSelected
                     ? 'border-primary bg-primary/5 shadow-lg shadow-primary/10 ring-1 ring-primary/20 dark:bg-primary/10 dark:border-primary/50'
-                    : 'border-border dark:border-border hover:border-primary/50 dark:hover:border-primary/40 dark:bg-card hover:shadow-md'
+                    : 'border-border dark:border-border hover:border-primary/30 dark:hover:border-primary/40 dark:bg-card hover:shadow-md'
                 }
                 ${!isBalanceSufficient ? 'opacity-70 cursor-not-allowed' : ''}
               `}
@@ -186,7 +186,7 @@ export default function PaymentMethodSelector({
                       className="w-10 h-auto object-contain"
                     />
                   </div>
-                  <div className="absolute -top-2 -right-2 w-5 h-5 bg-yellow-500 rounded-full flex items-center justify-center ring-2 ring-background">
+                  <div className="absolute -top-2 -right-2 w-5 h-5 bg-yellow-500 rounded-full flex items-center justify-center ring-1 ring-background">
                     <StarIcon className="w-3 h-3 text-white fill-current" />
                   </div>
                 </div>
@@ -213,8 +213,8 @@ export default function PaymentMethodSelector({
               </div>
             </div>
           ) : (
-            <div className="flex items-center gap-3 p-3 rounded-xl border border-dashed border-border bg-muted/30">
-              <div className="p-2 rounded-lg bg-muted text-muted-foreground shrink-0 border border-border">
+            <div className="flex items-center gap-3 p-3 rounded-xl border border-dashed border-border/70 bg-muted/30">
+              <div className="p-2 rounded-lg bg-muted text-muted-foreground shrink-0 border border-border/70">
                 <LogInIcon className="w-5 h-5" />
               </div>
               <div className="flex-1">
@@ -289,7 +289,7 @@ export default function PaymentMethodSelector({
                           ${
                             selectedPayment?.id === item.id
                               ? 'border-primary bg-primary/5 shadow-lg shadow-primary/10 ring-1 ring-primary/20 dark:bg-primary/10 dark:border-primary/50'
-                              : 'border-border dark:border-border hover:border-primary/50 dark:hover:border-primary/40 dark:bg-card hover:shadow-md'
+                              : 'border-border dark:border-border hover:border-primary/30 dark:hover:border-primary/40 dark:bg-card hover:shadow-md'
                           }
                           ${!itemAvailable ? 'opacity-60 cursor-not-allowed grayscale' : ''}
                         `}
@@ -317,7 +317,7 @@ export default function PaymentMethodSelector({
                                 />
                               </div>
                               {item.is_featured && (
-                                <div className="absolute -top-2 -right-2 w-5 h-5 bg-yellow-500 rounded-full flex items-center justify-center ring-2 ring-background">
+                                <div className="absolute -top-2 -right-2 w-5 h-5 bg-yellow-500 rounded-full flex items-center justify-center ring-1 ring-background">
                                   <StarIcon className="w-3 h-3 text-white fill-current" />
                                 </div>
                               )}
@@ -329,7 +329,7 @@ export default function PaymentMethodSelector({
                                 {item.label && (
                                   <Badge
                                     variant="outline"
-                                    className="text-xs shrink-0 dark:border-gray-500 dark:text-gray-300"
+                                    className="text-xs shrink-0 dark:border-border/70 dark:text-gray-300"
                                   >
                                     {item.label}
                                   </Badge>

@@ -100,7 +100,7 @@ export default function OrderSlugPrepaidPage({
         />
         <div className="grid md:grid-cols-5 gap-6">
           <div className="md:col-span-3 space-y-4">
-            <div className="flex flex-col md:flex-row items-center md:items-start text-center md:text-start gap-4 rounded-xl shadow-xs border border-gray-200 p-4 dark:border-none dark:bg-secondary text-secondary-foreground">
+            <div className="flex flex-col md:flex-row items-center md:items-start text-center md:text-start gap-4 rounded-xl shadow-xs border border-border/70 p-4 dark:bg-secondary text-secondary-foreground">
               <div className="w-32 rounded-lg overflow-hidden">
                 <Image
                   src={loaderData.data?.image_url}
@@ -134,7 +134,7 @@ export default function OrderSlugPrepaidPage({
               </div>
             </div>
             {/* Input Detail Akun */}
-            <div className="w-full h-fit rounded-xl shadow-xs border border-gray-200 p-6 dark:border-none dark:bg-secondary text-secondary-foreground relative overflow-hidden">
+            <div className="w-full h-fit rounded-xl shadow-xs border border-border/70 p-6 dark:bg-secondary text-secondary-foreground relative overflow-hidden">
               <div className="inline-flex gap-3 items-center mb-6">
                 <div className="rounded-xl p-2.5 bg-linear-to-br from-primary to-primary/80 shadow-lg shadow-primary/20 text-primary-foreground">
                   <KeyRoundIcon className="w-5 h-5 text-background" />
@@ -211,7 +211,7 @@ export default function OrderSlugPrepaidPage({
             </div>
 
             {/* Product Section */}
-            <div className="rounded-xl shadow-xs border border-gray-200 p-4 dark:border-none dark:bg-secondary text-secondary-foreground">
+            <div className="rounded-xl shadow-xs border border-border/70 p-4 dark:bg-secondary text-secondary-foreground">
               <Tabs defaultValue={data.product_sub_categories[0]?.name ?? ''} className="w-full">
                 <TabsList>
                   {data.product_sub_categories.map((subCategory: any) => (
@@ -238,8 +238,8 @@ export default function OrderSlugPrepaidPage({
                       h-full group relative rounded-xl border transition-all duration-300 cursor-pointer flex flex-col
                       ${
                         selectedItem?.id === item.id
-                          ? 'border-primary shadow-lg shadow-primary/20 ring-2 ring-primary/20 scale-[1.02]'
-                          : 'border-border dark:border-foreground/20 hover:border-primary/50'
+                          ? 'border-primary/40 shadow-lg shadow-primary/20 ring-1 ring-primary/15 scale-[1.02]'
+                          : 'border-border/70 hover:border-primary/30'
                       }
                       ${
                         !item.is_available
@@ -285,7 +285,7 @@ export default function OrderSlugPrepaidPage({
                               {/* Stock indicator */}
                               {item.stock < 200 && item.is_available && (
                                 <div className="mb-2">
-                                  <span className="text-xs text-orange-600 border-orange-200">
+                                  <span className="text-xs text-orange-600 border-warning/40">
                                     <TrendingDownIcon className="inline w-3 h-3 mr-1" />
                                     Stok Menipis
                                   </span>
@@ -325,7 +325,7 @@ export default function OrderSlugPrepaidPage({
           </div>
           <div className="md:col-span-2">
             <div className="space-y-4 md:sticky md:top-24 ">
-              <div className="w-full h-fit rounded-xl shadow-xs border border-gray-200 p-4 dark:border-none dark:bg-secondary text-secondary-foreground">
+              <div className="w-full h-fit rounded-xl shadow-xs border border-border/70 p-4 dark:bg-secondary text-secondary-foreground">
                 <div className="inline-flex gap-3 items-center mb-2">
                   <div className="rounded-xl p-2.5 bg-linear-to-br from-primary to-primary/80 shadow-lg shadow-primary/20 text-primary-foreground">
                     <ContactIcon className="w-5 h-5 text-background" />
@@ -366,7 +366,7 @@ export default function OrderSlugPrepaidPage({
                       {...form.register('payment_phone_number')}
                       type="text"
                       id="payment_phone_number"
-                      className="w-full mt-2 rounded-full dark:border-none"
+                      className="w-full mt-2 rounded-full"
                       placeholder="628123456789"
                     />
                     {form.formState.errors.payment_phone_number && (

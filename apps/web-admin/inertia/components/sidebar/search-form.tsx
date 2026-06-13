@@ -12,9 +12,9 @@ export function SearchForm({ ...props }: React.ComponentProps<'form'>) {
         <SidebarInput
           id="search"
           placeholder="Search menu..."
-          className="h-9 rounded-md border-border/70 bg-white/90 pl-8 text-sm shadow-[0_1px_2px_rgb(15_23_42/0.06)] focus-visible:border-primary/40 focus-visible:ring-primary/30"
+          className="h-9 rounded-md border-border/70 bg-card/90 pl-8 text-sm shadow-sm focus-visible:border-primary/40 focus-visible:ring-primary/30"
         />
-        <Search className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-slate-400 select-none" />
+        <Search className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground select-none" />
       </div>
     </form>
   )

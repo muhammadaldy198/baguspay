@@ -240,21 +240,25 @@ export default function EditOfferFlashSale({ offer }: Props) {
           </TabsList>
           <TabsContent value="users">
             {data.is_all_users ? (
-              <p className="text-sm text-gray-500">This offer is available for all users.</p>
+              <p className="text-sm text-muted-foreground">
+                This offer is available for all users.
+              </p>
             ) : (
               <OfferUserSection offerId={offer.id} />
             )}
           </TabsContent>
           <TabsContent value="products">
             {data.is_all_products ? (
-              <p className="text-sm text-gray-500">This offer is available for all products.</p>
+              <p className="text-sm text-muted-foreground">
+                This offer is available for all products.
+              </p>
             ) : (
               <OfferProductSection offerId={offer.id} />
             )}
           </TabsContent>
           <TabsContent value="payments">
             {data.is_all_payment_methods ? (
-              <p className="text-sm text-gray-500">
+              <p className="text-sm text-muted-foreground">
                 This offer is available for all payment methods.
               </p>
             ) : (

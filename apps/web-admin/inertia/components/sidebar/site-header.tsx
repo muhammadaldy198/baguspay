@@ -25,7 +25,7 @@ export function SiteHeader() {
     <header className="sticky top-0 z-50 flex w-full items-center border-b border-border/70 bg-background/95 backdrop-blur-sm">
       <div className="flex h-(--header-height) w-full items-center gap-3 px-4 sm:px-6 lg:px-8">
         <Button
-          className="h-9 w-9 rounded-md border border-border bg-white text-slate-700 shadow-[0_1px_1px_rgb(15_23_42/0.05)] hover:bg-primary/10 hover:text-primary"
+          className="h-9 w-9 rounded-md border border-border bg-card text-foreground shadow-sm hover:bg-primary/10 hover:text-primary"
           variant="ghost"
           size="icon"
           onClick={toggleSidebar}
@@ -33,10 +33,10 @@ export function SiteHeader() {
           <PanelLeft className="size-4" />
         </Button>
         <div className="min-w-0 flex-1">
-          <p className="truncate text-sm font-semibold text-slate-900 sm:text-[15px]">
+          <p className="truncate text-sm font-semibold text-foreground sm:text-[15px]">
             {toTitleCase(pageName)}
           </p>
-          <div className="flex items-center gap-1 text-xs text-slate-500">
+          <div className="flex items-center gap-1 text-xs text-muted-foreground">
             <span className="truncate">Baguspay Admin</span>
             <Dot className="size-3" />
             <span className="truncate capitalize">{toTitleCase(sectionName)}</span>

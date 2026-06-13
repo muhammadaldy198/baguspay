@@ -76,10 +76,10 @@ const columns: ColumnDef<Props['deposits'][number]>[] = [
           badgeColor = 'text-red-500 bg-red-100'
           break
         case DepositStatus.CANCELED:
-          badgeColor = 'text-gray-500 bg-gray-100'
+          badgeColor = 'text-muted-foreground bg-muted'
           break
         case DepositStatus.EXPIRED:
-          badgeColor = 'text-gray-500 bg-gray-100'
+          badgeColor = 'text-muted-foreground bg-muted'
           break
       }
 

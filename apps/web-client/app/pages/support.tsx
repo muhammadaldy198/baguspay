@@ -336,14 +336,14 @@ function StatusItem({
 }) {
   const toneClass =
     tone === 'ok'
-      ? 'bg-green-500/10 text-green-600 border-green-500/20'
+      ? 'bg-success/10 text-success border-success/30'
       : tone === 'warn'
-        ? 'bg-yellow-500/10 text-yellow-700 border-yellow-500/20'
-        : 'bg-red-500/10 text-red-600 border-red-500/20'
+        ? 'bg-warning/10 text-warning border-warning/40'
+        : 'bg-red-500/10 text-red-600 border-destructive/30'
   return (
-    <div className="rounded-xl border border-border bg-card p-4 flex items-center justify-between">
+    <div className="rounded-xl border border-border/70 bg-card p-4 flex items-center justify-between">
       <div className="flex items-center gap-2">
-        <div className="rounded-md border border-border bg-background p-1.5 text-foreground/90">
+        <div className="rounded-md border border-border/70 bg-background p-1.5 text-foreground/90">
           {icon}
         </div>
         <span className="text-sm text-foreground">{label}</span>

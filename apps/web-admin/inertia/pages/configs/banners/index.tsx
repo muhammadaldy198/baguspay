@@ -324,7 +324,7 @@ export default function BannersIndex({ banners }: Props) {
         accessorKey: 'is_available',
         header: 'Status',
         cell: ({ row }) => (
-          <Badge className={row.original.is_available ? 'bg-green-600' : 'bg-gray-500'}>
+          <Badge className={row.original.is_available ? 'bg-green-600' : 'bg-muted-foreground'}>
             {row.original.is_available ? 'Active' : 'Hidden'}
           </Badge>
         ),

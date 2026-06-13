@@ -199,7 +199,7 @@ export default function Contact() {
             <Label htmlFor="message">Pesan</Label>
             <textarea
               id="message"
-              className="min-h-32 w-full resize-y rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+              className="min-h-32 w-full resize-y rounded-md border border-input bg-background px-3 py-2 text-sm placeholder:text-muted-foreground focus-visible:border-primary/30 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary/15"
               placeholder="Jelaskan kebutuhan atau kendala Anda..."
               value={message}
               onChange={(e) => setMessage(e.target.value)}

@@ -141,9 +141,8 @@ export default function DetailDepositModal(props: Props) {
                         detailDeposit.data?.data.status === DepositStatus.PENDING,
                       'bg-green-200 text-green-500':
                         detailDeposit.data?.data.status === DepositStatus.COMPLETED,
-                      'bg-gray-200 text-gray-500':
-                        detailDeposit.data?.data.status === DepositStatus.EXPIRED,
-                      'bg-slate-200 text-slate-500':
+                      'bg-muted text-muted-foreground':
+                        detailDeposit.data?.data.status === DepositStatus.EXPIRED ||
                         detailDeposit.data?.data.status === DepositStatus.CANCELED,
                     })}
                   >
@@ -169,7 +168,7 @@ export default function DetailDepositModal(props: Props) {
                 </div>
                 <div>
                   <Label className="mb-1">Pay URL</Label>
-                  <div className="truncate text-blue-600 underline">
+                  <div className="truncate text-primary underline">
                     {detailDeposit.data?.data.pay_url ? (
                       <a
                         href={detailDeposit.data?.data.pay_url}

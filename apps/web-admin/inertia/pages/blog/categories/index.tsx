@@ -138,7 +138,7 @@ export default function ArticleCategoriesIndex(props: Props) {
         </Button>
       </div>
 
-      <div className="mt-6 rounded-lg border bg-white">
+      <div className="mt-6 rounded-lg border bg-card">
         <Table>
           <TableHeader>
             <TableRow>

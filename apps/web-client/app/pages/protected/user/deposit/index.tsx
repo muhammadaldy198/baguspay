@@ -234,7 +234,7 @@ export default function UserDeposit() {
             },
             validate: validateAmount,
           })}
-          className={`h-12 text-lg ${errors.amount ? 'border-red-500 focus:border-red-500' : ''}`}
+          className={`h-12 text-lg ${errors.amount ? 'border-destructive/50 focus:border-destructive/50' : ''}`}
         />
 
         {/* Show min/max info when payment method is selected */}
@@ -262,7 +262,7 @@ export default function UserDeposit() {
             {...register('phone_number', {
               validate: validatePhoneNumber,
             })}
-            className={`h-12 ${errors.phone_number ? 'border-red-500 focus:border-red-500' : ''}`}
+            className={`h-12 ${errors.phone_number ? 'border-destructive/50 focus:border-destructive/50' : ''}`}
           />
 
           {/* Show validation error */}
@@ -305,7 +305,7 @@ export default function UserDeposit() {
 
       {/* Summary */}
       {selectedPaymentMethod && watchedAmount && watchedAmount > 0 && (
-        <div className="rounded-xl border border-gray-200 p-6 bg-gray-50 dark:border-gray-700 dark:bg-gray-800">
+        <div className="rounded-xl border border-border/70 p-6 bg-gray-50 dark:border-border/70 dark:bg-gray-800">
           <h3 className="text-lg font-semibold mb-4 text-gray-900 dark:text-white">
             Payment Summary
           </h3>

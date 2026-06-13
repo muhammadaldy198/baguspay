@@ -133,10 +133,10 @@ const columns: ColumnDef<Props['orders'][number]>[] = [
           badgeColor = 'text-red-500 bg-red-100'
           break
         case PaymentStatus.CANCELLED:
-          badgeColor = 'text-gray-500 bg-gray-100'
+          badgeColor = 'text-muted-foreground bg-muted'
           break
         case PaymentStatus.EXPIRED:
-          badgeColor = 'text-gray-500 bg-gray-100'
+          badgeColor = 'text-muted-foreground bg-muted'
           break
       }
 
@@ -172,10 +172,10 @@ const columns: ColumnDef<Props['orders'][number]>[] = [
           badgeColor = 'text-red-500 bg-red-100'
           break
         case OrderStatus.CANCELLED:
-          badgeColor = 'text-gray-500 bg-gray-100'
+          badgeColor = 'text-muted-foreground bg-muted'
           break
         case OrderStatus.NONE:
-          badgeColor = 'text-gray-500 bg-gray-100'
+          badgeColor = 'text-muted-foreground bg-muted'
           break
       }
 
@@ -211,7 +211,7 @@ const columns: ColumnDef<Props['orders'][number]>[] = [
           badgeColor = 'text-red-500 bg-red-100'
           break
         case RefundStatus.NONE:
-          badgeColor = 'text-gray-500 bg-gray-100'
+          badgeColor = 'text-muted-foreground bg-muted'
           break
       }
 

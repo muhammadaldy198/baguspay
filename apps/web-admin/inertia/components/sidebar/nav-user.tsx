@@ -63,7 +63,7 @@ export function NavUser({
           <DropdownMenuTrigger asChild>
             <SidebarMenuButton
               size="lg"
-              className="rounded-md border border-border/70 bg-white/85 shadow-[0_1px_2px_rgb(15_23_42/0.06)] data-[state=open]:bg-primary/10 data-[state=open]:text-primary"
+              className="rounded-md border border-border/70 bg-card/85 shadow-sm data-[state=open]:bg-primary/10 data-[state=open]:text-primary"
             >
               <Avatar className="h-8 w-8 rounded-md">
                 <AvatarImage src={user.avatar} alt={user.name} />
@@ -73,7 +73,7 @@ export function NavUser({
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-medium">{data.data?.name}</span>
-                <span className="truncate text-xs text-slate-500">{data.data?.email}</span>
+                <span className="truncate text-xs text-muted-foreground">{data.data?.email}</span>
               </div>
               <ChevronsUpDown className="ml-auto size-4" />
             </SidebarMenuButton>
@@ -94,7 +94,7 @@ export function NavUser({
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-medium">{user.name}</span>
-                  <span className="truncate text-xs text-slate-500">{user.email}</span>
+                  <span className="truncate text-xs text-muted-foreground">{user.email}</span>
                 </div>
               </div>
             </DropdownMenuLabel>

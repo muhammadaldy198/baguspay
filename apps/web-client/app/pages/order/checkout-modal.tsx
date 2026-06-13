@@ -375,14 +375,14 @@ export default function CheckoutModal({ data }: Props) {
                           if (Array.isArray(value)) {
                             return (
                               <div key={key} className="pt-2">
-                                <span className="text-sm font-medium text-slate-700 dark:text-slate-300 mb-2 block border-b pb-1 dark:border-slate-700">
+                                <span className="text-sm font-medium text-slate-700 dark:text-slate-300 mb-2 block border-b pb-1 dark:border-border/70">
                                   {formattedKey}
                                 </span>
                                 <div className="space-y-2">
                                   {value.map((item) => (
                                     <div
                                       key={randId}
-                                      className="bg-slate-50 dark:bg-slate-800/50 rounded-md p-3 text-sm border dark:border-slate-800"
+                                      className="bg-slate-50 dark:bg-slate-800/50 rounded-md p-3 text-sm border dark:border-border/70"
                                     >
                                       {Object.entries(item).map(([iKey, iValue]) => (
                                         <div
@@ -407,10 +407,10 @@ export default function CheckoutModal({ data }: Props) {
                           if (typeof value === 'object' && value !== null) {
                             return (
                               <div key={key} className="pt-2">
-                                <span className="text-sm font-medium text-slate-700 dark:text-slate-300 mb-2 block border-b pb-1 dark:border-slate-700">
+                                <span className="text-sm font-medium text-slate-700 dark:text-slate-300 mb-2 block border-b pb-1 dark:border-border/70">
                                   {formattedKey}
                                 </span>
-                                <div className="bg-slate-50 dark:bg-slate-800/50 rounded-md p-3 text-sm border dark:border-slate-800 space-y-2">
+                                <div className="bg-slate-50 dark:bg-slate-800/50 rounded-md p-3 text-sm border dark:border-border/70 space-y-2">
                                   {Object.entries(value).map(([oKey, oValue]) => (
                                     <div
                                       key={oKey}
@@ -432,7 +432,7 @@ export default function CheckoutModal({ data }: Props) {
                           return (
                             <div
                               key={key}
-                              className="flex justify-between text-sm items-start py-1.5 border-b border-slate-100 dark:border-slate-800 last:border-0"
+                              className="flex justify-between text-sm items-start py-1.5 border-b border-border/50 dark:border-border/70 last:border-0"
                             >
                               <span className="text-slate-600 dark:text-slate-400 mr-2 mt-0.5 whitespace-nowrap">
                                 {formattedKey}
@@ -461,7 +461,7 @@ export default function CheckoutModal({ data }: Props) {
                 ))}
             </div>
 
-            <hr className="border-slate-300" />
+            <hr className="border-border/70" />
 
             {/* Payment Method Selection */}
             <div className="space-y-3">
@@ -489,7 +489,7 @@ export default function CheckoutModal({ data }: Props) {
                     type="button"
                     onClick={() => setIsPaymentSelectorOpen(true)}
                     variant="outline"
-                    className="w-full justify-between p-3 h-auto border-dashed border-2 hover:border-primary/50 transition-all duration-200"
+                    className="w-full justify-between p-3 h-auto border-dashed border-border/70 hover:border-primary/30 transition-[color,background-color,border-color] duration-200"
                   >
                     <div className="flex items-center gap-3">
                       <img
@@ -555,7 +555,7 @@ export default function CheckoutModal({ data }: Props) {
               )}
             </div>
 
-            <hr className="border-slate-300" />
+            <hr className="border-border/70" />
 
             {/* Price Breakdown - Simple */}
             <div className="space-y-3">
@@ -585,7 +585,7 @@ export default function CheckoutModal({ data }: Props) {
                 </div>
               ))}
 
-              <hr className="border-slate-300" />
+              <hr className="border-border/70" />
 
               <div className="flex justify-between items-center pt-2">
                 <span className="font-semibold">Total:</span>

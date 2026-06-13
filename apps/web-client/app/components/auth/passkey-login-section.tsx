@@ -39,7 +39,7 @@ export function PasskeyLoginSection({
     <div className="space-y-3">
       <div className="relative">
         <div className="absolute inset-0 flex items-center">
-          <span className="w-full border-t border-gray-300" />
+          <span className="w-full border-t border-border/70" />
         </div>
         <div className="relative flex justify-center text-sm">
           <span className="px-2 bg-background text-muted-foreground">{t('or', 'atau')}</span>
@@ -50,7 +50,7 @@ export function PasskeyLoginSection({
         type="button"
         variant="outline"
         size="lg"
-        className="w-full border-dashed rounded-2xl"
+        className="w-full border-dashed border-border/70 rounded-2xl hover:border-primary/30"
         disabled={isDisabled || isLoading}
         onClick={() => void handlePasskeyLogin()}
         title="Use your device's biometric or security key to login"

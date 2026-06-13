@@ -58,7 +58,7 @@ const columns: ColumnDef<Props['orders'][number]>[] = [
           className={cn(
             'inline-flex items-center px-2 py-1 rounded text-xs font-medium',
             billingType === ProductBillingType.PREPAID
-              ? 'text-blue-500 bg-blue-100'
+              ? 'text-primary bg-primary/10'
               : 'text-purple-500 bg-purple-100',
           )}
         >
@@ -152,10 +152,10 @@ const columns: ColumnDef<Props['orders'][number]>[] = [
           badgeColor = 'text-red-500 bg-red-100'
           break
         case PaymentStatus.CANCELLED:
-          badgeColor = 'text-gray-500 bg-gray-100'
+          badgeColor = 'text-muted-foreground bg-muted'
           break
         case PaymentStatus.EXPIRED:
-          badgeColor = 'text-gray-500 bg-gray-100'
+          badgeColor = 'text-muted-foreground bg-muted'
           break
       }
 
@@ -191,10 +191,10 @@ const columns: ColumnDef<Props['orders'][number]>[] = [
           badgeColor = 'text-red-500 bg-red-100'
           break
         case OrderStatus.CANCELLED:
-          badgeColor = 'text-gray-500 bg-gray-100'
+          badgeColor = 'text-muted-foreground bg-muted'
           break
         case OrderStatus.NONE:
-          badgeColor = 'text-gray-500 bg-gray-100'
+          badgeColor = 'text-muted-foreground bg-muted'
           break
       }
 
@@ -230,7 +230,7 @@ const columns: ColumnDef<Props['orders'][number]>[] = [
           badgeColor = 'text-red-500 bg-red-100'
           break
         case RefundStatus.NONE:
-          badgeColor = 'text-gray-500 bg-gray-100'
+          badgeColor = 'text-muted-foreground bg-muted'
           break
       }
 

@@ -103,7 +103,7 @@ export default function PageForm(props: Props) {
       </div>
 
       <form onSubmit={handleSubmit} className="mt-6 space-y-6">
-        <div className="rounded-lg border bg-white p-6 space-y-4">
+        <div className="rounded-lg border bg-card p-6 space-y-4">
           <h2 className="text-sm font-semibold">Informasi Halaman</h2>
           <Separator />
 
@@ -165,7 +165,7 @@ export default function PageForm(props: Props) {
           </div>
         </div>
 
-        <div className="rounded-lg border bg-white p-6 space-y-4">
+        <div className="rounded-lg border bg-card p-6 space-y-4">
           <h2 className="text-sm font-semibold">Konten Halaman</h2>
           <Separator />
 

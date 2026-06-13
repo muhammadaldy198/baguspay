@@ -79,7 +79,7 @@ export default function GeneralSettings(props: Props) {
       </div>
 
       <form onSubmit={handleSubmit} className="mt-6 space-y-6">
-        <div className="rounded-lg border bg-white p-6 space-y-4">
+        <div className="rounded-lg border bg-card p-6 space-y-4">
           <h2 className="text-sm font-semibold">Maintenance</h2>
           <Separator />
           <div className="flex items-center justify-between">
@@ -107,7 +107,7 @@ export default function GeneralSettings(props: Props) {
           </div>
         </div>
 
-        <div className="rounded-lg border bg-white p-6 space-y-4">
+        <div className="rounded-lg border bg-card p-6 space-y-4">
           <h2 className="text-sm font-semibold">App Information</h2>
           <Separator />
           <div className="grid gap-4 md:grid-cols-2">
@@ -157,7 +157,7 @@ export default function GeneralSettings(props: Props) {
           </div>
         </div>
 
-        <div className="rounded-lg border bg-white p-6 space-y-4">
+        <div className="rounded-lg border bg-card p-6 space-y-4">
           <h2 className="text-sm font-semibold">App Download Links</h2>
           <Separator />
           <div className="grid gap-4 md:grid-cols-2">
@@ -180,7 +180,7 @@ export default function GeneralSettings(props: Props) {
           </div>
         </div>
 
-        <div className="rounded-lg border bg-white p-6 space-y-4">
+        <div className="rounded-lg border bg-card p-6 space-y-4">
           <h2 className="text-sm font-semibold">Contact Info</h2>
           <Separator />
           <div className="grid gap-4 md:grid-cols-2">
@@ -215,7 +215,7 @@ export default function GeneralSettings(props: Props) {
           </div>
         </div>
 
-        <div className="rounded-lg border bg-white p-6 space-y-4">
+        <div className="rounded-lg border bg-card p-6 space-y-4">
           <h2 className="text-sm font-semibold">Social Media</h2>
           <Separator />
           <div className="grid gap-4 md:grid-cols-2">
@@ -324,7 +324,7 @@ export default function GeneralSettings(props: Props) {
           </div>
         </div>
 
-        <div className="rounded-lg border bg-white p-6 space-y-4">
+        <div className="rounded-lg border bg-card p-6 space-y-4">
           <h2 className="text-sm font-semibold">Feature Flags</h2>
           <Separator />
           <div className="grid gap-3 md:grid-cols-2">

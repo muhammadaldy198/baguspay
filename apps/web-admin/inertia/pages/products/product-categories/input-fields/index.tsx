@@ -36,7 +36,7 @@ export default function SectionInputFields({ productCategory }: Props) {
             <div key={input.id} className="border p-2 rounded-lg flex justify-between items-center">
               <div>
                 <h4 className="font-semibold text-sm">{input.input_field.identifier}</h4>
-                <p className="text-sm text-gray-500">{input.input_field.type}</p>
+                <p className="text-sm text-muted-foreground">{input.input_field.type}</p>
               </div>
               <Button
                 variant="destructive"

@@ -143,7 +143,7 @@ export default function DepositDetail({ params }: Route.ComponentProps) {
   if (depositDetail.isError) {
     return (
       <div className="w-full md:max-w-7xl mx-auto px-6 py-8">
-        <div className="rounded-xl shadow-xs border border-red-200 p-8 dark:border-red-800/30 dark:bg-red-800/10 text-center">
+        <div className="rounded-xl shadow-xs border border-destructive/40 p-8 dark:border-destructive/40 dark:bg-red-800/10 text-center">
           <XCircleIcon className="w-16 h-16 text-destructive mx-auto mb-4" />
           <h2 className="text-xl font-semibold mb-2">Gagal Memuat Detail Deposit</h2>
           <p className="text-muted-foreground mb-4">
@@ -193,7 +193,7 @@ export default function DepositDetail({ params }: Route.ComponentProps) {
 
       {data.status === DepositStatus.PENDING && (
         <section id="payment-countdown">
-          <div className="rounded-xl border border-orange-200 bg-orange-50 p-4 dark:border-orange-800/30 dark:bg-orange-800/10">
+          <div className="rounded-xl border border-warning/40 bg-orange-50 p-4 dark:border-warning/40 dark:bg-orange-800/10">
             <div className="flex items-center gap-2 mb-2">
               <ClockIcon className="w-5 h-5 text-orange-600" />
               <h3 className="font-semibold text-orange-800 dark:text-orange-400">
@@ -210,7 +210,7 @@ export default function DepositDetail({ params }: Route.ComponentProps) {
       <div className="grid md:grid-cols-5 gap-6">
         <div className="md:col-span-3 space-y-4">
           {/* Deposit Information Card */}
-          <div className="rounded-xl shadow-xs border border-gray-200 p-4 dark:border-none dark:bg-secondary text-secondary-foreground">
+          <div className="rounded-xl shadow-xs border border-border/70 p-4 dark:bg-secondary text-secondary-foreground">
             <div className="inline-flex gap-2 items-center mb-4">
               <div className="rounded-full p-2 bg-primary">
                 <WalletIcon className="w-4 h-4 text-primary-foreground" />
@@ -242,7 +242,7 @@ export default function DepositDetail({ params }: Route.ComponentProps) {
           </div>
 
           {/* Payment Method Information Card */}
-          <div className="rounded-xl shadow-xs border border-gray-200 p-4 dark:border-none dark:bg-secondary text-secondary-foreground">
+          <div className="rounded-xl shadow-xs border border-border/70 p-4 dark:bg-secondary text-secondary-foreground">
             <div className="inline-flex gap-2 items-center mb-4">
               <div className="rounded-full p-2 bg-primary">
                 <CreditCardIcon className="w-4 h-4 text-primary-foreground" />
@@ -285,7 +285,7 @@ export default function DepositDetail({ params }: Route.ComponentProps) {
 
               {/* Payment Details */}
 
-              <div className="space-y-3 p-3 bg-slate-100 dark:bg-blue-900/20 rounded-lg border border-slate-200 dark:border-blue-800/30">
+              <div className="space-y-3 p-3 bg-slate-100 dark:bg-blue-900/20 rounded-lg border border-border/70 dark:border-info/40">
                 {data.payment_method.type === PaymentMethodType.QR_CODE && (
                   <div className="text-center">
                     <p className="text-xs text-muted-foreground mb-2">
@@ -330,7 +330,7 @@ export default function DepositDetail({ params }: Route.ComponentProps) {
 
               {/* Instructions */}
               {data.payment_method.instruction && (
-                <div className="p-3 bg-amber-50 dark:bg-amber-900/20 rounded-lg border border-amber-200 dark:border-amber-800/30">
+                <div className="p-3 bg-amber-50 dark:bg-amber-900/20 rounded-lg border border-warning/40 dark:border-warning/40">
                   <h4 className="font-semibold text-amber-800 dark:text-amber-400 mb-2">
                     Cara Pembayaran
                   </h4>
@@ -350,7 +350,7 @@ export default function DepositDetail({ params }: Route.ComponentProps) {
         <div className="md:col-span-2">
           <div className="space-y-4 md:sticky md:top-24">
             {/* Amount Summary Card */}
-            <div className="rounded-xl shadow-xs border border-gray-200 p-4 dark:border-none dark:bg-secondary text-secondary-foreground">
+            <div className="rounded-xl shadow-xs border border-border/70 p-4 dark:bg-secondary text-secondary-foreground">
               <div className="inline-flex gap-2 items-center mb-4">
                 <div className="rounded-full p-2 bg-primary">
                   <WalletIcon className="w-4 h-4 text-primary-foreground" />
@@ -381,7 +381,7 @@ export default function DepositDetail({ params }: Route.ComponentProps) {
             </div>
 
             {/* Timestamp Information */}
-            <div className="rounded-xl shadow-xs border border-gray-200 p-4 dark:border-none dark:bg-secondary text-secondary-foreground">
+            <div className="rounded-xl shadow-xs border border-border/70 p-4 dark:bg-secondary text-secondary-foreground">
               <div className="inline-flex gap-2 items-center mb-4">
                 <div className="rounded-full p-2 bg-primary">
                   <AlertCircleIcon className="w-4 h-4 text-primary-foreground" />
@@ -417,7 +417,7 @@ export default function DepositDetail({ params }: Route.ComponentProps) {
                   onClick={handleChatCS}
                   variant="outline"
                   size="sm"
-                  className="flex-1 w-full gap-2 bg-green-50 hover:bg-green-100 text-green-700 border-green-200 dark:bg-green-900/20 dark:hover:bg-green-900/30 dark:text-green-400 dark:border-green-800/30"
+                  className="flex-1 w-full gap-2 bg-green-50 hover:bg-green-100 text-green-700 border-success/30 dark:bg-green-900/20 dark:hover:bg-green-900/30 dark:text-green-400 dark:border-success/40"
                 >
                   <MessageCircleIcon className="w-4 h-4" />
                   Butuh Bantuan?

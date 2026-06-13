@@ -30,7 +30,7 @@ export default function IsAvailable({
   }
 
   if (isLoading) {
-    return <LoaderIcon className="animate-spin h-8 w-8 text-gray-500" />
+    return <LoaderIcon className="animate-spin h-8 w-8 text-muted-foreground" />
   }
 
   return (
