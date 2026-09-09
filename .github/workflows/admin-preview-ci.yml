@@ -73,7 +73,7 @@ jobs:
 
       - name: Check login page
         run: |
-          pnpm --filter web-admin start > /tmp/baguspay-admin.log 2>&1 &
+          (cd apps/web-admin/build && node bin/server.js) > /tmp/baguspay-admin.log 2>&1 &
           server_pid=$!
           trap 'kill "$server_pid"' EXIT
           for attempt in $(seq 1 30); do

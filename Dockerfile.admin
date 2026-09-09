@@ -44,4 +44,4 @@ ENV PORT=10000
 
 EXPOSE 10000
 
-CMD ["sh", "-c", "pnpm --filter @baguspay/db db:migrate && pnpm --filter @baguspay/db db:seed && pnpm --filter web-admin start"]
+CMD ["sh", "-c", "pnpm --filter @baguspay/db db:migrate && pnpm --filter @baguspay/db db:seed && cd apps/web-admin/build && node bin/server.js"]
