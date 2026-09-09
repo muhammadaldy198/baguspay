@@ -13,8 +13,8 @@ export class DigiflazzService {
     this.apiClient = axios.create({
       baseURL: 'https://api.digiflazz.com/v1',
     })
-    this.username = env.get('DIGIFLAZZ_USERNAME')
-    this.apiKey = env.get('DIGIFLAZZ_API_KEY')
+    this.username = env.get('DIGIFLAZZ_USERNAME', '')
+    this.apiKey = env.get('DIGIFLAZZ_API_KEY', '')
   }
 
   public async checkSaldo() {

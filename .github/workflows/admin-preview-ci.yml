@@ -1,0 +1,86 @@
+name: Admin Preview CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  verify-admin:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: baguspay
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d baguspay"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+    env:
+      NODE_ENV: production
+      PORT: 3333
+      HOST: 0.0.0.0
+      LOG_LEVEL: info
+      APP_NAME: Baguspay Admin Preview CI
+      APP_KEY: ci-only-app-key-not-used-in-production
+      JWT_SECRET: ci-only-jwt-secret-not-used-in-production
+      SESSION_DRIVER: cookie
+      DATABASE_URL: postgresql://postgres:postgres@localhost:5432/baguspay
+      DRIVE_DISK: fs
+      VITE_S3_URL: /uploads
+      PREVIEW_ADMIN_EMAIL: admin@example.test
+      PREVIEW_ADMIN_PASSWORD: AdminPreview123!
+      PREVIEW_ADMIN_NAME: Preview Admin
+      PREVIEW_ADMIN_PHONE: 080000000000
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.26.2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build admin and workspace dependencies
+        run: pnpm --filter web-admin... run build
+
+      - name: Check admin types
+        run: pnpm --filter web-admin run typecheck
+
+      - name: Apply database migrations
+        run: pnpm --filter @baguspay/db run db:migrate
+
+      - name: Seed preview database
+        run: pnpm --filter @baguspay/db run db:seed
+
+      - name: Check login page
+        run: |
+          (cd apps/web-admin/build && node bin/server.js) > /tmp/baguspay-admin.log 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid"' EXIT
+          for attempt in $(seq 1 30); do
+            if curl --fail --silent http://127.0.0.1:3333/auth/login > /dev/null; then
+              exit 0
+            fi
+            sleep 1
+          done
+          cat /tmp/baguspay-admin.log
+          exit 1

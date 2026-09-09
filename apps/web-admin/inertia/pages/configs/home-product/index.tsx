@@ -46,7 +46,7 @@ const columns: ColumnDef<Props['productSections'][number]>[] = [
         {row.original.image_url ? (
           <img
             className="object-contain w-full h-full"
-            src={`${import.meta.env.VITE_S3_URL}${row.original.image_url}`}
+            src={`${import.meta.env.VITE_S3_URL || '/uploads'}${row.original.image_url}`}
             alt={row.original.name}
           />
         ) : (

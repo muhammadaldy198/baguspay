@@ -184,7 +184,7 @@ export function SimpleEditor({
   const [isMediaOpen, setIsMediaOpen] = React.useState(false)
   const toolbarRef = React.useRef<HTMLDivElement>(null)
   const lastValueRef = React.useRef<string>('')
-  const s3BaseUrl = import.meta.env.VITE_S3_URL || ''
+  const s3BaseUrl = import.meta.env.VITE_S3_URL || '/uploads'
 
   const resolveSrc = React.useCallback((src: string) => {
     if (!src) return src

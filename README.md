@@ -197,4 +197,25 @@ node ace serve --watch
 
 ---
 
+## 👀 Preview Seluruh Admin Panel
+
+Fork ini menyediakan Blueprint Render untuk menjalankan panel admin lengkap bersama PostgreSQL.
+Migrasi dan seed dijalankan otomatis saat service dimulai.
+
+[Deploy admin panel ke Render](https://dashboard.render.com/blueprint/new?repo=https://github.com/muhammadaldy198/baguspay)
+
+Saat Render meminta nilai environment, isi:
+
+- `PREVIEW_ADMIN_EMAIL`: email login pilihan Anda
+- `PREVIEW_ADMIN_PASSWORD`: password pilihan Anda, minimal 12 karakter
+
+Setelah deploy selesai, buka `/auth/login`. Login akan diarahkan ke `/admin`, dan seluruh
+menu admin dapat dibuka. Mode preview memakai penyimpanan file lokal sementara; kredensial
+Digiflazz dan S3 tidak diperlukan untuk meninjau panel.
+
+> Render Free cocok untuk preview. Database gratisnya memiliki batas masa aktif, jadi jangan
+> gunakan deployment ini sebagai toko produksi tanpa mengganti paket dan konfigurasi storage.
+
+---
+
 > 💡 _"Baguspay — top up game & PPOB semudah klik!"_

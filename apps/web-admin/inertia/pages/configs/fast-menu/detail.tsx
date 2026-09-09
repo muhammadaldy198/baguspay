@@ -99,7 +99,7 @@ export default function ProductSectionDetail({ productSection, productOnProductS
                 <div>
                   <p className="text-xs text-muted-foreground mb-2">Image</p>
                   <img
-                    src={`${import.meta.env.VITE_S3_URL}${productSection.image_url}`}
+                    src={`${import.meta.env.VITE_S3_URL || '/uploads'}${productSection.image_url}`}
                     alt={productSection.name}
                     className="w-20 h-20 rounded-lg object-cover border"
                   />

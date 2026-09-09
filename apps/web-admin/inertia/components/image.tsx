@@ -12,7 +12,7 @@ function resolveSrc(src: string, baseUrl: string) {
   return `${base}/${src}`
 }
 
-const _baseUrl = import.meta.env.VITE_S3_URL
+const _baseUrl = import.meta.env.VITE_S3_URL || '/uploads'
 
 export default function Image({ src, baseUrl = _baseUrl, ...rest }: ImageProps) {
   const finalSrc =
