@@ -14,6 +14,7 @@ import { Env } from '@adonisjs/core/env'
 export default await Env.create(new URL('../', import.meta.url), {
   NODE_ENV: Env.schema.enum(['development', 'production', 'test'] as const),
   PORT: Env.schema.number(),
+  APP_NAME: Env.schema.string.optional(),
   APP_KEY: Env.schema.string(),
   JWT_SECRET: Env.schema.string(),
   HOST: Env.schema.string({ format: 'host' }),
@@ -28,23 +29,17 @@ export default await Env.create(new URL('../', import.meta.url), {
 
   DATABASE_URL: Env.schema.string(),
 
-  S3_REGION: Env.schema.string(),
-  S3_ACCESS_KEY_ID: Env.schema.string(),
-  S3_SECRET_ACCESS_KEY: Env.schema.string(),
-  S3_BUCKET_NAME: Env.schema.string(),
-  S3_URL: Env.schema.string(),
-
   /*
   |----------------------------------------------------------
   | Variables for configuring the drive package
   |----------------------------------------------------------
   */
-  DRIVE_DISK: Env.schema.enum(['s3', 'spaces', 'r2'] as const),
-  AWS_ACCESS_KEY_ID: Env.schema.string(),
-  AWS_SECRET_ACCESS_KEY: Env.schema.string(),
-  AWS_REGION: Env.schema.string(),
-  S3_BUCKET: Env.schema.string(),
-  S3_ENDPOINT: Env.schema.string(),
+  DRIVE_DISK: Env.schema.enum(['fs', 's3'] as const),
+  AWS_ACCESS_KEY_ID: Env.schema.string.optional(),
+  AWS_SECRET_ACCESS_KEY: Env.schema.string.optional(),
+  AWS_REGION: Env.schema.string.optional(),
+  S3_BUCKET: Env.schema.string.optional(),
+  S3_ENDPOINT: Env.schema.string.optional(),
 
   // SPACES_KEY: Env.schema.string(),
   // SPACES_SECRET: Env.schema.string(),
@@ -56,9 +51,9 @@ export default await Env.create(new URL('../', import.meta.url), {
   // R2_BUCKET: Env.schema.string(),
   // R2_ENDPOINT: Env.schema.string(),
 
-  VITE_S3_URL: Env.schema.string({ format: 'url' }),
+  VITE_S3_URL: Env.schema.string.optional(),
 
-  DIGIFLAZZ_API_KEY: Env.schema.string(),
-  DIGIFLAZZ_USERNAME: Env.schema.string(),
-  DIGIFLAZZ_CALLBACK_SECRET: Env.schema.string(),
+  DIGIFLAZZ_API_KEY: Env.schema.string.optional(),
+  DIGIFLAZZ_USERNAME: Env.schema.string.optional(),
+  DIGIFLAZZ_CALLBACK_SECRET: Env.schema.string.optional(),
 })

@@ -297,7 +297,7 @@ export default function FileManager({
         {selectedFile?.url ? (
           <div className="rounded-md border border-border/70 flex items-center justify-center overflow-hidden">
             <img
-              src={`${import.meta.env.VITE_S3_URL}${selectedFile.url}`}
+              src={`${import.meta.env.VITE_S3_URL || '/uploads'}${selectedFile.url}`}
               alt={selectedFile.name || ''}
               className="object-contain max-h-28 max-w-full"
             />
@@ -336,7 +336,7 @@ export default function FileManager({
                         onChange={() => toggleSelectedFileId(file.id)}
                       />
                       <img
-                        src={`${import.meta.env.VITE_S3_URL}${file.url}`}
+                        src={`${import.meta.env.VITE_S3_URL || '/uploads'}${file.url}`}
                         alt={file.name || ''}
                         onClick={() => setSelectedFile(file)}
                         className={`shadow rounded-md border transition-colors w-full object-contain ${selectedFile?.id === file.id ? 'border-primary/40 ring-1 ring-primary/15' : 'border-transparent'}`}

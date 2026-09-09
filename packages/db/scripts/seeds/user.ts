@@ -4,25 +4,43 @@ import type { Database } from '@/database'
 import { UserRole } from '@/schema'
 import { tb } from '@/table'
 
-const user: InferInsertModel<typeof tb.users>[] = [
-  {
-    id: '91319975-2d4a-4704-9963-7d3d66506ae1',
-    email: 'okebagus426@gmail.com',
-    password: bcrypt.hashSync('B@gusok55', 10),
-    name: 'Okebagus',
-    phone: '08123456789',
-    role: UserRole.ADMIN,
-  },
-  {
-    id: '00000000-0000-0000-0000-000000000001',
-    email: 'guest@baguspay.id',
-    password: bcrypt.hashSync('B@gusok55', 10),
-    name: 'Guest User',
-    phone: '08123123123',
-    role: UserRole.GUEST,
-  },
-]
-
 export const userSeed = async (db: Database) => {
-  await db.insert(tb.users).values(user).onConflictDoNothing()
+  const email = process.env.PREVIEW_ADMIN_EMAIL?.trim().toLowerCase()
+  const password = process.env.PREVIEW_ADMIN_PASSWORD
+
+  if (!email || !password) {
+    throw new Error('PREVIEW_ADMIN_EMAIL and PREVIEW_ADMIN_PASSWORD are required')
+  }
+
+  if (password.length < 12) {
+    throw new Error('PREVIEW_ADMIN_PASSWORD must contain at least 12 characters')
+  }
+
+  const admin: InferInsertModel<typeof tb.users> = {
+    email,
+    password: bcrypt.hashSync(password, 10),
+    name: process.env.PREVIEW_ADMIN_NAME?.trim() || 'Preview Admin',
+    phone: process.env.PREVIEW_ADMIN_PHONE?.trim() || '080000000000',
+    role: UserRole.ADMIN,
+    is_email_verified: true,
+    is_banned: false,
+    is_deleted: false,
+  }
+
+  await db
+    .insert(tb.users)
+    .values(admin)
+    .onConflictDoUpdate({
+      target: tb.users.email,
+      set: {
+        name: admin.name,
+        phone: admin.phone,
+        password: admin.password,
+        role: UserRole.ADMIN,
+        is_email_verified: true,
+        is_banned: false,
+        is_deleted: false,
+        updated_at: new Date(),
+      },
+    })
 }

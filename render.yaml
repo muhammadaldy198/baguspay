@@ -1,0 +1,46 @@
+services:
+  - type: web
+    name: baguspay-admin-preview
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile.admin
+    healthCheckPath: /auth/login
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: HOST
+        value: 0.0.0.0
+      - key: PORT
+        value: "10000"
+      - key: LOG_LEVEL
+        value: info
+      - key: APP_NAME
+        value: Baguspay Admin Preview
+      - key: APP_KEY
+        generateValue: true
+      - key: JWT_SECRET
+        generateValue: true
+      - key: SESSION_DRIVER
+        value: cookie
+      - key: DATABASE_URL
+        fromDatabase:
+          name: baguspay-admin-preview-db
+          property: connectionString
+      - key: DRIVE_DISK
+        value: fs
+      - key: VITE_S3_URL
+        value: "/uploads"
+      - key: PREVIEW_ADMIN_EMAIL
+        sync: false
+      - key: PREVIEW_ADMIN_PASSWORD
+        sync: false
+      - key: PREVIEW_ADMIN_NAME
+        value: Preview Admin
+      - key: PREVIEW_ADMIN_PHONE
+        value: "080000000000"
+
+databases:
+  - name: baguspay-admin-preview-db
+    plan: free
+    databaseName: baguspay
+    user: baguspay

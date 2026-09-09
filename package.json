@@ -55,8 +55,13 @@
   },
   "pnpm": {
     "onlyBuiltDependencies": [
+      "@parcel/watcher",
       "@nestjs/core",
-      "@swc/core"
+      "@swc/core",
+      "bcrypt",
+      "esbuild",
+      "msgpackr-extract",
+      "sharp"
     ]
   },
   "dependencies": {

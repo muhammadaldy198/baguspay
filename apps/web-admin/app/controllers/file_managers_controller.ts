@@ -19,11 +19,20 @@ import {
 } from '#validators/file_manager'
 
 export default class FileManagersController {
+  private publicUrl(path: string) {
+    const baseUrl = env.get('VITE_S3_URL', '/uploads').replace(/\/+$/, '')
+    return `${baseUrl}/${path.replace(/^\/+/, '')}`
+  }
+
+  private storageKey(path: string) {
+    return path.replace(/^\/+/, '')
+  }
+
   public async upload(ctx: HttpContext) {
     try {
       const data = await ctx.request.validateUsing(vine.compile(uploadFileValidator))
 
-      const disk = drive.use('s3')
+      const disk = drive.use()
 
       if (data.file.type === 'image') {
         const fileBuffer = await fs.readFile(data.file.tmpPath!)
@@ -63,10 +72,7 @@ export default class FileManagersController {
           file: {
             id: save[0].id,
             name: `${fileHash}.webp`,
-            url:
-              env.get('S3_ENDPOINT') +
-              env.get('S3_BUCKET_NAME') +
-              `/storage/images/${fileHash}.webp`,
+            url: this.publicUrl(`/storage/images/${fileHash}.webp`),
           },
         })
       } else {
@@ -86,7 +92,7 @@ export default class FileManagersController {
     try {
       const data = await ctx.request.validateUsing(vine.compile(uploadFilesValidator))
 
-      const disk = drive.use('s3')
+      const disk = drive.use()
       const uploaded: { id: string; name: string; url: string }[] = []
       const errors: { name: string; error: string }[] = []
 
@@ -126,7 +132,7 @@ export default class FileManagersController {
         uploaded.push({
           id: save[0].id,
           name: `${fileHash}.webp`,
-          url: `${env.get('S3_ENDPOINT') + env.get('S3_BUCKET_NAME')}/storage/images/${fileHash}.webp`,
+          url: this.publicUrl(`/storage/images/${fileHash}.webp`),
         })
       }
 
@@ -149,7 +155,7 @@ export default class FileManagersController {
         data: ctx.request.params(),
       })
 
-      const disk = drive.use('s3')
+      const disk = drive.use()
 
       const file = await db.query.fileManager.findFirst({
         where: eq(tb.fileManager.id, data.id),
@@ -161,7 +167,8 @@ export default class FileManagersController {
         })
       }
 
-      const check = await disk.exists(file.url)
+      const key = this.storageKey(file.url)
+      const check = await disk.exists(key)
 
       if (!check) {
         await db.delete(tb.fileManager).where(eq(tb.fileManager.id, data.id))
@@ -170,7 +177,7 @@ export default class FileManagersController {
         })
       }
 
-      await disk.delete(file.url)
+      await disk.delete(key)
       await db.delete(tb.fileManager).where(eq(tb.fileManager.id, data.id))
 
       return ctx.response.json({
@@ -187,7 +194,7 @@ export default class FileManagersController {
   public async destroyBulk(ctx: HttpContext) {
     try {
       const data = await ctx.request.validateUsing(vine.compile(deleteFilesValidator))
-      const disk = drive.use('s3')
+      const disk = drive.use()
       const deleted: string[] = []
       const errors: { id: string; error: string }[] = []
 
@@ -201,7 +208,8 @@ export default class FileManagersController {
           continue
         }
 
-        const check = await disk.exists(file.url)
+        const key = this.storageKey(file.url)
+        const check = await disk.exists(key)
 
         if (!check) {
           await db.delete(tb.fileManager).where(eq(tb.fileManager.id, id))
@@ -209,7 +217,7 @@ export default class FileManagersController {
           continue
         }
 
-        await disk.delete(file.url)
+        await disk.delete(key)
         await db.delete(tb.fileManager).where(eq(tb.fileManager.id, id))
         deleted.push(id)
       }
